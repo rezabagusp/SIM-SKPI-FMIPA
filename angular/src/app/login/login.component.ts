@@ -17,9 +17,8 @@ import 'rxjs/Rx';
 export class LoginComponent implements OnInit {
   returnUrl: string;
   // atribut2 login
-  private username;
-  private password;
-  private datalist;
+  private nama_user;
+  private password_user;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -29,37 +28,36 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-    console.log(this.returnUrl);
+    console.log('url sekarang', this.returnUrl);
   }
 
 
 
   login() {
-    const send = {username: this.username, password: this.password }; // bikin data inputan lu jadi string json
-    console.log(send);
 
     const header = new Headers();
     header.append('Content-type', 'application/json' );
 
-    // this.authenticationService.login(this.username, this.password)
-    // .subscribe(
-    //   result => {
-    //     if (result) {
-    //       swal(
-    //         'Success',
-    //         'Click Ok',
-    //         'success'
-    //       )
-    //       this.router.navigate(['dashboard']); // if succes masuk ke halaman lain
-    //     }else {
-    //       swal(
-    //         'Failed',
-    //         'Invalid Username or Password',
-    //         'info'
-    //       )
-    //     }
-    //  }
-    // );
+    this.authenticationService.login(this.nama_user, this.password_user)
+    .subscribe(
+      result => {
+        console.log('resultnya:', result)
+        if (result) {
+          swal(
+            'Success',
+            'Click Ok',
+            'success'
+          )
+          this.router.navigate(['dashboard']); // if succes masuk ke halaman lain
+        }else {
+          swal(
+            'Failed',
+            'Invalid Username or Password',
+            'info'
+          )
+        }
+     }
+    );
   }
 
   test() {

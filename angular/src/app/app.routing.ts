@@ -10,7 +10,7 @@ import { PrestasiComponent } from './prestasi/prestasi.component';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {

@@ -12,17 +12,17 @@
               <form (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
                 <div class="input-group mb-3 form-group">
                   <span class="input-group-addon"><i class="icon-user"></i></span>
-                  <input type="text" class="form-control" placeholder="Username" name="username" [(ngModel)]="username">
+                  <input type="text" class="form-control" placeholder="Username" name="username" [(ngModel)]="nama_user">
                 </div>
 
                 <div class="input-group mb-4 form-grouup">
                   <span class="input-group-addon"><i class="icon-lock"></i></span>
-                  <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="password">
+                  <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="password_user">
                 </div>
 
                 <div class="row">
                   <div class="col-6">
-                    <button type="submit" class="btn btn-primary" [routerLink] = "['/dashboard']" >Login</button>
+                    <button type="submit" class="btn btn-primary" >Login</button>
                   </div>
 
                   <div class="col-6 text-right">
