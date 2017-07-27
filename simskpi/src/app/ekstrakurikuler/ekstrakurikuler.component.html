@@ -1,0 +1,174 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> List Ekstrakurikuler
+       	  <span class="float-right">
+          	<button type="button" class="btn btn-primary" data-toggle="modal" (click)="tambahEkstrakurikulerModal.show()">
+            	Tambah Ekstrakurikuler
+          	</button>		
+          </span>
+        </div>
+        <div class="card-block">
+          <table class="table table-bordered table-striped table-sm">
+            <thead>
+              <tr>
+                <th>Nama</th>
+                <th>Waktu</th>
+                <th>Jenis</th>
+                <th>Tingkat</th>
+                <th>Sebagai</th>
+                <th>Bukti</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Vishnu Serghei</td>
+                <td>2012/01/01</td>
+                <td>Member</td>
+                <td>
+                  <span class="badge badge-success">Active</span>
+                </td>
+                <td>Vishnu Serghei</td>
+                <td>2012/01/01</td>
+              </tr>
+              <tr>
+                <td>Zbyněk Phoibos</td>
+                <td>2012/02/01</td>
+                <td>Staff</td>
+                <td>
+                  <span class="badge badge-danger">Banned</span>
+                </td>
+                <td>Vishnu Serghei</td>
+                <td>2012/01/01</td>
+              </tr>
+              <tr>
+                <td>Einar Randall</td>
+                <td>2012/02/01</td>
+                <td>Admin</td>
+                <td>
+                  <span class="badge badge-default">Inactive</span>
+                </td>
+                <td>Vishnu Serghei</td>
+                <td>2012/01/01</td>
+              </tr>
+              <tr>
+                <td>Félix Troels</td>
+                <td>2012/03/01</td>
+                <td>Member</td>
+                <td>
+                  <span class="badge badge-warning">Pending</span>
+                </td>
+                <td>Vishnu Serghei</td>
+                <td>2012/01/01</td>
+              </tr>
+              <tr>
+                <td>Aulus Agmundr</td>
+                <td>2012/01/21</td>
+                <td>Staff</td>
+                <td>
+                  <span class="badge badge-success">Active</span>
+                </td>
+                <td>Vishnu Serghei</td>
+                <td>2012/01/01</td>
+              </tr>
+            </tbody>
+          </table>
+          <nav>
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+              <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">4</a></li>
+              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+  <!--/.row-->
+</div>
+
+<div bsModal #tambahEkstrakurikulerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="tambahEkstrakurikulerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Tambah Ekstrakurikuler</h4>
+        <button type="button" class="close" (click)="tambahEkstrakurikulerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="select">Jenis Kegiatan</label>
+            <div class="col-md-9">
+              <ng-select [items]="jenis_kegiatan" (selected)="pilihJenis" placeholder="Pilih salah satu">
+  			  </ng-select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="select">Tingkat Kegiatan</label>
+            <div class="col-md-9">
+              <ng-select [items]="tingkat_kegiatan" [multiple]="false" (selected)="pilihTingkat($event)" placeholder="Pilih salah satu">
+  			  </ng-select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="select">Sub Jenis Kegiatan</label>
+            <div class="col-md-9">
+              <ng-select [items]="sub_jenis_kegiatan" [multiple]="false" (selected)="pilihSubJenis($event)" placeholder="Pilih salah satu">
+  			  </ng-select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="text-input">Nama Kegiatan</label>
+            <div class="col-md-9">
+              <input type="text" id="text-input" name="text-input" class="form-control" placeholder="Text">
+              <span class="help-block">Masukkan nama kegiatan secara lengkap</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="text-input">Kota Pelaksanaan Kegiatan</label>
+            <div class="col-md-9">
+              <input type="text" id="text-input" name="text-input" class="form-control" placeholder="Text">
+              <span class="help-block">Masukkan kota tempat pelaksanaan kegiatan</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="text-input">Tanggal mulai kegiatan</label>
+            <div class="col-md-9">
+              <input type="text" id="text-input" name="text-input" class="form-control" placeholder="Text">
+              <span class="help-block">Masukkan tanggal mulai kegiatan berlangsung</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="text-input">Tanggal selesai kegiatan</label>
+            <div class="col-md-9">
+              <input type="text" id="text-input" name="text-input" class="form-control" placeholder="Text">
+              <span class="help-block">Masukkan tanggal mulai kegiatan berakhir</span>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="file-input">Upload bukti</label>
+            <div class="col-md-9">
+              <input type="file" id="file-input" name="file-input">
+              <p class="help-block">Upload hasil <i>scan</i> bukti mengikuti kegiatan (sertifikat, plakat, atau lainnya)</p>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="tambahEkstrakurikulerModal.hide()">Batal</button>
+        <button type="button" class="btn btn-primary">Simpan</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
