@@ -7,8 +7,12 @@ var express = require('express'),
     cors = require('cors')
     login = require('./routes/Login'),
     index = require('./routes/index'),
-    jwt = require('jsonwebtoken')
+    jwt = require('jsonwebtoken'),
+    mahasiswa = require('./routes/mahasiswa'),
+    departemen = require('./routes/departemen'), 
+    admin = require('./routes/admin');   
     users = require('./routes/users');
+    
 
 var app = express();
 
@@ -32,6 +36,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/login', login);
+app.use('/mahasiswa', mahasiswa);
+app.use('/departemen', departemen);
+app.use('/admin', admin);
 
 /*jwt middleware*/
 app.use(function(req, res, next){
@@ -49,8 +56,6 @@ app.use(function(req, res, next){
 app.use('/coba', function(req, res, next){
   res.json("ada token")
 })
-
-
 
 
 // catch 404 and forward to error handler

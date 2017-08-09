@@ -1,0 +1,221 @@
+<div class = "animated fadeIn">
+  <div class = "row">
+      <div class ="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Informasi prestasi
+            <div class="float-right">
+              Status: 
+              <span *ngIf = "status==1" class="badge badge-success">Diterima</span>    
+              <span *ngIf = "status==2" class="badge badge-danger">Ditolak</span>     
+              <span *ngIf = "status==0" class="badge badge-default">Belum diproses</span>                                        
+            </div>
+          </div>
+          <div class="card-block"> 
+            <div class="container">    
+              <div class="form-group row">
+                <label class="col-md-4 form-control-label"><strong>Nama mahasiswa</strong></label>
+                <div class="col-md-1">
+                  :
+                </div>                
+                <div class="col-md-7">
+                  {{presma?.mahasiswa.nama_mahasiswa}}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4 form-control-label" for="password-input"><strong>NIM</strong></label>
+                <div class="col-md-1">
+                  :
+                </div>                
+                <div class="col-md-7">
+                  {{presma?.mahasiswa.nim_mahasiswa}}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4 form-control-label" for="password-input"><strong>NIM</strong></label>
+                <div class="col-md-1">
+                  :
+                </div>                
+                <div class="col-md-7">
+                  {{presma?.mahasiswa.departemen.nama_departemen}}
+                </div>
+              </div>              
+              <div class="form-group row">
+                <label class="col-md-4 form-control-label" for="password-input"><strong>Nama kegiatan</strong></label>
+                <div class="col-md-1">
+                  :
+                </div>                
+                <div class="col-md-7">
+                  {{presma?.nama_ekstrakurikuler}}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4 form-control-label" for="password-input"><strong>Jenis kegiatan</strong></label>
+                <div class="col-md-1">
+                  :
+                </div>
+                <div class="col-md-7 ">
+                  {{presma?.sub_kategori.nama_sub_kategori}}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4 form-control-label" for="password-input"><strong>Tingkat/region</strong></label>
+                <div class="col-md-1">
+                  :
+                </div>                
+                <div class="col-md-7">
+                  {{presma?.tingkat.nama_tingkat}}
+                </div>
+              </div>        
+              <div class="form-group row">
+                <label class="col-md-4 form-control-label" for="password-input"><strong>Tempat</strong></label>
+                <div class="col-md-1">
+                  :
+                </div>                
+                <div class="col-md-7">
+                  {{presma?.kota}}, {{presma?.negara}}
+                </div>
+              </div>                                                       
+              <div class="form-group row">
+                <label class="col-md-4 form-control-label" for="password-input"><strong>Tanggal mulai kegiatan</strong></label>
+                <div class="col-md-1">
+                  :
+                </div>                
+                <div class="col-md-7">
+                  {{presma?.tanggal_mulai | date}} 
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4 form-control-label" for="password-input"><strong>Tanggal selesai kegiatan</strong></label>
+                <div class="col-md-1">
+                  :
+                </div>                
+                <div class="col-md-7">
+                  {{presma?.tanggal_selesai | date}}
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4 form-control-label" for="password-input"><strong>Keterangan</strong></label>
+                <div class="col-md-1">
+                  :
+                </div>                
+                <div class="col-md-7">
+                  {{presma?.keterangan}}
+                </div>
+              </div>              
+              <div class = "form-group row">
+                <div class="col-md-8"> 
+                  <input type="checkbox" (click)="checkbox()"> Ubah status 
+                </div>              
+              </div>
+              <div *ngIf="checked==true" class="animated fadeIn">
+                <button *ngIf="status==2" type="button" (click)="verifConfirm()" class="btn btn-primary btn-sm">Terima</button>
+                <button *ngIf="status==1" type="button" (click)="verifCommentConfirm()"class="btn btn-danger btn-sm">Tolak </button>                
+              </div>
+              <div *ngIf = "status==0">
+                <button type="button" (click)="verifConfirm()" class="btn btn-primary btn-sm">Terima</button>
+                <button type="button" (click)="verifCommentConfirm()"class="btn btn-danger btn-sm">Tolak </button>
+              </div>                   
+            </div>         
+          </div>`
+        </div>
+      </div>        
+
+      <div class = "col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Bukti prestasi
+          </div>
+          <div class="card-block">
+            <div class="portrait">
+              <img src="assets/abby.png" alt="Bukti prestasi" class="fit">
+            </div>
+          </div>`
+        </div>
+      </div>      
+  </div>
+</div>
+
+
+<!-- <div class="row">
+  <div class="card">
+    <div class="card-header">
+      Informasi prestasi
+      <div class="float-right">
+        Status: 
+        <span class="badge badge-success">Sudah Terverifikasi</span>
+      </div>
+    </div>
+    <div class="card-block">     
+      <div class="row">
+        <div class="col-md-6">
+          <div class="container">    
+            <div class="form-group row">
+              <label class="col-md-3 form-control-label"><strong>Nama mahasiswa</strong></label>
+              <div class="col-md-8 push-1">
+                  Reza Bagus Permana
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 form-control-label" for="password-input"><strong>NIM</strong></label>
+              <div class="col-md-8 push-1">
+                  G64140023
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 form-control-label" for="password-input"><strong>Nama kegiatan</strong></label>
+              <div class="col-md-8 push-1">
+                  Organisasi mahasiswa lalalaa
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 form-control-label" for="password-input"><strong>Jenis kegiatan</strong></label>
+              <div class="col-md-8 push-1">
+                  presentasi dalam seminar
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 form-control-label" for="password-input"><strong>Tingkat/region</strong></label>
+              <div class="col-md-8 push-1">
+                  Nasional
+              </div>
+            </div>        
+            <div class="form-group row">
+              <label class="col-md-3 form-control-label" for="password-input"><strong>Tempat(kota)</strong></label>
+              <div class="col-md-8 push-1">
+                  Nasional
+              </div>
+            </div>                            
+            <div class="form-group row">
+              <label class="col-md-3 form-control-label" for="password-input"><strong>Tanggal mulai kegiatan</strong></label>
+              <div class="col-md-8 push-1">
+                  30/08/1998
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 form-control-label" for="password-input"><strong>Tanggal selesai kegiatan</strong></label>
+              <div class="col-md-8 push-1">
+                  30/20/1998
+              </div>
+            </div>  
+          </div>                    
+
+        </div>
+        <div class="col-md-6">
+          <div class="card-block">
+            <form>
+            <div class="form-group row">
+              <label class="col-md-3 form-control-label"><strong>Bukti</strong></label>
+              <div class="col-md-8 push-1">    
+              </div>
+            </div>
+            </form>            
+            <div class="portrait">
+              <img src="assets/abby.png" alt="Bukti prestasi" class="fit">
+            </div>
+          </div>`        
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

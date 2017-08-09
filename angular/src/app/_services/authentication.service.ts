@@ -1,23 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http'; // add http module
 import { Observable } from 'rxjs/Observable';
-// jwt helper
-import { AuthHttp, JwtHelper, tokenNotExpired } from 'angular2-jwt';
+
 
 @Injectable()
 export class AuthenticationService {
-  public jwtHelper: JwtHelper = new JwtHelper();
 
-  public url_login = 'http://localhost:3000/login/masuk';
-  private token: string;
+  public url_login = 'http://localhost:8000/login/masuk';
+
+  public token: string;
 
   constructor(private http: Http) {
-    this.token = localStorage.getItem('token');
   }
 
   login(nama_user: string, password_user: string) {
     let send = JSON.stringify({nama_user: nama_user, password_user:password_user });//bikin data inputan lu jadi string json
-    console.log(send);
+    console.log("yang akan dikirim vias service: ", send);    
     let header= new Headers();
     header.append('Content-type', 'application/json' );
 
@@ -27,16 +25,12 @@ export class AuthenticationService {
         let token = response.json() && response.json().token;
         console.log('ini token balikan', response.json().token);
         if(token){
-          //set token
           this.token = token;
-          //set other to localstorage
           localStorage.setItem('token', token);
-          localStorage.setItem('username', nama_user);
-          //return true to indicate successful login
+          localStorage.setItem('nama_user', nama_user);
           return true
         }
         else{
-          // return false to indicate failed to login
           return false;
         }
       });
@@ -46,7 +40,7 @@ export class AuthenticationService {
       // remove user from local storage to log user out
       this.token = null;
       localStorage.removeItem('token');
-      localStorage.removeItem('username');
+      localStorage.removeItem('nama_user');
   }
 
 }

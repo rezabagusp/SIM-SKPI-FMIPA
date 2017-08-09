@@ -1,9 +1,10 @@
 var express = require('express'),
 	sequelize = require('../dbsequelize'),
     jwt = require('jsonwebtoken')
-    crypto = require('crypto'),
-    user = sequelize.import('../models/user.model.js');
-;
+    crypto = require('crypto');
+
+var user = sequelize.import('./../models/user.model.js');
+var mahasiswa = sequelize.import('./../models/mahasiswa.model.js');
 
 class Authentication{
 
@@ -21,20 +22,32 @@ class Authentication{
     }
     
     login(data, res){
+        console.log('databody', data.body)
         this.setNamaUser(data.nama_user);
         this.setPasswordUser(data.password_user);
-
         user.findOne({
             where: {
                 nama_user: this.nama_user,
                 password_user: this.password_user
             }
         }).then((hasil)=>{
-            console.log("hasil chek row: ", hasil)
+            console.log('hasilnya', hasil.dataValues)
             var token = jwt.sign(hasil.dataValues, SECRET_KEY);
             res.json({status:true, message:"login berhasil", token:token});
         }).catch((err)=> {
-            res.json({status:false, message:"login gagal"});
+            console.log('masuk err')
+            mahasiswa.findOne({
+                where: {
+                    nama_user:this.nama_user,
+                    password_user:this.password_user
+                }
+            }).then((data)=>{
+                console.log(data)
+                var token = jwt.sign(data.dataValues, SECRET_KEY);
+                res.json({status:true, message:"login berhasil", token:token});
+            }).catch((err)=>{
+                res.json({status:false, message:'login gagal'})
+            })
         })
     }
 

@@ -3,41 +3,34 @@ import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 // Layouts
 import { FullLayoutComponent } from './layouts/full-layout.component';
-import { LoginComponent } from './login/login.component';
 
-import { PrestasiComponent } from './prestasi/prestasi.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'auth',
     pathMatch: 'full',
   },
   {
-    path: 'login',
-    component: LoginComponent
+    path:'admin',
+    redirectTo:'admin/dashboard'
   },
   {
-    path: '',
-    component: FullLayoutComponent,
-    data: {
-      title: 'Home'
-    },
-    children: [
-      {
-        path: 'dashboard',
-        loadChildren: './dashboard/dashboard.module#DashboardModule'
-      },
-      {
-        path: 'prestasi',
-        component: PrestasiComponent
-      },
-    ]
-  }
+    path:'mahasiswa',
+    redirectTo:'mahasiswa/dashboard'
+  },  
+  {
+    path:'departemen',
+    redirectTo:'departemen/dashboard'
+  },
+  {
+    path:'fakultas',
+    redirectTo:'fakultas/dashboard'
+  },  
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
+  imports: [ RouterModule.forRoot(routes, {useHash: true}) ],
   exports: [ RouterModule ]
 })
 export class AppRoutingModule {}
