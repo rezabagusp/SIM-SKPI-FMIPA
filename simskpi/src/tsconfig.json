@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "baseUrl": "",
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es2016",
+      "dom"
+    ],
+<<<<<<< HEAD:angular/tsconfig.json
+    "paths": {
+      "@angular/*": [
+        "../node_modules/@angular/*"
+      ]
+    }
+=======
+    "mapRoot": "./",
+    "module": "es2016",
+    "moduleResolution": "node",
+    "outDir": "../dist/out-tsc",
+    "sourceMap": true,
+    "target": "es5",
+    "typeRoots": [
+      "../node_modules/@types"
+    ]
+>>>>>>> 69f6805568475729dd0dda642c21e8a13149bba8:simskpi/src/tsconfig.json
+  }
+}
