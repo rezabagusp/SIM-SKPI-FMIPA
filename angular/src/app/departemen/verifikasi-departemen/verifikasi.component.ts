@@ -38,10 +38,12 @@ export class VerifikasiComponent implements OnInit {
     this.DepartemenService.getAllPresma(this.data.url_get_all_presma, this.data.token, this.data.id_departemen)
     .subscribe(
       data =>{
-        console.log(data)
-          this.list_presma = data;
+        if(data.status){
+          console.log(data)
+          this.list_presma = data.result;
           this.dtTrigger.next();
           console.log('masuk promise ', this.list_presma)
+        }
       }
     )
   }

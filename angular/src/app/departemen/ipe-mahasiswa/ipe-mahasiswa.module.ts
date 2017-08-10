@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { DataTablesModule } from 'angular-datatables';
 import { SelectModule } from 'ng2-select-compat';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
-import { ModalModule } from 'ngx-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';  
 import { DetailIpeMahasiswaComponent } from './detail-ipe-mahasiswa/detail-ipe-mahasiswa.component';
 
 

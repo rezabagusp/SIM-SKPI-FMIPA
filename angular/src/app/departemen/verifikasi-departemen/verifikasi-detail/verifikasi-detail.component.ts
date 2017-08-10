@@ -38,9 +38,14 @@ export class VerifikasiDetailComponent implements OnInit {
     this.DepartemenService.getDetilPresmaById(this.data.url_get_detil_presma, this.data.token, this.id_presma)
     .subscribe(
       data =>{
-        this.presma = data;
-        this.status = this.presma.status_verifikasi_ekstrakurikuler;
-        console.log('atanya', this.presma);
+        console.log(data)
+        if(data.status){
+          this.presma = data.result;
+          this.status = this.presma.status_verifikasi_ekstrakurikuler;
+          console.log('atanya', this.presma);
+        }
+        else
+          this.data.showError(data.message);
       }
     )
   }

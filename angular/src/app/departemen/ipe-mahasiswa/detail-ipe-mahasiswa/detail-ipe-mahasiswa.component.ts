@@ -55,9 +55,13 @@ export class DetailIpeMahasiswaComponent implements OnInit {
     this.MahasiswaService.getAllEkskul(this.data.token, this.data.url_get_all_Ekskul, this.id_mahasiswa)
     .subscribe(
       data=> {
-        this.list_ekskul = data;
-        this.dtTrigger.next();        
-        console.log('all ekskul: ', this.list_ekskul)
+        if(data.status){
+          this.list_ekskul = data.result;
+          this.dtTrigger.next();        
+          console.log('all ekskul: ', this.list_ekskul)
+        }
+        else 
+          this.data.showError(data.message)
       }
     )
   }

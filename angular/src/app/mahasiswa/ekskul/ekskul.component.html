@@ -40,8 +40,8 @@
                 <td>{{ekskul.tanggal_selesai | date}}</td>
                 <td><a href="assets/public/images/{{ekskul.bukti_ekstrakurikuler}}" target="_blank">{{ekskul.bukti_ekstrakurikuler}}</a></td>
                 <td>
-                  <span><a href="javascript:void(0)" (click)="deleteEkskul(ekskul.id);" ><i class="fa fa-trash-o" aria-hidden="true" title="Hapus"></i></a> </span> &nbsp;
-                  <span><a href="javascript:void(0)" (click)="changeState(1);clickRow(ekskul); editEkskulModal.show()" ><i class="fa fa-pencil-square-o" aria-hidden="true" title="Edit"></i></a> </span>
+                  <span><a href="javascript:void(0)" (click)="deleteEkskul(ekskul.id);" ><i class="fa fa-trash-o" aria-hidden="true" title="Hapus"></i>Delete</a></span> &nbsp;
+                  <span><a href="javascript:void(0)" (click)="changeState(1);clickRow(ekskul); editEkskulModal.show()" ><i class="fa fa-pencil-square-o" aria-hidden="true" title="Edit"></i>Update</a> </span>
                 </td>      
               </tr>
             </tbody>

@@ -106,7 +106,10 @@ export class EkskulComponent implements OnInit {
     this.MahasiswaService.getSubKategori(this.data.token, this.data.url_get_sub_kategori)
     .subscribe(
       data=> {
-        this.list_sub_kategori = data;
+        if(data.status)
+          this.list_sub_kategori = data.result;
+        else
+          this.data.showError(data.message)
      }
     );
   }
@@ -114,8 +117,11 @@ export class EkskulComponent implements OnInit {
     this.MahasiswaService.getKategori(this.data.token, this.data.url_get_kategori)
     .subscribe(
       data=> {
-        this.list_kategori = data;
-        console.log('list kategori: ', this.list_kategori);
+        if(data.status)
+          this.list_kategori = data.result;
+        else
+          this.data.showError(data.message);
+
      }
     );    
   }
@@ -123,8 +129,10 @@ export class EkskulComponent implements OnInit {
     this.MahasiswaService.getTingkat(this.data.token, this.data.url_get_tingkat)
     .subscribe(
       data => {
-        this.list_tingkat = data
-        console.log('list_tingkat: ', this.list_tingkat)
+        if(data.status)
+          this.list_tingkat = data.result
+        else
+          this.data.showError(data.message);
       }
     )
   }
@@ -132,9 +140,14 @@ export class EkskulComponent implements OnInit {
     this.MahasiswaService.getAllEkskul(this.data.token, this.data.url_get_all_Ekskul, this.data.id_mahasiswa)
     .subscribe(
       data=> {
-        this.list_ekskul = data;
-        this.dtTrigger.next();        
-        console.log('all ekskul: ', this.list_ekskul)
+        if(data.status){
+          this.list_ekskul = data.result;
+          this.dtTrigger.next();        
+          console.log('all ekskul: ', this.list_ekskul)
+        }
+        else{
+          this.data.showError('erro saat mengambil data');
+        }
       }
     )
   }

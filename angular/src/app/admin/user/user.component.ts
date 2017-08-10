@@ -89,9 +89,10 @@ export class UserComponent implements OnInit {
     this.admin.getAllUsers(this.data.url_get_all_user, this.data.token)
     .subscribe(
       data =>{
-
-        this.list_user=data;
-                console.log(this.list_user)
+        if(data.status)
+          this.list_user=data.result;
+        else 
+          this.data.showError(data.message)
       }
     )
   }
