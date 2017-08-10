@@ -63,7 +63,7 @@ class Mahasiswa {
         }).then(()=>{
             res.json({status:true, message:'berhasil menambahkan ekskul'})
         }).catch((err)=>{
-            res.json(err)
+            res.json({status:false, message:'gagal menambahkan ekskul'})
         })
     }
     updateEkskul(data, res){
@@ -162,7 +162,7 @@ class Mahasiswa {
             if(hasil.length==0 || hasil==null)
                 res.json({status:false, message:'mahasiswa tidak memilki prestasi'})
             else
-                res.json(hasil)
+                res.json({status:true, message: 'berhasil get all ekskul', result: hasil});
         }).catch(()=>{
             res.json('error saat pencarian')
         })
@@ -173,27 +173,27 @@ class Mahasiswa {
                 model: kategori
             }]
         }).then((hasil)=>{
-            res.json(hasil);
+            res.json({status:true, message:'berhasil get Sub kategori', result:hasil});
         }).catch((err)=>{
-            res.json(err)
+            res.json({status:false, message:'gagal get Sub kategori'})
         })
     
     }
     getKategori(data, res){
         kategori.findAll({
         }).then((hasil)=>{
-            res.json(hasil)
+            res.json({status:true, message:'berhasil get Kategori', result:hasil})
 
         }).catch((err)=>{
-            res.json(err)
+            res.json({status:false, message:'gagal get kategori'})
         })
     }
     getTingkat(data, res){
         tingkat.findAll({
         }).then((hasil)=>{
-            res.json(hasil)
+            res.json({status:true, message:'berhasil get tingkat', result:hasil})
         }).catch((err)=>{
-            res.json(err)
+            res.json({status:false, message:'gagal get tingkat'});
         })
     }
     getEkskulByID(data, res){

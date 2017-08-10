@@ -29,7 +29,7 @@ class Departemen{
                     }]
                 }]
             }).then((hasil)=>{
-                res.json(hasil)
+                res.json({status:true, message:'berhasil mengambil data presma', result:hasil})
             }).catch((err)=>{
                 res.json({status:false, message:'error saat menemukan'})
             })            
@@ -51,24 +51,11 @@ class Departemen{
                     },                
                 }]
             }).then((hasil)=>{
-                if(hasil.length==0 || hasil==null)
-                    res.json(hasil)
-                else
-                    res.json(hasil)
-            })            
+                res.json({status:true, message:'berhasil mendapatkan presma', result:hasil})
+            }).catch(()=>{
+                res.json({status:false, message:'gagal mendapatkan prestasi mahasiswa'});
+            })
         }
-    }
-
-    getAllMahasiswa(data, res){
-        mahasiswa.findAll({
-            include: [{
-                model:departemen
-            }],
-        }).then((hasil)=>{
-            res.json({status:true, message:'berhasil get all mahasiswa', result: hasil});
-        }).catch((err)=>{
-            res.json({status:false, message:'gagal get mahasiswa', result: err});
-        })
     }
 
     //method for update status of ekskul. jangan lupa diganti status[0,1,2]
@@ -133,14 +120,27 @@ class Departemen{
                         }]
                     }]
                 }).then((hasil)=>{
-                    res.json(hasil);
+                    res.json({status:true, message:'ekskul berhasil ditemukan', result:hasil});
                 }).catch((err)=>{
-                    res.json('err saat menemukan')
+                    res.json({status:false, message:'error saat menemukan'})
                 })
  
             }
         }).catch((err)=>{
             res.json(err)
+        })
+    }
+
+    //departemen ke 9
+    getAllMahasiswa(data, res){
+        mahasiswa.findAll({
+            include: [{
+                model:departemen
+            }],
+        }).then((hasil)=>{
+            res.json({status:true, message:'berhasil get all mahasiswa', result: hasil});
+        }).catch((err)=>{
+            res.json({status:false, message:'gagal get mahasiswa', result: err});
         })
     }
 

@@ -63,9 +63,9 @@ class Admin{
                 model: departemen
             }]
         }).then((hasil)=>{
-            res.json(hasil);
+            res.json({status:true, message:'berhasil get all user', result: hasil});
         }).catch((err)=>{
-            res.json(hasil);
+            res.json({status:false, message:'gagal get all user'});
         })
     }
     
