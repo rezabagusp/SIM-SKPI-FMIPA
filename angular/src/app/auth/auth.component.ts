@@ -1,9 +1,14 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
 import { ToastrService } from 'toastr-ng2';
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Http, Headers } from '@angular/http';
 // jwt helper
 import { AuthHttp, JwtHelper, tokenNotExpired } from 'angular2-jwt';
+<<<<<<< HEAD
 import 'rxjs/add/observable/of';
 import 'rxjs/Rx';
 // inject Service
@@ -12,6 +17,14 @@ import { AuthenticationService } from '../_services/authentication.service';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 declare var $: JQueryStatic;
+=======
+
+import 'rxjs/add/observable/of';
+import 'rxjs/Rx';
+
+// inject Service
+import { AuthenticationService } from '../_services/authentication.service';
+>>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
 
 @Component({
   selector: 'app-auth',
@@ -24,7 +37,11 @@ export class Auth implements OnInit {
   returnUrl: string;
   decode;
   token;
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
   // atribut2 auth ngmodel
   private nama_user;
   private password_user;
@@ -38,7 +55,10 @@ export class Auth implements OnInit {
               private http: Http,
               private authenticationService: AuthenticationService,
               private toastrService: ToastrService,
+<<<<<<< HEAD
               private slimLoadingBarService: SlimLoadingBarService
+=======
+>>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
               ) { }
 
   ngOnInit() {
@@ -46,7 +66,10 @@ export class Auth implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     console.log(this.returnUrl);
     console.log(this.route)
+<<<<<<< HEAD
     this.loginJquery();
+=======
+>>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
   }
 
   login() {
@@ -57,6 +80,7 @@ export class Auth implements OnInit {
     this.authenticationService.login(this.nama_user, this.password_user)
     .subscribe(
       result => {
+<<<<<<< HEAD
         this.slimLoadingBarService.start(() => {
           console.log('Loading complete');
         });
@@ -67,6 +91,12 @@ export class Auth implements OnInit {
           this.checkstatus();
         }else {
           this.slimLoadingBarService.complete();
+=======
+        if (result) {
+          this.toastrService.success("yeay kamu berhasil masuk", "Success !")
+          this.checkstatus();
+        }else {
+>>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
           swal(
             'Failed',
             'Invalid Username or Password',
@@ -89,6 +119,7 @@ export class Auth implements OnInit {
       this.router.navigate(['mahasiswa/dashboard']); // if succes masuk ke halaman lain      
   }
 
+<<<<<<< HEAD
   loginJquery() {
     $('input').blur(function() {
       var $this = $(this);
@@ -114,4 +145,6 @@ export class Auth implements OnInit {
       $(this).removeClass('is-active');
     });
   }
+=======
+>>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
 }

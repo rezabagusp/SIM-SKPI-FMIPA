@@ -5,7 +5,11 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     cors = require('cors')
+<<<<<<< HEAD
     login = require('./routes/login'),
+=======
+    login = require('./routes/Login'),
+>>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
     index = require('./routes/index'),
     jwt = require('jsonwebtoken'),
     mahasiswa = require('./routes/mahasiswa'),

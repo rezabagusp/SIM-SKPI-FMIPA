@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { LocationStrategy, HashLocationStrategy, CommonModule } from '@angular/common';
@@ -68,8 +72,12 @@ import { DepartemenService } from './_services/departemen.service';
     AdminModule,
     MahasiswaModule,
     DepartemenModule,
+<<<<<<< HEAD
     FakultasModule,
     
+=======
+    FakultasModule
+>>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
   ],
   declarations: [
     AppComponent,

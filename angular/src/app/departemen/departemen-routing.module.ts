@@ -34,7 +34,18 @@ const routes: Routes = [
       {
         path: 'ipemahasiswa',
         loadChildren: './ipe-mahasiswa/ipe-mahasiswa.module#IpeMahasiswaModule'
+<<<<<<< HEAD
       },
+=======
+      },      
+      // {
+      //   path: 'ipemahasiswa',
+      //   component: IpeMahasiswaComponent,
+      //   data: {
+      //     title: 'IPE Mahasiswa'
+      //   }
+      // }         
+>>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
     ]
   },  
 ];
