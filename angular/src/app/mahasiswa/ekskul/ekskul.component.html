@@ -1,0 +1,229 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+
+            <i class="fa fa-align-justify"></i> List Ekstrakurikuler            
+
+       	  <div class="pull-right">
+          	<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" (click)="changeState(0);resetForm();addEkskulModal.show()">
+            	Tambah
+          	</button>		
+          </div>
+        </div>
+        <div class="card-block">
+           <table datatable [dtOptions]="dtOptions" style="display: inline-block;width: 100%;overflow: auto;" [dtTrigger]="dtTrigger" class="row-border hover">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama </th>
+                <th>jenis</th>
+                <th>Tingkat</th>
+                <th>Kota</th>
+                <th>Negara</th>
+                <th>Tanggal mulai</th>
+                <th>Tanggal selesai</th>
+                <th>Bukti</th>
+                <th></th>                                                                                     
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ekskul of list_ekskul; let i = index">
+                <td>{{i+1}}</td>                
+                <td>{{ekskul.nama_ekstrakurikuler}}</td>
+                <td>{{ekskul.sub_kategori.nama_sub_kategori}}</td>
+                <td>{{ekskul.tingkat.nama_tingkat}}</td>
+                <td>{{ekskul.kota}}</td>
+                <td>{{ekskul.negara}}</td>
+                <td>{{ekskul.tanggal_mulai | date}}</td>
+                <td>{{ekskul.tanggal_selesai | date}}</td>
+                <td><a href="assets/public/images/{{ekskul.bukti_ekstrakurikuler}}" target="_blank">{{ekskul.bukti_ekstrakurikuler}}</a></td>
+                <td>
+                  <span><a href="javascript:void(0)" (click)="deleteEkskul(ekskul.id);" ><i class="fa fa-trash-o" aria-hidden="true" title="Hapus"></i>Delete</a></span> &nbsp;
+                  <span><a href="javascript:void(0)" (click)="changeState(1);clickRow(ekskul); editEkskulModal.show()" ><i class="fa fa-pencil-square-o" aria-hidden="true" title="Edit"></i>Update</a> </span>
+                </td>      
+              </tr>
+            </tbody>
+          </table> 
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+  <!--/.row-->
+</div>
+
+<!-- <a href="javascipt:void(0)"><iframe src="https://research.google.com/pubs/archive/44678.pdf"
+   width="800px" height="600px" > -->
+
+
+
+<button type="button" (click)="cek()">cek</button>
+
+<div bsModal #editEkskulModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editEkskulModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Ekstrakurikuler</h4>
+        <button type="button" class="close" (click)="editEkskulModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" (submit)="updateEkskul();" novalidate>
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="nama_kegiatan">Nama kegiatan</label>
+            <div class="col-md-9">
+              <input type="text" formControlName="nama_kegiatan" id="nama_kegiatan" name="nama_kegiatan" class="form-control form-control-sm" placeholder="Masukkan nama kegiatan secara lengkap" required>
+            </div>
+          </div>      
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="jenis_kegiatan">Jenis kegiatan</label>
+              <div class="col-md-9">
+              <select id="jenis_kegiatan" name="jenis_kegiatan" formControlName="jenis_kegiatan" class="form-control form-control-sm" required>
+                <option disabled selected value></option>    
+                <optgroup *ngFor="let kategori of list_kategori; let i = index;" label="{{kategori.nama_kategori}}">
+                  <ng-container *ngFor="let jenis_kegiatan of list_sub_kategori ; let j = index">               
+                  <option *ngIf = "jenis_kegiatan.kategori.id == kategori.id" [ngValue]="jenis_kegiatan">{{jenis_kegiatan.nama_sub_kategori}}</option>               
+                </ng-container>
+                </optgroup>
+              </select>
+            </div> 
+          </div>  
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="tingkat_kegiatan">Tingkat kegiatan</label>
+              <div class="col-md-9">
+              <select id="tingkat_kegiatan" name="tingkat_kegiatan" formControlName="tingkat_kegiatan"  class="form-control form-control-sm" required>
+                <option disabled selected value></option>                  
+                <option *ngFor="let tingkat_kegiatan of list_tingkat" [ngValue]="tingkat_kegiatan">{{tingkat_kegiatan.nama_tingkat}}</option>
+              </select>
+            </div> 
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="tempat_kegiatan">Tempat</label>
+            <div class="col-md-4">
+              <input type="text" name="kota" formControlName="kota" class="form-control form-control-sm" placeholder="nama kota" required> 
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-4">
+              <input type="text" name="negara" formControlName="negara" class="form-control form-control-sm" placeholder="nama negara" required> 
+            </div>            
+          </div>  
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="tanggal_mulai">Tanggal mulai kegiatan</label>
+            <div class="col-md-9">
+                <date-picker *ngIf="state==1" formControlName="tanggal_mulai" [showClearButton]="false"></date-picker>              
+            </div>           
+          </div>   
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="tanggal_selesai">Tanggal selesai kegiatan</label>
+            <div class="col-md-9">
+                <date-picker formControlName="tanggal_selesai" [showClearButton]="false"></date-picker>      
+            </div>
+          </div>  
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="bukti">Upload bukti</label>
+            <div class="col-md-9">
+              <input type="file" id="bukti" name="bukti" class="form-control form-control-sm" (change)="onChangeFile($event)" accept="image/jpeg, application/pdf"  single required>
+              <small class="help-block" style="color:crimson">Silahkan upload ulang jika ingin mengganti file bukti <br>Extensi: *.pdf / *.jpeg / *.png</small>
+            </div>
+          </div>
+          <div class="progress" *ngIf="fileValid && uploadProgress!=100 " >
+              <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadProgress/100)*100 + '%'" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">{{uploadProgress}} %
+              </div>
+          </div><br>          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="cek()">cek</button>
+            <button type="button" class="btn btn-secondary" (click)="editEkskulModal.hide()">Batal</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="editEkskulModal.hide()">Simpan</button>            
+          </div>
+        </form>
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div bsModal #addEkskulModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editEkskulModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Tambah Ekstrakurikuler</h4>
+        <button type="button" class="close" (click)="addEkskulModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" (submit)="submit();" novalidate>
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="nama_kegiatan">Nama kegiatan</label>
+            <div class="col-md-9">
+              <input type="text" formControlName="nama_kegiatan" id="nama_kegiatan" name="nama_kegiatan" class="form-control form-control-sm" placeholder="Masukkan nama kegiatan secara lengkap" required>
+            </div>
+          </div>      
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="jenis_kegiatan">Jenis kegiatan</label>
+              <div class="col-md-9">
+              <select id="jenis_kegiatan" name="jenis_kegiatan" formControlName="jenis_kegiatan" class="form-control form-control-sm"  required>
+                <option disabled selected value></option>    
+                <optgroup *ngFor="let kategori of list_kategori; let i = index;" label="{{kategori.nama_kategori}}">
+                  <ng-container *ngFor="let jenis_kegiatan of list_sub_kategori ; let j = index">               
+                  <option *ngIf = "jenis_kegiatan.kategori.id == kategori.id" [ngValue]="jenis_kegiatan">{{jenis_kegiatan.nama_sub_kategori}}</option>               
+                </ng-container>
+                </optgroup>
+              </select>
+            </div> 
+          </div>  
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="tingkat_kegiatan">Tingkat kegiatan</label>
+              <div class="col-md-9">
+              <select id="tingkat_kegiatan" name="tingkat_kegiatan" formControlName="tingkat_kegiatan"  class="form-control form-control-sm" required>
+                <option disabled selected value></option>                  
+                <option *ngFor="let tingkat_kegiatan of list_tingkat" [ngValue]="tingkat_kegiatan">{{tingkat_kegiatan.nama_tingkat}}</option>
+              </select>
+            </div> 
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="tempat_kegiatan">Tempat</label>
+            <div class="col-md-4">
+              <input type="text" name="kota" formControlName="kota" class="form-control form-control-sm" placeholder="nama kota" required> 
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-4">
+              <input type="text" name="negara" formControlName="negara" class="form-control form-control-sm" placeholder="nama negara" required> 
+            </div>            
+          </div>  
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="tanggal_mulai">Tanggal mulai kegiatan</label>
+            <div class="col-md-9">
+                <date-picker *ngIf="state==0" formControlName="tanggal_mulai" [showClearButton]="true"></date-picker>              
+            </div>           
+          </div>   
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="tanggal_selesai">Tanggal selesai kegiatan</label>
+            <div class="col-md-9">
+                <date-picker formControlName="tanggal_selesai" [showClearButton]="true"></date-picker>      
+            </div>
+          </div>  
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="bukti">Upload bukti</label>
+            <div class="col-md-9">
+              <input type="file" id="bukti" name="bukti" class="form-control form-control-sm" (change)="onChangeFile($event)" accept="image/jpeg, application/pdf"  single required>
+              <small class="help-block" style="color:crimson">Upload hasil <i>scan</i> bukti (sertifikat atau lainnya).  <br>Extensi: *.pdf / *.jpeg / *.png</small>
+            </div>
+          </div>
+          <div class="progress" *ngIf="fileValid && uploadProgress!=100 " >
+              <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadProgress/100)*100 + '%'" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">{{uploadProgress}} %
+              </div>
+          </div><br>          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="cek()">cek</button>
+            <button type="button" class="btn btn-secondary" (click)="addEkskulModal.hide()">Batal</button>
+            <button type="submit" class="btn btn-primary"  [disabled]="!form.valid || !fileValid" (click)="addEkskulModal.hide()">Simpan</button>            
+          </div>
+        </form>
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -1,0 +1,36 @@
+.navbar {
+  /* display: block; */
+  -webkit-box-shadow: 0 8px 6px -6px #999;
+  -moz-box-shadow: 0 8px 6px -6px #999;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  color: #fff;
+}
+
+.jumbotron {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: #673AB7;
+  -webkit-box-shadow: inset 13px 0px 9px -6px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: inset 13px 0px 9px -6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 13px 0px 9px -6px rgba(0, 0, 0, 0.3);
+}
+
+.jumbotron h3 {
+  color: #fff;
+}
+
+.sidebar {
+  -webkit-box-shadow: 10px 0 20px -4px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 10px 0 20px -4px rgba(0, 0, 0, 0.3);
+  box-shadow: 10px 0 20px -4px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 640px) {
+  #navItem {
+    display: none;
+  }
+  .jumbotron {
+    text-align: center;
+  }
+}
+

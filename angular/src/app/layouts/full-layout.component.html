@@ -1,0 +1,67 @@
+<header class="app-header navbar">
+  <button class="navbar-toggler d-lg-none" type="button" appMobileSidebarToggler>&#9776;</button>
+  <a class="navbar-brand" href="#"></a>
+  <ul class="nav navbar-nav d-md-down-none">
+    <li class="nav-item">
+      <a class="nav-link navbar-toggler" href="#" appSidebarToggler>&#9776;</a>
+    </li>
+    <li class="nav-item px-3">
+      <a class="nav-link" href="#">Dashboard</a>
+    </li>
+  </ul>
+  <ul class="nav navbar-nav ml-auto">
+  </ul>
+</header>
+
+<div class="app-body">
+  <div class="sidebar">
+    <nav class="sidebar-nav" >
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['dashboard']"><i class="icon-speedometer"></i> Dashboard </a>
+        </li>
+        <li class="divider"></li>
+        <li class="nav-title">
+          SKPI
+        </li>        
+        <li *ngIf="role == 'mahasiswa' " class="nav-item">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['ekskul']"><i class="icon-puzzle"></i> Ekskul </a>
+        </li>
+        <li *ngIf="role == 'departemen' " class="nav-item">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['verifikasiprestasi']"><i class="icon-puzzle"></i> Verifikasi Prestasi</a>
+        </li>   
+        <li *ngIf="role == 'departemen' && id == 9  " class="nav-item"> <!-- berarti role fakultas -->
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['ipemahasiswa']"><i class="icon-puzzle"></i> IPE Mahasiwa</a>
+        </li>        
+        <li *ngIf="role == 'admin' " class="nav-item"> <!-- berarti role admin -->
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['user']"><i class="icon-puzzle"></i> Users</a>
+        </li>   
+        <li *ngIf="role == 'admin' " class="nav-item">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['transkripkegiatan']"><i class="icon-puzzle"></i> Transkrip Kegiatan</a>
+        </li>                  
+        <li class="nav-title">
+          USER {{nama_user}}
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0)" (click)="logout()"><i class="icon-logout"></i>Log Out</a>
+        </li>        
+
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Main content -->
+  <main class="main">
+    <div class="jumbotron img-responsive">
+      <div *ngFor="let data of title">
+        <div *ngIf="data.title.title !== 'departemen'">
+          <h3>{{data.title.title}}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div><!-- /.conainer-fluid -->
+  </main>
+</div>
