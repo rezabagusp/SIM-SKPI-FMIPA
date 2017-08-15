@@ -68,7 +68,7 @@ export class UserComponent implements OnInit {
     }
   ]
 
-  constructor(private data: DataService, private admin: AdminService, private fb: FormBuilder) {  console.log('data token', this.data.token)}
+  constructor(private data: DataService, private admin: AdminService, private fb: FormBuilder) {}
 
   ngOnInit() {
     this.initForm();

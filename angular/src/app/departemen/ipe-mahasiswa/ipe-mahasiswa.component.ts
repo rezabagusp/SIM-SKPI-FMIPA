@@ -44,12 +44,9 @@ export class IpeMahasiswaComponent implements OnInit {
           this.dtTrigger.next();
         }
         else 
-          this.data.showError('erro')
+          this.data.showError(data.message)
       }
     )
-  }
-  getDetilIpeMahasiswaa(){
-
   }
 
   

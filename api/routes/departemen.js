@@ -20,6 +20,10 @@ router.get('/detilprestasi/:id_ekskul', function(req, res, next){
 router.get('/getallmahasiswa', function(req, res, next){
     departemen.getAllMahasiswa(req, res);
 });
+router.get('/getmutu/:jumlah_skor', function(req, res, next){
+    console.log('masuk mutu')
+    departemen.getMutu(req, res);
+});
 
 
 

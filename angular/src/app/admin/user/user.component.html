@@ -3,7 +3,7 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
-          <i class="fa fa-align-justify"></i> List Users
+          <i class="fa fa-align-justify"></i> List User
           <span class="float-right"><button type="button" class="btn btn-sm btn-primary" (click)="userModal.show()" >Tambah</button></span>
         </div>
         <div class="card-block">
@@ -46,7 +46,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Users</h4>
+        <h4 class="modal-title">User</h4>
         <button type="button" class="close" (click)="userModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -90,7 +90,6 @@
             </div> 
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="cek()">cek</button>
             <button type="button" class="btn btn-secondary" (click)="userModal.hide()">Batal</button>
             <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="userModal.hide()">Simpan</button>            
           </div>
@@ -105,7 +104,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Users</h4>
+        <h4 class="modal-title">Update user</h4>
         <button type="button" class="close" (click)="updateModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -149,7 +148,6 @@
             </div> 
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="cek()">cek</button>
             <button type="button" class="btn btn-secondary" (click)="updateModal.hide()">Batal</button>
             <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="updateModal.hide()">Simpan</button>            
           </div>

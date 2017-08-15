@@ -26,8 +26,13 @@ var tingkat = sequelize.import('../models/tingkat.model.js');
 var sub_kategori = sequelize.import('../models/sub_kategori.model.js');
 var kategori = sequelize.import('../models/kategori.model.js');
 var mahasiswa = sequelize.import('../models/mahasiswa.model.js');
-ekskul.belongsTo(tingkat, {foreignKey:'fk_tingkat_id'})
-ekskul.belongsTo(sub_kategori, {foreignKey:'fk_sub_kategori_id'})
+var skor = sequelize.import('../models/skor.model.js');
+
+ekskul.belongsTo(skor, {foreignKey:'fk_skor_id'})
+
+skor.belongsTo(sub_kategori, {foreignKey:'fk_sub_kategori_id'})
+skor.belongsTo(tingkat, {foreignKey:'fk_tingkat_id'})
+
 
 class Mahasiswa {
     constructor(){}
@@ -40,7 +45,6 @@ class Mahasiswa {
         });
     }
     addEkskul(data, res){
-        console.log('yang diterima: ', data.body)
         var nama_ekstrakurikuler = data.body.nama_ekstrakurikuler,
             fk_sub_kategori_id = data.body.fk_sub_kategori_id,
             fk_tingkat_id = data.body.fk_tingkat_id,
@@ -49,25 +53,34 @@ class Mahasiswa {
             tanggal_mulai = data.body.tanggal_mulai,
             tanggal_selesai = data.body.tanggal_selesai,
             bukti = data.body.bukti,
-            id_mahasiswa = data.body.id_mahasiswa;
-        ekskul.create({
-            nama_ekstrakurikuler:nama_ekstrakurikuler,
-            fk_sub_kategori_id:fk_sub_kategori_id,
-            fk_tingkat_id:fk_tingkat_id,
-            kota:kota,
-            negara:negara,
-            tanggal_mulai:tanggal_mulai,
-            tanggal_selesai:tanggal_selesai,
-            fk_mahasiswa_id: id_mahasiswa,
-            bukti_ekstrakurikuler: bukti
-        }).then(()=>{
-            res.json({status:true, message:'berhasil menambahkan ekskul'})
-        }).catch((err)=>{
-            res.json({status:false, message:'gagal menambahkan ekskul'})
-        })
+            id_mahasiswa = data.body.id_mahasiswa,
+            skor_id = '';
+            skor.findOne({
+                where: {
+                    fk_tingkat_id: fk_tingkat_id,
+                    fk_sub_kategori_id: fk_sub_kategori_id
+                }
+            }).then((hasil)=>{
+                skor_id = hasil.id
+                ekskul.create({
+                    nama_ekstrakurikuler:nama_ekstrakurikuler,
+                    kota:kota,
+                    negara:negara,
+                    tanggal_mulai:tanggal_mulai,
+                    tanggal_selesai:tanggal_selesai,
+                    fk_mahasiswa_id: id_mahasiswa,
+                    bukti_ekstrakurikuler: bukti,
+                    fk_skor_id: skor_id
+                }).then(()=>{
+                    res.json({status:true, message:'berhasil menambahkan ekskul'})
+                }).catch((err)=>{
+                    res.json({status:false, message:'gagal menambahkan ekskul'})
+                })                
+            }).catch((err)=>{
+                res.json({status:false, message:'error saat pencarian skor'})
+            })
     }
     updateEkskul(data, res){
-        console.log('bodynya: ', data.body)
         var id = data.body.id,
             nama_ekstrakurikuler = data.body.nama_ekstrakurikuler,
             fk_sub_kategori_id = data.body.fk_sub_kategori_id,
@@ -77,8 +90,8 @@ class Mahasiswa {
             tanggal_mulai = data.body.tanggal_mulai,
             tanggal_selesai = data.body.tanggal_selesai,
             bukti = data.body.bukti,
+            skor_id = '',
             id_mahasiswa = data.body.id_mahasiswa;
-            console.log('buktinyta njayy', bukti)
 
         ekskul.findOne({
             where: {
@@ -86,34 +99,48 @@ class Mahasiswa {
             }
         }).then((hasil)=>{
             if(hasil==null){
-                console.log('ekskulnya', hasil)
                 res.json({status:false, message: 'ekskul tidak ditemukan'})}
             else{
-                console.log('hasilbro ',hasil)
-                ekskul.update({
-                    nama_ekstrakurikuler:nama_ekstrakurikuler,
-                    fk_sub_kategori_id:fk_sub_kategori_id,
-                    fk_tingkat_id:fk_tingkat_id,
-                    kota:kota,
-                    negara:negara,
-                    tanggal_mulai:tanggal_mulai,
-                    tanggal_selesai:tanggal_selesai,
-                    bukti_ekstrakurikuler: bukti              
-                },
-                {
-                    where:{
-                        id:id,
-                        fk_mahasiswa_id:id_mahasiswa
+                skor.findOne({
+                    where: {
+                        fk_tingkat_id: fk_tingkat_id,
+                        fk_sub_kategori_id: fk_sub_kategori_id
                     }
-                }).then(()=>{
-                    res.json({status:true, message:'update berhasil'})
-                }).catch(()=>{
-                    res.json('error saat update')
+                }).then((hasil)=>{
+                    console.log('hasil', hasil)
+                    if(hasil == null)
+                        res.json({status:false, message:'gagal saat pencarian skor'})
+                    else{
+                        skor_id = hasil.id
+                        ekskul.update({
+                            nama_ekstrakurikuler:nama_ekstrakurikuler,
+                            fk_sub_kategori_id:fk_sub_kategori_id,
+                            fk_tingkat_id:fk_tingkat_id,
+                            kota:kota,
+                            negara:negara,
+                            tanggal_mulai:tanggal_mulai,
+                            tanggal_selesai:tanggal_selesai,
+                            fk_skor_id: skor_id,
+                            bukti_ekstrakurikuler: bukti              
+                        },
+                        {
+                            where:{
+                                id:id,
+                                fk_mahasiswa_id:id_mahasiswa
+                            }
+                        }).then(()=>{
+                            res.json({status:true, message:'update berhasil'})
+                        }).catch(()=>{
+                            res.json({status: false, message:'error saat update'})
+                        })                        
+                    }
+                }).catch((err)=>{
+                    res.json({status:false, message:'gagal saat pencarian nilai skor'})
                 })
 
             }
         }).catch((err)=>{
-            res.json(err)
+            res.json({status:false, message:'gagal saat pencarian ekskul'})
         })
     }
     deleteEkskul(data,res){
@@ -134,10 +161,9 @@ class Mahasiswa {
                         fk_mahasiswa_id:id_mahasiswa
                     }
                 }).then((hasil)=>{
-                    console.log('ini hasilnya: ' ,hasil)
                     res.json({status:true, message:'mengahapus ekskul berhasil'})
                 }).catch(()=>{
-                    res.send({status:0, message:'error saat menghapus'})
+                    res.json({status:false, message:'error saat menghapus'})
                 })
             }
         }).catch(()=>{
@@ -150,21 +176,26 @@ class Mahasiswa {
         var id_mahasiswa = data.params.id_mahasiswa;
         ekskul.findAll({         
             include:[{
-                model: tingkat
-            },{
-                model: sub_kategori
+                model: skor,
+                include:[{  
+                    model: tingkat
+                },{
+                    model:sub_kategori
+                }]
             }],
             where: {
-                fk_mahasiswa_id:id_mahasiswa
+                fk_mahasiswa_id:id_mahasiswa,
             }
 
         }).then((hasil)=>{
             if(hasil.length==0 || hasil==null)
-                res.json({status:false, message:'mahasiswa tidak memilki prestasi'})
-            else
+                res.json({status:true, message:'mahasiswa tidak memilki prestasi', result: hasil})
+            else{
+                
                 res.json({status:true, message: 'berhasil get all ekskul', result: hasil});
+            }
         }).catch(()=>{
-            res.json('error saat pencarian')
+            res.json({status: false, message:'error saat pencarian'})
         })
     }
     getSubKategori(data, res){
@@ -202,9 +233,12 @@ class Mahasiswa {
 
         ekskul.findOne({
             include:[{
-                model:tingkat
-            },{
-                model: sub_kategori
+                model: skor,
+                include:[{
+                    model:sub_kategori
+                },{
+                    model:tingkat
+                }]
             }],
             where:{
                 id: id_ekskul

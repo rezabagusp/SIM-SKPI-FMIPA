@@ -18,11 +18,7 @@ export class VerifikasiComponent implements OnInit {
   private dtOptions: DataTables.Settings = {};
   private dtTrigger: Subject<any> = new Subject();
 
-  constructor(private http: Http, private data: DataService, private DepartemenService:DepartemenService) {
-    console.log('verifikasi departemen') 
-    console.log('id_departemen', this.data.id_departemen)
-    console.log('token', this.data.token)
-   }
+  constructor(private http: Http, private data: DataService, private DepartemenService:DepartemenService) {}
 
   ngOnInit() {   
       this.dtOptions = {
@@ -38,12 +34,14 @@ export class VerifikasiComponent implements OnInit {
     this.DepartemenService.getAllPresma(this.data.url_get_all_presma, this.data.token, this.data.id_departemen)
     .subscribe(
       data =>{
+        console.log(data)
         if(data.status){
-          console.log(data)
           this.list_presma = data.result;
           this.dtTrigger.next();
-          console.log('masuk promise ', this.list_presma)
         }
+        else 
+          this.data.showError(data.message)
+
       }
     )
   }

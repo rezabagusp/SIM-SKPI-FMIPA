@@ -6,7 +6,7 @@
       <a class="nav-link navbar-toggler" href="#" appSidebarToggler>&#9776;</a>
     </li>
     <li class="nav-item px-3">
-      <a class="nav-link" href="#">Dashboard</a>
+      <a class="nav-link" [routerLink]="['dashboard']">Dashboard</a>
     </li>
   </ul>
   <ul class="nav navbar-nav ml-auto">
@@ -25,7 +25,7 @@
           SKPI
         </li>        
         <li *ngIf="role == 'mahasiswa' " class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="['ekskul']"><i class="icon-puzzle"></i> Ekskul </a>
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['ekskul']"><i class="icon-puzzle"></i> Ekstrakurikuler </a>
         </li>
         <li *ngIf="role == 'departemen' " class="nav-item">
           <a class="nav-link" routerLinkActive="active" [routerLink]="['verifikasiprestasi']"><i class="icon-puzzle"></i> Verifikasi Prestasi</a>

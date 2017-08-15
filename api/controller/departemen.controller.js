@@ -6,6 +6,8 @@ var tingkat = sequelize.import('../models/tingkat.model.js');
 var sub_kategori = sequelize.import('../models/sub_kategori.model.js');
 var mahasiswa = sequelize.import('../models/mahasiswa.model.js');
 var departemen = sequelize.import('../models/departemen.model.js');
+var skor = sequelize.import('../models/skor.model.js');
+var mutu = sequelize.import('../models/mutu.model.js');
 
 mahasiswa.belongsTo(departemen, {foreignKey:'fk_departemen_id'})
 ekskul.belongsTo(mahasiswa, {foreignKey:'fk_mahasiswa_id'})
@@ -19,9 +21,12 @@ class Departemen{
         if(id_departemen == 9){ //fakultas
             ekskul.findAll({
                 include:[{
-                    model: tingkat
-                },{
-                    model: sub_kategori
+                    model: skor,
+                    include: [{
+                        model: tingkat
+                    },{
+                        model: sub_kategori
+                    }]
                 },{
                     model: mahasiswa,
                     include:[{
@@ -38,9 +43,12 @@ class Departemen{
         else if (id_departemen != 9){ //departemen
             ekskul.findAll({
                 include:[{
-                    model: tingkat
-                },{
-                    model: sub_kategori
+                    model: skor,
+                    include:[{
+                        model: tingkat
+                    }, {
+                        model: sub_kategori
+                    }]
                 },{
                     model: mahasiswa,
                     include:[{
@@ -72,7 +80,7 @@ class Departemen{
             }
         }).then((hasil)=>{
             if (hasil.length==0 || hasil==null)
-                res.json('prestasi tidak ditemukan')
+                res.json({status:false, message:'prestasi tidak ditemukan'})
             else{
                 ekskul.update({
                     status_verifikasi_ekstrakurikuler:status,
@@ -85,11 +93,11 @@ class Departemen{
                 }).then(()=>{
                     res.json({status:true, message:'berhasil update status verifikasi'})
                 }).catch(()=>{
-                    res.json('error saat update')
+                    res.json({status:false, message:'error saat update'})
                 })      
             }
         }).catch((err)=>{
-            res.json(err)
+            res.json({status:false, message:'error saat pencarian ekskul'})
         })
     }
 
@@ -110,9 +118,12 @@ class Departemen{
                         id: id_ekskul
                     },
                     include:[{
-                        model:tingkat                        
-                    },{
-                        model:sub_kategori
+                        model:skor,
+                        include:[{
+                            model: tingkat,
+                        },{
+                            model: sub_kategori
+                        }]                      
                     },{
                         model:mahasiswa,
                         include:[{
@@ -141,6 +152,29 @@ class Departemen{
             res.json({status:true, message:'berhasil get all mahasiswa', result: hasil});
         }).catch((err)=>{
             res.json({status:false, message:'gagal get mahasiswa', result: err});
+        })
+    }
+
+    getMutu(data, res){
+        //menerima jumlah_skor di params
+        console.log('masuk mutu')
+        var jumlah_skor = data.params.jumlah_skor;
+        mutu.findOne({
+            where: {
+                batas_bawah: {
+                    $lte: jumlah_skor
+                },
+                batas_atas: {
+                    $gte: jumlah_skor
+                }
+            }
+        }).then((hasil)=>{
+            console.log(hasil)
+            if(hasil == null)
+                res.json({status:true, message: 'berhasil get mutu', result: null})
+            res.json({status: true, message: 'berhasil get mutu', result: hasil.nama_mutu})
+        }).catch((err)=>{
+            res.json({status: false, message:'error saat pencarian mutu', result: err})
         })
     }
 

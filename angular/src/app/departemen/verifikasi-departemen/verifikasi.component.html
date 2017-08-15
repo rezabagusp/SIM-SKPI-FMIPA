@@ -24,8 +24,8 @@
                 <td>{{presma?.mahasiswa.nim_mahasiswa}}</td>
                 <td>{{presma?.mahasiswa.departemen.nama_departemen}}</td>
                 <td>{{presma?.nama_ekstrakurikuler}}</td>     
-                <td>{{presma?.sub_kategori.nama_sub_kategori}}</td>
-                <td>{{presma?.tingkat.nama_tingkat}}</td>   
+                <td>{{presma?.skor.sub_kategori.nama_sub_kategori}}</td>
+                <td>{{presma?.skor.tingkat.nama_tingkat}}</td>   
                 <td>     
                   <span *ngIf="presma.status_verifikasi_ekstrakurikuler==0" class="badge badge-default">Belum diproses</span>
                   <span *ngIf="presma.status_verifikasi_ekstrakurikuler==1" class="badge badge-success">Diterima</span>

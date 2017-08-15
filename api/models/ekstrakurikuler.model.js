@@ -1,6 +1,5 @@
 var sequelize = require('./../dbsequelize');
-var sub_kategori = sequelize.import('sub_kategori.model.js');
-var tingkat = sequelize.import('tingkat.model.js');
+var skor = sequelize.import('skor.model.js');
 
 var mahasiswa = sequelize.import('mahasiswa.model.js');
 
@@ -24,19 +23,12 @@ module.exports = function(sequelize, DataType){
 				key: 'id'
 			}
 		},
-        fk_tingkat_id:{
+		fk_skor_id:{
 			type: DataType.INTEGER,
 			references: {
-				model: tingkat,
+				model: skor,
 				key: 'id'
 			}
-		},		
-		fk_sub_kategori_id:{
-			type: DataType.INTEGER,
-			references: {
-				model: sub_kategori,
-				key: 'id'
-			}
-		}
+		}		
     });
 }

@@ -23,14 +23,15 @@ export class DataService {
   public url_get_all_presma = 'http://localhost:8000/departemen/getallpresma';
   public url_get_detil_presma = 'http://localhost:8000/departemen/detilprestasi';
   public url_verif_ekskul = 'http://localhost:8000/departemen/verifikasiekskul';  
-  // apit fakultas departemen
+  // api fakultas departemen
   public url_get_all_mahasiswa = 'http://localhost:8000/departemen/getallmahasiswa';  
+  public url_get_mutu = 'http://localhost:8000/departemen/getmutu';    
   
 
   // API admin
   public url_get_all_user = 'http://localhost:8000/admin/getalluser';  
   public url_add_user = 'http://localhost:8000/admin/adduser';    
-  public url_delete_user = 'http://localhost:8000/admin/deleteuser';      
+  public url_delete_user = 'http://localhost:8000/departemen/deleteuser';      
   
   public token;
   public nama_user;

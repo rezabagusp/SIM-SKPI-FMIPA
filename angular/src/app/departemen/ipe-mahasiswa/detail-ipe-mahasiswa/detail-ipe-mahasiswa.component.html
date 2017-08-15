@@ -23,8 +23,8 @@
               <tr *ngFor="let ekskul of list_ekskul; let i = index">
                 <td>{{i+1}}</td>                
                 <td>{{ekskul.nama_ekstrakurikuler}}</td>
-                <td>{{ekskul.sub_kategori.nama_sub_kategori}}</td>
-                <td>{{ekskul.tingkat.nama_tingkat}}</td>
+                <td>{{ekskul.skor.sub_kategori.nama_sub_kategori}}</td>
+                <td>{{ekskul.skor.tingkat.nama_tingkat}}</td>
                 <td>{{ekskul.kota}}</td>
                 <td>{{ekskul.negara}}</td>
                 <td><a href="assets/public/images/{{ekskul.bukti_ekstrakurikuler}}" target="_blank">{{ekskul.bukti_ekstrakurikuler}}</a></td>    

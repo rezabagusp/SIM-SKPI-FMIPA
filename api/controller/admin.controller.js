@@ -25,7 +25,7 @@ class Admin{
         }).then((hasil)=>{
             res.json(hasil)
         }).catch(()=>{
-            res.json('erro saat menenukan all kategori')
+            res.json({status:false, message:'error saat menenukan all kategori'})
         })
     }
     getAllSubKategori(data, res){
@@ -81,7 +81,7 @@ class Admin{
             else
                 res.json({status:false, message:'gagal menambah kategori'})
         }).catch(()=>{
-            res.json('error saat membuat kategori baru')
+            res.json({status:false, message:'error saat membuat kategori baru'})
         });
     }
     updateKategori(data, res){
@@ -95,7 +95,7 @@ class Admin{
             }
         }).then((hasil)=>{
             if (hasil.length==0 || hasil==null)
-                res.json('kategori tidak ditemukan')
+                res.json({status: false, mesage:'kategori tidak ditemukan'})
             else{
                 kategori.update({
                     nama_kategori: nama_baru
@@ -106,11 +106,11 @@ class Admin{
                 }).then(()=>{
                     res.json({status:true, message:'berhasil mengupdate kategori'})
                 }).catch(()=>{
-                    res.json('error saat melakukan update')
+                    res.json({status:false, message:'error saat melakukan update'})
                 })
             }
         }).catch((err)=>{
-            res.json('error saat pencarian kategori')
+            res.json({status:false, message:'error saat pencarian kategori'})
         })
     }
     deleteKategori(data, res){
@@ -122,7 +122,7 @@ class Admin{
             }
         }).then((hasil)=>{
             if (hasil.length == 0 || hasil == null )
-                res.json('kategori tidak ditemukan');
+                res.json({status: false, message:'kategori tidak ditemukan'});
             else{
                 kategori.destroy({
                     where:{
@@ -131,11 +131,11 @@ class Admin{
                 }).then(()=>{
                     res.json({status:true, message:'berhasil menghapus kategori'});
                 }).catch(()=>{
-                    res.json('error saat menghapus kategori')
+                    res.json({status: false, message:'error saat menghapus kategori'})
                 });                    
             }
         }).catch(()=>{
-            res.json('eror saat pencarian kategori')
+            res.json({status:false, message:'eror saat pencarian kategori'})
         })
     }
 
@@ -151,7 +151,7 @@ class Admin{
         }).then(()=>{
             res.json({status:true, message:'berhasil menambah sub_kategori baru'})
         }).catch(()=>{
-            res.json('error saat membuat kategori baru');
+            res.json({status: false, message:'error saat membuat kategori baru'});
         })
     }
     updateSubKategori(data, res){
@@ -166,7 +166,7 @@ class Admin{
             }
         }).then((hasil)=>{
             if(hasil.length == 0 || hasil==null)
-                res.json('subkategori tidak ditemukan')
+                res.json({status: false, message:'subkategori tidak ditemukan'})
             else {
                 sub_kategori.update({
                     nama_sub_kategori: nama_sub_kategori,
@@ -179,14 +179,13 @@ class Admin{
                 ).then(()=>{
                     res.json({status:true, message:'update sub kategori berhasil'})
                 }).catch(()=>{
-                    res.json('error saat melakukan update sub kategori')
+                    res.json({status: false, message:'error saat melakukan update sub kategori'})
                 })
             }
         }).catch(()=>{
-            res.json('erros saat pencarian sub kategori')
+            res.json({status: false, message:'erros saat pencarian sub kategori'})
         })
     }
-
     deleteSubKategori(data, res){
         // menerima id sub kategori
         var id_sub_kategori = data.body.id_sub_kategori
@@ -206,11 +205,11 @@ class Admin{
                 }).then(()=>{
                     res.json({status:true, message:'berhasil menghapus sub kategeri'})
                 }).catch(()=>{
-                    res.json('err saat melakukan penghapusan sub kategori')
+                    res.json({status: false, message:'err saat melakukan penghapusan sub kategori'})
                 })                
             }
         }).catch(()=>{
-            res.json('error saat pencarian sub kategori')
+            res.json({status: false, message:'error saat pencarian sub kategori'})
         })
     }
 
@@ -232,7 +231,7 @@ class Admin{
             else
                 res.json({status:true, message:' kombinasi skor sudah pernah ada'})
         }).catch((err)=>{
-            res.json('error saat melakukan pencarian kombinasi skor')
+            res.json({status: false, message:'error saat melakukan pencarian kombinasi skor'})
         })
     }
     addSkor(data, res){
@@ -256,13 +255,13 @@ class Admin{
                 }).then(()=>{
                     res.json({status:true, message:' berhasil manambahkan skor baru'})
                 }).catch(()=>{
-                    res.json('error saar menambahkan skor')
+                    res.json({status: false, message: 'error saar menambahkan skor'})
                 });
             }
             else
                 res.json({status:false, message:'row skor sudah pernah ada'}); 
         }).catch((err)=>{
-            res.json(err)
+            res.json({status: flase, message: 'error saat pencarian skor'})
         })
     }
     updateSkor(data, res){
@@ -277,7 +276,7 @@ class Admin{
             }
         }).then((hasil)=>{
             if (hasil.length==0 || hasil == null)
-                res.json('hasil tidak ditemukan');
+                res.json({status: false, message:'hasil tidak ditemukan'});
             else {
                 skor.update({
                     skor: skor_baru
@@ -289,11 +288,11 @@ class Admin{
                 }).then(()=>{
                     res.json({status:true, message:'update skor berhasil'})
                 }).catch(()=>{
-                    res.json('error saat update skor')
+                    res.json({status: false, message:'error saat update skor'})
                 })
             }
         }).catch(()=>{
-            res.json('error saat pencarian')
+            res.json({status:false, message:'error saat pencarian'})
         })
         
     }
@@ -316,11 +315,11 @@ class Admin{
                 }).then(()=>{
                     res.json({status:true, message:'berhasil menghapus skor'})
                 }).catch(()=>{
-                    res.json('error saat menghapus skor')
+                    res.json({status: false, message:'error saat menghapus skor'})
                 })                
             }
         }).catch((err)=>{
-            res.json(err);
+            res.json({status: false, message: 'error saat pencarian skor'});
         })
     }
 
@@ -342,7 +341,7 @@ class Admin{
         }).then(()=>{
             res.json({status:true, message:'berhasil menambahkan user baru'})
         }).catch(()=>{
-            res.json('error saat menambahkan user baru')
+            res.json({status: false, message: 'error saat menambahkan user baru'})
         });
     }
     updateUser(data, res){
@@ -360,7 +359,7 @@ class Admin{
             }
         }).then((hasil)=>{
             if(hasil == null)
-                res.json('user tidak ditemukan');
+                res.json({status: false, message:'user tidak ditemukan'});
             else{
                 user.update({
                     nama_user: nama_user,
@@ -375,14 +374,13 @@ class Admin{
                 }).then(()=>{
                     res.json({status:true, message:'berhasil mengupdate user'})
                 }).catch(()=>{
-                    res.json('error saat melakukan update user')
+                    res.json({status: false, message:'error saat melakukan update user'})
                 })
             }
         }).catch(()=>{
-            res.json('error saat pencarian user')
+            res.json({status: false, message:'error saat pencarian user'})
         })
     }
-
     deleteUser(data, res){
         // menerima id user
         var id_user = data.body.id_user;
@@ -393,7 +391,7 @@ class Admin{
             }
         }).then((hasil)=>{
             if(hasil == null)
-                res.json('user tidak ditemukan')
+                res.json({status: false, message: 'user tidak ditemukan'})
             else{
                 user.destroy({
                     where:{
@@ -402,11 +400,11 @@ class Admin{
                 }).then(()=>{
                     res.json({status:true, message:'berhasil menghapus user'});
                 }).catch(()=>{
-                    res.json('error pada ssaat melakukan penghapusan');
+                    res.json({status:false, message:'error pada ssaat melakukan penghapusan'});
                 })                
             }
         }).catch(()=>{
-            res.json('eror pada saat pencarian user')
+            res.json({status:false, message:'eror pada saat pencarian user'})
         })
     }
 }

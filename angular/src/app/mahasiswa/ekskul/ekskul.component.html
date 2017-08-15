@@ -32,8 +32,8 @@
               <tr *ngFor="let ekskul of list_ekskul; let i = index">
                 <td>{{i+1}}</td>                
                 <td>{{ekskul.nama_ekstrakurikuler}}</td>
-                <td>{{ekskul.sub_kategori.nama_sub_kategori}}</td>
-                <td>{{ekskul.tingkat.nama_tingkat}}</td>
+                <td>{{ekskul.skor.sub_kategori.nama_sub_kategori}}</td>
+                <td>{{ekskul.skor.tingkat.nama_tingkat}}</td>
                 <td>{{ekskul.kota}}</td>
                 <td>{{ekskul.negara}}</td>
                 <td>{{ekskul.tanggal_mulai | date}}</td>
@@ -54,12 +54,6 @@
   <!--/.row-->
 </div>
 
-<!-- <a href="javascipt:void(0)"><iframe src="https://research.google.com/pubs/archive/44678.pdf"
-   width="800px" height="600px" > -->
-
-
-
-<button type="button" (click)="cek()">cek</button>
 
 <div bsModal #editEkskulModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editEkskulModal" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -134,7 +128,6 @@
               </div>
           </div><br>          
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="cek()">cek</button>
             <button type="button" class="btn btn-secondary" (click)="editEkskulModal.hide()">Batal</button>
             <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="editEkskulModal.hide()">Simpan</button>            
           </div>
@@ -217,7 +210,6 @@
               </div>
           </div><br>          
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="cek()">cek</button>
             <button type="button" class="btn btn-secondary" (click)="addEkskulModal.hide()">Batal</button>
             <button type="submit" class="btn btn-primary"  [disabled]="!form.valid || !fileValid" (click)="addEkskulModal.hide()">Simpan</button>            
           </div>

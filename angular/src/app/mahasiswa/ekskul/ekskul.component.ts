@@ -64,7 +64,7 @@ export class EkskulComponent implements OnInit {
     // get form select at the first time
     this.getSubKategori();
     this.getKategori();
-    this.getTingkat(); 
+    this.getTingkat();
   }
 
   ngOnInit() {   
@@ -146,7 +146,7 @@ export class EkskulComponent implements OnInit {
           console.log('all ekskul: ', this.list_ekskul)
         }
         else{
-          this.data.showError('erro saat mengambil data');
+          this.data.showError(data.message);
         }
       }
     )
@@ -193,40 +193,14 @@ export class EkskulComponent implements OnInit {
     }
         
   }
-  // downloadPDF(){
-  //   console.log('masuk')
-  //   var headers = new Headers();
-  //   headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
-  //   this.http.post('http://localhost:8000/mahasiswa/asset', null,  {
-  //       headers: headers
-  //       })
-  //       .retry(3)
-  //       // .map( (res:any) => res.blob() ) // errors out
-  //       .subscribe(
-  //         (dataReceived:any) => {
-  //           var blob = new Blob([dataReceived._body], {type: 'application/pdf'});
-  //           var fileURL = URL.createObjectURL(dataReceived);
-  //           window.open(fileURL);            
-  //         },
-  //         (err:any) => console.log('error'),
-  //         () => console.log('Complete')
-  //       );
-  // }
-  // downloadPDF().subscribe(
-  //       (res) => {
-  //       var fileURL = URL.createObjectURL(res);
-  //       window.open(fileURL);
-  //       }
-  //   );
 
   // for edit
   clickRow(data:any):void{
     console.log('data click:', data)
     this.form.controls.nama_kegiatan.setValue(data.nama_ekstrakurikuler,  { onlySelf: true });
-    this.form.controls.jenis_kegiatan.setValue(this.getSelectedSubKategori(data.sub_kategori.id),  { onlySelf: true });
-    this.form.controls.tingkat_kegiatan.setValue(this.getSelectedTingkat(data.tingkat.id),  { onlySelf: true });    
-    this.form.controls.kota.setValue(data.kota,  { onlySelf: true });
+    this.form.controls.jenis_kegiatan.setValue(this.getSelectedSubKategori(data.skor.sub_kategori.id),  { onlySelf: true });
+    this.form.controls.tingkat_kegiatan.setValue(this.getSelectedTingkat(data.skor.tingkat.id),  { onlySelf: true });    
+    this.form.controls.kota.setValue(data.kota,  { onlySelf:   true });
     this.form.controls.negara.setValue(data.negara,  { onlySelf: true });
     this.tanggal_mulai = new Date(data.tanggal_mulai)
     console.log(this.tanggal_mulai.toISOString().substring(0, 10))
@@ -236,7 +210,8 @@ export class EkskulComponent implements OnInit {
 
     this.form.controls.tanggal_mulai.setValue(this.tanggal_mulai,  { onlySelf: true });
     this.form.controls.tanggal_selesai.setValue(this.tanggal_selesai,  { onlySelf: true });        
-    this.bukti = data.bukti;
+    this.bukti = data.bukti_ekstrakurikuler;
+    console.log('bukti', this.bukti)
     this.id_ekskul = data.id;                
   }
 
@@ -253,7 +228,7 @@ export class EkskulComponent implements OnInit {
         console.log(this.list_sub_kategori[x])
         return this.list_sub_kategori[x]
       }
-  }    
+  }
   
   submit(){
     var creds = JSON.stringify({
