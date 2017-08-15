@@ -39,29 +39,6 @@
         <li *ngIf="role == 'admin' " class="nav-item">
           <a class="nav-link" routerLinkActive="active" [routerLink]="['transkripkegiatan']"><i class="icon-puzzle"></i> Transkrip Kegiatan</a>
         </li>                  
-<<<<<<< HEAD
-=======
-        <!-- <li class="nav-item nav-dropdown" routerLinkActive="open" appNavDropdown>
-          <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-puzzle"></i>drowpdown menu</a>
-          <ul class="nav-dropdown-items">
-            <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/prestasi']"><i class="icon-puzzle"></i> Surat Masuk</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/pendaftaran/olahraga/basket',2]"><i class="icon-puzzle"></i> Surat Keluar</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/pendaftaran/olahraga/voli',3]"><i class="icon-puzzle"></i> Lampiran</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/pendaftaran/modals']"><i class="icon-puzzle"></i> Sasaran Mutu</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/pendaftaran/modals']"><i class="icon-puzzle"></i> Retensi Surat</a>
-            </li>            
-          </ul>
-        </li> -->
->>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
         <li class="nav-title">
           USER {{nama_user}}
         </li>
@@ -75,7 +52,6 @@
 
   <!-- Main content -->
   <main class="main">
-<<<<<<< HEAD
     <div class="jumbotron img-responsive">
       <div *ngFor="let data of title">
         <div *ngIf="data.title.title !== 'departemen'">
@@ -83,32 +59,9 @@
         </div>
       </div>
     </div>
-=======
-
-    <!-- Breadcrumb -->
-    <ol class="breadcrumb">
-       <app-breadcrumbs></app-breadcrumbs> 
-      <!-- Breadcrumb Menu-->
-       <li class="breadcrumb-menu d-md-down-none">
-        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-          <a class="btn btn-secondary" [routerLink]="['dashboard']"><i class="icon-graph"></i> &nbsp;Dashboard</a>
-        </div>
-      </li> 
-    </ol>
->>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
 
     <div class="container-fluid">
       <router-outlet></router-outlet>
     </div><!-- /.conainer-fluid -->
   </main>
-<<<<<<< HEAD
 </div>
-=======
-
-</div>
-
-<footer class="app-footer">
-   &copy; 2017 SIMSKPI
-  <span class="float-right">Powered by <a href="http://coreui.io">CoreUI</a></span>
-</footer>
->>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30

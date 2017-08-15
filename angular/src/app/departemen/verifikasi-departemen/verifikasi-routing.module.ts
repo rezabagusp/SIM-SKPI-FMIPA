@@ -11,25 +11,12 @@ const routes: Routes = [
     data:{
       title: 'Verifikasi Prestasi'
     },
-<<<<<<< HEAD
-=======
-    // children: [
-    //   {
-    //     path:'verifikasidetail/:id',
-    //     component: VerifikasiDetailComponent      
-    //   },      
-    // ]    
->>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
   },
   {
     path:'verifikasidetail/:id',
     component: VerifikasiDetailComponent,
     data:{
-<<<<<<< HEAD
       title: 'Verifikasi Detail'
-=======
-      title: 'Verifikasi detail'
->>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
     }
   }
 ];

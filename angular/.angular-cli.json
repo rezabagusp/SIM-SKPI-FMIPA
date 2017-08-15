@@ -20,12 +20,7 @@
         "scss/style.scss",
         "../node_modules/sweetalert2/dist/sweetalert2.min.css",        
         "../node_modules/datatables.net-dt/css/jquery.dataTables.css" ,
-<<<<<<< HEAD
         "../node_modules/toastr-ng2/toastr.css"
-=======
-        "../node_modules/toastr-ng2/toastr.css"   
-
->>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
       ],
       "scripts": [
         "../node_modules/chart.js/dist/Chart.bundle.min.js",
