@@ -66,7 +66,7 @@ class Departemen{
         }
     }
 
-    //method for update status of ekskul. jangan lupa diganti status[0,1,2]
+    // method for update status of ekskul. jangan lupa diganti status[0,1,2]
     verifikasiEkskul(data, res){
         console.log('data bodynya:', data.body)
         //menerima status verif, id_ekskl dan keterangan
@@ -142,7 +142,7 @@ class Departemen{
         })
     }
 
-    //departemen ke 9
+    // departemen ke 9
     getAllMahasiswa(data, res){
         mahasiswa.findAll({
             include: [{
@@ -154,7 +154,25 @@ class Departemen{
             res.json({status:false, message:'gagal get mahasiswa', result: err});
         })
     }
-
+    getMahasiswa(data, res){
+        // menerima params nim
+        var nim = data.params.nim;
+        if(!nim || nim==null)
+            res.json({status:false, message:'data tidak lengkap'})
+        else{
+            mahasiswa.findOne({
+                where: {
+                    nim_mahasiswa: nim
+                }
+            }).then((hasil)=>{
+                if(hasil == null)
+                    res.json({status: false, message:'mahasiswa tidak ditemukan', resutl:hasil})
+                else res.json({status: true, message:'mahasiswa ditemukan', result:hasil})
+            }).catch((err)=>{
+                res.json({status: false, message:'erro saat pencarian mahasiswa', result:err})
+            })            
+        }
+    }
     getMutu(data, res){
         //menerima jumlah_skor di params
         console.log('masuk mutu')
