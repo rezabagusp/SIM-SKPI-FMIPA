@@ -32,13 +32,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+// var generate = require(__dirname + '/controller/createPDF.controller')
+//   generate.CreateGeneratePDF()
 app.use('/', index);
 app.use('/users', users);
 app.use('/login', login);
 app.use('/mahasiswa', mahasiswa);
 app.use('/departemen', departemen);
 app.use('/admin', admin);
+
 
 /*jwt middleware*/
 app.use(function(req, res, next){

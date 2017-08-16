@@ -2,6 +2,7 @@ var express = require('express'),
     multer = require('multer'),
 	departemen = require('./../controller/departemen.controller'),
     router = express.Router();  
+var createPDF = require('./../controller/createPDF.controller')
 
 
 //routing departemen
@@ -26,10 +27,12 @@ router.get('/getmahasiswa/:nim', function(req, res, next){
 });
 
 router.get('/getmutu/:jumlah_skor', function(req, res, next){
-    console.log('masuk mutu')
     departemen.getMutu(req, res);
 });
 
+router.get('/downloadipe/:nim', function(req, res, next){
+    createPDF.CreateGeneratePDF(req, res);
+});
 
 
 module.exports = router;

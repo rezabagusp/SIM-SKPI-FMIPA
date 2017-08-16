@@ -34,7 +34,31 @@ class GeneratePDF {
 		this.indexbukti = 0
 	}
 	/*Setup PDF pepper*/
+	Redefine() {
+		this.resource = ''
+		this.destination = ''
+		this.options = ''
+		this.tanggalttd = ''
+		this.namadekan = ''
+		this.nipdekan = ''
+		this.nama = ''
+		this.NIM = ''
+		this.prodi = ''
+		this.tanggallulus = ''
+		this.tingkats = ''
+		this.kategoris = ''
+		this.sub_kategoris = ''
+		this.bobots = ''
+		this.ekstrakurikulers = ''
+		this.total = 0
+		this.jumlah = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+		this.bukti = [0, 0, 0, 0, 0, 0]
+		this.kesimpulan = ''
+		this.banyaksubperkategori = []
+		this.indexbukti = 0
+	}
 	InitGeneratePDF(data, res) {
+		this.Redefine()
 		this.resource = fs.readFileSync(__dirname + '/dynamictamplate.html', 'utf8');
 		this.options = { 
 			"format": 'A4', 
@@ -46,7 +70,7 @@ class GeneratePDF {
 			    "left": "10mm"
 			  },
 		}
-		this.destination = __dirname + '/pdf.pdf'
+		this.destination = __dirname + '/../public/ipe/pdf.pdf'
 	}
 	/*Set date of printed the pepper*/
 	SetTanggalTTD(data, res) {
@@ -100,39 +124,40 @@ class GeneratePDF {
 			.then((tingkats) => {
 				this.tingkats = JSON.parse(JSON.stringify(tingkats))
 				/*Get kategori data (Kegiatan or himpro)*/
-				kategori
-					.findAll()
-					.then((kategoris) => {
-						this.kategoris = JSON.parse(JSON.stringify(kategoris))
-						/*Get Sub_kategori data (the role of kategori data)*/
-						sub_kategori
-							.findAll()
-							.then((sub_kategoris) => {
-								this.sub_kategoris = JSON.parse(JSON.stringify(sub_kategoris))
-								/*Get skor of the role witch specific kategori and sub_kategori*/
-								bobot
-									.findAll()
-									.then((bobots) => {
-										this.bobots = JSON.parse(JSON.stringify(bobots))
-										/*Get mahasiswa ekstrakulikuler of specific mahasiswa*/
-										ekstrakurikuler
-											.findAll({
-												where: {
-													/*sementara*/
-													fk_mahasiswa_id: 1 /*data.params.id*/
-												},
-												order: [
-													['fk_skor_id']
-												]
-											})
-											.then((ekstrakurikulers) => {
-												this.ekstrakurikulers = JSON.parse(JSON.stringify(ekstrakurikulers))
-												this.SetSubPerKategori(data, res)
-												this.SetPDFSKPI(data, res)
-											})
-									})
-							})
-					})
+			})
+		kategori
+			.findAll()
+			.then((kategoris) => {
+				this.kategoris = JSON.parse(JSON.stringify(kategoris))
+				/*Get Sub_kategori data (the role of kategori data)*/
+			})
+		sub_kategori
+			.findAll()
+			.then((sub_kategoris) => {
+				this.sub_kategoris = JSON.parse(JSON.stringify(sub_kategoris))
+				/*Get skor of the role witch specific kategori and sub_kategori*/
+			})
+		bobot
+			.findAll()
+			.then((bobots) => {
+				this.bobots = JSON.parse(JSON.stringify(bobots))
+				/*Get mahasiswa ekstrakulikuler of specific mahasiswa*/
+			})
+		ekstrakurikuler
+			.findAll({
+				where: {
+					/*sementara*/
+					fk_mahasiswa_id: 1 /*data.params.id*/,
+					status_verifikasi_ekstrakurikuler: 1
+				},
+				order: [
+					['fk_skor_id']
+				]
+			})
+			.then((ekstrakurikulers) => {
+				this.ekstrakurikulers = JSON.parse(JSON.stringify(ekstrakurikulers))
+				this.SetSubPerKategori(data, res)
+				this.SetPDFSKPI(data, res)
 			})
 	}
 	/*Count sub-kategori/primary-katagori (ex: Kegiatan have 6 sub_kategori)*/
@@ -294,9 +319,10 @@ class GeneratePDF {
 			.create(this.resource, this.options)
 			.toFile(this.destination, (err, pdf) => {
 				if (err) {
-					return console.log(err)
+					res.json({status: false, message:'berhasil convert pdf', result: 'pdf.pdf'})
+				} else {
+					res.json({status: true, message:'berhasil convert pdf', result: 'pdf.pdf'})
 				}
-				console.log(pdf)
 			})
 	}
 	CreateGeneratePDF(data, res) {
