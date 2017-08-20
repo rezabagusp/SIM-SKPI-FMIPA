@@ -26,6 +26,8 @@ export class DataService {
   // api fakultas departemen
   public url_get_all_mahasiswa = 'http://localhost:8000/departemen/getallmahasiswa';  
   public url_get_mutu = 'http://localhost:8000/departemen/getmutu';    
+  public url_get_mahasiswa = 'http://localhost:8000/departemen/getmahasiswa';  
+  public url_download_ipe = 'http://localhost:8000/departemen/downloadipe';
   
 
   // API admin

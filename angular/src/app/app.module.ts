@@ -30,8 +30,6 @@ import { AdminModule } from './admin/admin.module';
 import { MahasiswaModule } from './mahasiswa/mahasiswa.module';
 // departemen
 import { DepartemenModule } from './departemen/departemen.module';
-// fakultas
-import { FakultasModule } from './fakultas/fakultas.module';
 // Modal Component
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalsComponent } from './modals/modals.component';
@@ -67,8 +65,7 @@ import { DepartemenService } from './_services/departemen.service';
     AuthModule,
     AdminModule,
     MahasiswaModule,
-    DepartemenModule,
-    FakultasModule,
+    DepartemenModule
     
   ],
   declarations: [

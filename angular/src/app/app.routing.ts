@@ -22,11 +22,7 @@ export const routes: Routes = [
   {
     path:'departemen',
     redirectTo:'departemen/dashboard'
-  },
-  {
-    path:'fakultas',
-    redirectTo:'fakultas/dashboard'
-  },  
+  }
 ];
 
 @NgModule({

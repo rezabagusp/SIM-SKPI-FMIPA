@@ -20,7 +20,8 @@
         "scss/style.scss",
         "../node_modules/sweetalert2/dist/sweetalert2.min.css",        
         "../node_modules/datatables.net-dt/css/jquery.dataTables.css" ,
-        "../node_modules/toastr-ng2/toastr.css"
+        "../node_modules/toastr-ng2/toastr.css",
+        "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css"        
       ],
       "scripts": [
         "../node_modules/chart.js/dist/Chart.bundle.min.js",

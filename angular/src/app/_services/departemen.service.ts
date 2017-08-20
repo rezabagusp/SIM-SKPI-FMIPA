@@ -47,8 +47,12 @@ export class DepartemenService {
 	        	response.json()
         );           
   }
+  
+  getSummary(url, token, id_departemen){
 
-  //ipe for fakutlas only
+  }
+
+  // for fakutlas only
   getAllMahasiswa(url, token){
     let header= new Headers();
 
@@ -60,6 +64,18 @@ export class DepartemenService {
         .map((response: Response) => 
 	        	response.json()
         );         
+  }
+  getMahasiswa(url, token, nim){
+    let header= new Headers();
+
+    header.append('Content-type', 'application/json' );
+		header.append('token', token );//put token to request API
+
+
+    return this.http.get(url+'/'+nim, {headers:header})
+        .map((response: Response) => 
+	        	response.json()
+        );        
   }
   getMutu(url, token, jumlah_skor){
     let header= new Headers();
@@ -73,4 +89,17 @@ export class DepartemenService {
 	        	response.json()
         );         
   }
+      
+  DownloadIPE(url, token, id_mahasiswa){
+    let header= new Headers();
+
+    header.append('Content-type', 'application/json' );
+		header.append('token', token );//put token to request API
+
+
+    return this.http.get(url+'/'+id_mahasiswa, {headers:header})
+        .map((response: Response) => 
+	        	response.json()
+        );         
+  } 
 }
