@@ -9,8 +9,10 @@ var departemen = sequelize.import('../models/departemen.model.js');
 var skor = sequelize.import('../models/skor.model.js');
 var mutu = sequelize.import('../models/mutu.model.js');
 
+
 mahasiswa.belongsTo(departemen, {foreignKey:'fk_departemen_id'})
 ekskul.belongsTo(mahasiswa, {foreignKey:'fk_mahasiswa_id'})
+
 
 class Departemen{
     constructor(){}
@@ -18,30 +20,9 @@ class Departemen{
     getAllpresma(data, res){
         //menerima params id_departemen
         var id_departemen = data.params.id_departemen;
-        if(id_departemen == 9){ //fakultas
+        if (id_departemen != 9){ //departemen
             ekskul.findAll({
-                include:[{
-                    model: skor,
-                    include: [{
-                        model: tingkat
-                    },{
-                        model: sub_kategori
-                    }]
-                },{
-                    model: mahasiswa,
-                    include:[{
-                        model:departemen
-                    }]
-                }]
-            }).then((hasil)=>{
-                res.json({status:true, message:'berhasil mengambil data presma', result:hasil})
-            }).catch((err)=>{
-                res.json({status:false, message:'error saat menemukan'})
-            })            
-        }
-
-        else if (id_departemen != 9){ //departemen
-            ekskul.findAll({
+                order: [['status_verifikasi_ekstrakurikuler', 'DESC']],
                 include:[{
                     model: skor,
                     include:[{
@@ -64,8 +45,30 @@ class Departemen{
                 res.json({status:false, message:'gagal mendapatkan prestasi mahasiswa'});
             })
         }
+        else if(id_departemen == 9){ //fakultas
+            ekskul.findAll({
+            order: [['createdAt', 'DESC']],
+                include:[{
+                    model: skor,
+                    include: [{
+                        model: tingkat
+                    },{
+                        model: sub_kategori
+                    }]
+                },{
+                    model: mahasiswa,
+                    include:[{
+                        model:departemen
+                    }]
+                }]
+            }).then((hasil)=>{
+                res.json({status:true, message:'berhasil mengambil data presma', result:hasil})
+            }).catch((err)=>{
+                res.json({status:false, message:'error saat menemukan'})
+            })            
+        }
+        
     }
-
     // method for update status of ekskul. jangan lupa diganti status[0,1,2]
     verifikasiEkskul(data, res){
         console.log('data bodynya:', data.body)
@@ -100,7 +103,6 @@ class Departemen{
             res.json({status:false, message:'error saat pencarian ekskul'})
         })
     }
-
     getPresmaById(data, res){
         // menerima paramsnya id ekskul
         console.log(data.params)
@@ -138,8 +140,18 @@ class Departemen{
  
             }
         }).catch((err)=>{
-            res.json(err)
+            res.json({status: false, message:'error saat pencarian ekskul'})
         })
+    }
+    getSummary(data, res){
+        // menerima id departemen
+        var id_departemen = data.params.id_departemen;
+        if(id_departemen != 9){
+            ekskul.aggregate('status_verifikasi_ekstrakurikuler', 'COUNT', {plain:false, group:['status_verifikasi_ekstrakurikuler']})
+            .then((hasil)=>{
+                res.json(hasil)
+            })
+        }
     }
 
     // departemen ke 9
@@ -173,10 +185,10 @@ class Departemen{
             })            
         }
     }
-    getMutu(data, res){
-        //menerima jumlah_skor di params
-        console.log('masuk mutu')
+    getMutu(data, res){// kategori cuku[, baik, sangat baik]
+        // menerima jumlah skor
         var jumlah_skor = data.params.jumlah_skor;
+
         mutu.findOne({
             where: {
                 batas_bawah: {
@@ -187,15 +199,14 @@ class Departemen{
                 }
             }
         }).then((hasil)=>{
-            console.log(hasil)
-            if(hasil == null)
-                res.json({status:true, message: 'berhasil get mutu', result: null})
-            res.json({status: true, message: 'berhasil get mutu', result: hasil.nama_mutu})
+            if(hasil == null)// tidak ada yang masuk rang antara 5 - 200, 
+                res.json({status:true, message: 'berhasil get mutu, jumlah skor tidak memenuhi', result: null})
+            else
+                res.json({status: true, message: 'berhasil get mutu', result: hasil.nama_mutu})
         }).catch((err)=>{
             res.json({status: false, message:'error saat pencarian mutu', result: err})
         })
     }
-
 }
 
 module.exports = new Departemen;
