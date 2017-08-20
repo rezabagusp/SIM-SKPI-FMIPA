@@ -1,5 +1,5 @@
 
-import { DepartemenService } from './../../_services/departemen.service';
+
 import { Component, OnInit, NgZone } from '@angular/core';
 
 import { Http, Response } from '@angular/http';
@@ -7,16 +7,21 @@ import { Subject } from 'rxjs/Rx'; // dipake buat datatables
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { DataService } from './../../_services/data.service';
+import { DepartemenService } from './../../_services/departemen.service';
 
 @Component({
   selector: 'app-ipe-mahasiswa',
   templateUrl: './ipe-mahasiswa.component.html',
   styleUrls: ['./ipe-mahasiswa.component.scss'],
-  providers: []
+  providers: [DataService]
 })
 export class IpeMahasiswaComponent implements OnInit {
 
   private list_mahasiswa=[];
+
+  // ngmodel
+  private nim='';
+  private mahasiswa;
 
   // datatables
   private dtOptions: DataTables.Settings = {};
@@ -33,7 +38,6 @@ export class IpeMahasiswaComponent implements OnInit {
 
     this.getAllIpeMahasiswa();
   }
-
   getAllIpeMahasiswa(){
     this.departemenService.getAllMahasiswa(this.data.url_get_all_mahasiswa, this.data.token)
     .subscribe(
@@ -48,6 +52,20 @@ export class IpeMahasiswaComponent implements OnInit {
       }
     )
   }
-
+  submit(){
+    console.log(this.nim)
+    this.departemenService.getMahasiswa(this.data.url_get_mahasiswa, this.data.token, this.nim)
+    .subscribe(
+      data=>{
+        if(data.status){
+          this.mahasiswa = data.result;
+          this.router.navigate(['/departemen/ipemahasiswa/detailipe', this.mahasiswa.id, this.mahasiswa.nama_mahasiswa, this.mahasiswa.nim_mahasiswa])
+        }
+        else{
+          this.data.showWarning(data.message)
+        }
+      }
+    )
+  }
   
 }

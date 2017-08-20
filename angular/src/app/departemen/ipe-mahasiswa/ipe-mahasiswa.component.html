@@ -1,4 +1,4 @@
-<div class="animated fadeIn">
+<!-- <div class="animated fadeIn">
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
@@ -27,7 +27,29 @@
         </div>
       </div>
     </div>
-    <!--/.col-->
   </div>
-  <!--/.row-->
-</div>
+
+</div> -->
+
+
+<div class="card">
+  <div class="card-header">
+    <strong>Cari Mahasiswa</strong>
+  </div>
+  <form #form = 'ngForm' class="form-horizontal">
+    <div class="card-block">
+
+      <div class="form-group row">
+        <label class="col-md-3 form-control-label" for="hf-email">NIM</label>
+        <div class="col-md-9">
+          <input type="text" id="nim" name="nim" [(ngModel)]="nim" class="form-control" placeholder="Masukan NIM">
+        </div>
+      </div>
+
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="btn btn-sm btn-primary" (click)="submit()" [disabled]="!nim"><i class="fa fa-dot-circle-o"></i> Cari</button>
+      <button type="reset" class="btn btn-sm btn-danger" (click)="form.reset()"><i class="fa fa-ban"></i> Reset</button>
+    </div>
+  </form>
+</div>    

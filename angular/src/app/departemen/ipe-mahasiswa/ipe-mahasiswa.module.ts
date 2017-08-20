@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { IpeMahasiswaComponent } from './ipe-mahasiswa.component';
 import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
@@ -5,6 +6,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { IpeMahasiswaRoutingModule } from './ipe-mahasiswa-routing.module';
 
 import { CommonModule } from '@angular/common';
+
 
 import { DataTablesModule } from 'angular-datatables';
 import { SelectModule } from 'ng2-select-compat';
@@ -15,6 +17,7 @@ import { DetailIpeMahasiswaComponent } from './detail-ipe-mahasiswa/detail-ipe-m
 
 @NgModule({
   imports: [
+    FormsModule,
     CommonModule,
     IpeMahasiswaRoutingModule,
     ChartsModule,

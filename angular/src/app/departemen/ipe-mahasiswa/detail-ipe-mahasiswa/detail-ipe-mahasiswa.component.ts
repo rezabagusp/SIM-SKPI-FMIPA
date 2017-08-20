@@ -18,14 +18,18 @@ import { DepartemenService } from './../../../_services/departemen.service';
 })
 export class DetailIpeMahasiswaComponent implements OnInit {
 
-  private list_ekskul;  
+  private download;
+  private list_ekskul=[];
   //for store params
   private params; // id, nama
   private id_mahasiswa;  
   private nama_mahasiswa;
   private nim;
+  
   private jumlah_skor = 45;
-  private kategori = 'Sangat Baik'
+  private kategori = 'Sangat Baik';
+  private minimum_skor = 10;
+
 
   // datatables
   private dtOptions: DataTables.Settings = {};
@@ -50,6 +54,7 @@ export class DetailIpeMahasiswaComponent implements OnInit {
       retrieve: true
     };
     this.getAllEkskulMahasiswa();
+    this.download = false;
   }
 
   getAllEkskulMahasiswa(){
@@ -58,7 +63,11 @@ export class DetailIpeMahasiswaComponent implements OnInit {
       data=> {
         console.log(data)
         if(data.status){
-          this.list_ekskul = data.result;
+          // loop to filter ekskul with status ==1
+          for (let x in data.result)
+            if(data.result[x].status_verifikasi_ekstrakurikuler==1)
+              this.list_ekskul.push(data.result[x])
+          console.log('list ekskul', this.list_ekskul)
           this.dtTrigger.next();
           this.jumlah_skor = this.getCountedSkor(this.list_ekskul);
           this.getMutu();
@@ -91,6 +100,18 @@ export class DetailIpeMahasiswaComponent implements OnInit {
   }
 
   downloadIpe(){
-    console.log('download ipe')
+    this.download = true;
+    this.departemenservice.DownloadIPE(this.data.url_download_ipe, this.data.token, this.id_mahasiswa)
+    .subscribe(
+      data =>{
+        console.log('data', data)
+        if(data.status){
+          this.download = false;
+          window.open('assets/public/ipe/'+data.result)
+        }
+        else
+          this.data.showError(data.message);
+      }
+    )
   }
 }
