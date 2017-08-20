@@ -5,6 +5,7 @@ import { Subject } from 'rxjs/Rx'; // dipake buat datatables
 
 import { MahasiswaService } from './../../_services/mahasiswa.service'
 import { DataService } from './../../_services/data.service';
+import { DepartemenService } from './../../_services/departemen.service';
 
 import { Validators, FormGroup, FormBuilder } from "@angular/forms";
 
@@ -26,6 +27,9 @@ export class EkskulComponent implements OnInit {
 
   //for datatables data
   private list_ekskul = [];
+  private jumlah_skor;
+  private kategori;
+  private status_verifikasi = 1; // to diterima; 0-uncheck, 1-diterima, 2-ditolak
 
   //exception
   public max_size = Math.pow(10,6);
@@ -45,6 +49,7 @@ export class EkskulComponent implements OnInit {
   private id_ekskul;
   private fileValid:boolean;
   private today;
+  private dateValid:boolean;
 
   // datatables
   private dtOptions: DataTables.Settings = {};
@@ -55,6 +60,7 @@ export class EkskulComponent implements OnInit {
               private toastrService:ToastrService,
               private MahasiswaService:MahasiswaService,
               private data:DataService,
+              private departemenservice: DepartemenService ,
               private fb: FormBuilder){
     // init loading fileupload
     this.MahasiswaService.progress$.subscribe(status => {
@@ -100,6 +106,7 @@ export class EkskulComponent implements OnInit {
     this.form.controls.negara.setValue('',  { onlySelf: true });
     this.form.controls.tanggal_mulai.setValue(this.today,  { onlySelf: true });
     this.form.controls.tanggal_selesai.setValue(this.today,  { onlySelf: true });
+    this.fileValid = false;
   }
   //api service to get option form
   getSubKategori(){
@@ -142,7 +149,9 @@ export class EkskulComponent implements OnInit {
       data=> {
         if(data.status){
           this.list_ekskul = data.result;
-          this.dtTrigger.next();        
+          this.jumlah_skor=this.getCountedSkor(this.list_ekskul);
+          this.getMutu();
+          this.dtTrigger.next();
           console.log('all ekskul: ', this.list_ekskul)
         }
         else{
@@ -158,7 +167,28 @@ export class EkskulComponent implements OnInit {
       retrieve: true
     };
   } 
+  getCountedSkor(ekskul){
+    var total = 0
+    for(let x in this.list_ekskul){
+      if(this.list_ekskul[x].status_verifikasi_ekstrakurikuler == this.status_verifikasi)
+        total+=this.list_ekskul[x].skor.skor
+    }
+    return total
+  }
+  getMutu(){
+    this.departemenservice.getMutu(this.data.url_get_mutu, this.data.token, this.jumlah_skor)
+    .subscribe(
+      data => {
+        console.log(data)
+        if(data.status)
+          this.kategori = data.result;
+        else
+          this.data.showError(data.message)
+      }
+    )
+  }  
 
+  // file
   onChangeFile(fileinput:any){
     var sementara = <Array<File>> fileinput.target.files
     var ext = sementara[0].type;
@@ -214,7 +244,6 @@ export class EkskulComponent implements OnInit {
     console.log('bukti', this.bukti)
     this.id_ekskul = data.id;                
   }
-
   getSelectedTingkat(id){
     for(let x in this.list_tingkat)
       if(this.list_tingkat[x].id == id){
@@ -319,6 +348,15 @@ export class EkskulComponent implements OnInit {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Ya, hapus!'
       })  
+  }
+  checkPeriode(){
+    let s = new Date(this.form.value.tanggal_mulai);
+    let e = new Date(this.form.value.tanggal_selesai);
+    if (s <= e) {
+      return true
+    }else {
+      return false
+    }
   }
 
   cek(){

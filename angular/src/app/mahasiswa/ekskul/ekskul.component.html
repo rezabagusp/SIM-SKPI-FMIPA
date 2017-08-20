@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="card-block">
-           <table datatable [dtOptions]="dtOptions" style="display: inline-block;width: 100%;overflow: auto;" [dtTrigger]="dtTrigger" class="row-border hover">
+           <table datatable [dtOptions]="dtOptions" style="display: inline-block;width: 100%;overflow: auto;" [dtTrigger]="dtTrigger" class="row-border hover table-simple table-responsive">
             <thead>
               <tr>
                 <th>No</th>
@@ -24,7 +24,9 @@
                 <th>Negara</th>
                 <th>Tanggal mulai</th>
                 <th>Tanggal selesai</th>
-                <th>Bukti</th>
+                <th>skor</th>  
+                <th>Bukti</th>              
+                <th>Status</th>                
                 <th></th>                                                                                     
               </tr>
             </thead>
@@ -38,7 +40,15 @@
                 <td>{{ekskul.negara}}</td>
                 <td>{{ekskul.tanggal_mulai | date}}</td>
                 <td>{{ekskul.tanggal_selesai | date}}</td>
+                <td>
+                  {{ekskul.skor.skor}}
+                </td> 
                 <td><a href="assets/public/images/{{ekskul.bukti_ekstrakurikuler}}" target="_blank">{{ekskul.bukti_ekstrakurikuler}}</a></td>
+                <td>
+                  <span *ngIf="ekskul.status_verifikasi_ekstrakurikuler==0" class="badge badge-default">Belum diproses</span>
+                  <span *ngIf="ekskul.status_verifikasi_ekstrakurikuler==1" class="badge badge-success">Diterima</span>
+                  <span *ngIf="ekskul.status_verifikasi_ekstrakurikuler==2" class="badge badge-danger">Ditolak</span>                       
+                </td>         
                 <td>
                   <span><a href="javascript:void(0)" (click)="deleteEkskul(ekskul.id);" ><i class="fa fa-trash-o" aria-hidden="true" title="Hapus"></i>Delete</a></span> &nbsp;
                   <span><a href="javascript:void(0)" (click)="changeState(1);clickRow(ekskul); editEkskulModal.show()" ><i class="fa fa-pencil-square-o" aria-hidden="true" title="Edit"></i>Update</a> </span>
@@ -46,6 +56,10 @@
               </tr>
             </tbody>
           </table> 
+          <div>
+            <strong>Jumlah skor: {{jumlah_skor}}<br/>Kategori: {{kategori}}</strong>
+            
+          </div>          
         </div>
       </div>
     </div>
@@ -211,7 +225,7 @@
           </div><br>          
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" (click)="addEkskulModal.hide()">Batal</button>
-            <button type="submit" class="btn btn-primary"  [disabled]="!form.valid || !fileValid" (click)="addEkskulModal.hide()">Simpan</button>            
+            <button type="submit" class="btn btn-primary"  [disabled]="!form.valid || !fileValid || !checkPeriode()" (click)="addEkskulModal.hide()">Simpan</button>            
           </div>
         </form>
       </div>
