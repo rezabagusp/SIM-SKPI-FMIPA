@@ -92,6 +92,7 @@ class Mahasiswa {
             bukti = data.body.bukti,
             skor_id = '',
             id_mahasiswa = data.body.id_mahasiswa;
+            status: 0// set status jadi belum 
 
         ekskul.findOne({
             where: {
@@ -121,7 +122,8 @@ class Mahasiswa {
                             tanggal_mulai:tanggal_mulai,
                             tanggal_selesai:tanggal_selesai,
                             fk_skor_id: skor_id,
-                            bukti_ekstrakurikuler: bukti              
+                            status_verifikasi_ekstrakurikuler: 0, //update status
+                            bukti_ekstrakurikuler: bukti          
                         },
                         {
                             where:{
@@ -174,7 +176,8 @@ class Mahasiswa {
     getAllEkskul(data, res){
         // menerima id mahasiswa
         var id_mahasiswa = data.params.id_mahasiswa;
-        ekskul.findAll({         
+        ekskul.findAll({
+            order: [['updatedAt', 'DESC']],
             include:[{
                 model: skor,
                 include:[{  

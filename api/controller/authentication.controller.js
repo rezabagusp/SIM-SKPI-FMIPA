@@ -22,20 +22,20 @@ class Authentication{
     }
     
     login(data, res){
-        console.log('databody', data.body)
+        console.log('databody', data)
         this.setNamaUser(data.nama_user);
         this.setPasswordUser(data.password_user);
+        console.log(this.nama_user, this.password_user)
         user.findOne({
             where: {
                 nama_user: this.nama_user,
                 password_user: this.password_user
             }
         }).then((hasil)=>{
-            console.log('hasilnya', hasil.dataValues)
             var token = jwt.sign(hasil.dataValues, SECRET_KEY);
             res.json({status:true, message:"login berhasil", token:token});
         }).catch((err)=> {
-            console.log('masuk err')
+            console.log('masuk err find one user', err)
             mahasiswa.findOne({
                 where: {
                     nama_user:this.nama_user,
