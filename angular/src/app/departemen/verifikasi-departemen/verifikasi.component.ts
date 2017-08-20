@@ -24,7 +24,8 @@ export class VerifikasiComponent implements OnInit {
       this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
-      retrieve: true
+      retrieve: true,
+      order: [6, 'desc']
     };
 
     this.getAllPresma();

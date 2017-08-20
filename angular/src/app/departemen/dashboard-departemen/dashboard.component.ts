@@ -7,10 +7,17 @@ import { Router } from '@angular/router';
   providers:[DataService]
 })
 export class DashboardComponent {
+  private jumlah_pengajuan_ekskul;
+  private jumlah_uncheck;
+  private jumlah_ditolak;
+  private jumlah_diterima;
 
   constructor( private data:DataService) { 
     console.log("dashboard departemen")
-    console.log(this.data.id_departemen)
+    console.log('id_departemen', this.data.id_departemen)
   }
+
+  
+
 
 }
