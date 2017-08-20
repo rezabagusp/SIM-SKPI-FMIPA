@@ -70,7 +70,6 @@ class GeneratePDF {
 			    "left": "10mm"
 			  },
 		}
-		this.destination = __dirname + '/../public/ipe/pdf.pdf'
 	}
 	/*Set date of printed the pepper*/
 	SetTanggalTTD(data, res) {
@@ -314,6 +313,7 @@ class GeneratePDF {
 	}
 	/*Convert HTML to PDF*/
 	ConvertHTLM2PDF(data, res) {
+		this.destination = __dirname + '/../public/ipe/'+this.NIM+'.pdf'
 		this.resource = this.resource.replace('{{bukti}}', '')
 		pdf
 			.create(this.resource, this.options)
