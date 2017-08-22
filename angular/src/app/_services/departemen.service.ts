@@ -90,14 +90,14 @@ export class DepartemenService {
         );         
   }
       
-  DownloadIPE(url, token, id_mahasiswa){
+  DownloadIPE(url, token, nim){
     let header= new Headers();
 
     header.append('Content-type', 'application/json' );
 		header.append('token', token );//put token to request API
 
 
-    return this.http.get(url+'/'+id_mahasiswa, {headers:header})
+    return this.http.get(url+'/'+nim, {headers:header})
         .map((response: Response) => 
 	        	response.json()
         );         

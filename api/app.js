@@ -16,15 +16,13 @@ var express = require('express'),
 
 var app = express();
 
-/*global secret key*/
+/*global secret token key*/
 SECRET_KEY='secret_admire';
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -32,19 +30,33 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// var generate = require(__dirname + '/controller/createPDF.controller')
-//   generate.CreateGeneratePDF()
+//check connection
+// app.use(function(req, res, next){
+//   require('dns').resolve('www.google.com', function(err) {
+//     if (err ) {
+//       console.log('ERR')
+//       res.json(err)
+//     } else {
+//       console.log("Connected");
+//       next();
+//     }
+//   });
+// })
+
 app.use('/', index);
 app.use('/users', users);
 app.use('/login', login);
 app.use('/mahasiswa', mahasiswa);
 app.use('/departemen', departemen);
 app.use('/admin', admin);
+app.use('*', function(req, res, next){
+  res.json({status:false, message:'non API implemented'})
+})
+
 
 
 /*jwt middleware*/
 app.use(function(req, res, next){
-  console.log(req.headers)
   var token = req.body.token || req.headers['token'];
   if (token){
     jwt.verify(token, SECRET_KEY, function(err, decode){
@@ -54,10 +66,6 @@ app.use(function(req, res, next){
     });
   }else res.json("please send me a token");
 });
-
-app.use('/coba', function(req, res, next){
-  res.json("ada token")
-})
 
 
 // catch 404 and forward to error handler

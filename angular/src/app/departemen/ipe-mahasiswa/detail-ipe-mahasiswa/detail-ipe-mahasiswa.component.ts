@@ -9,6 +9,7 @@ import { DataService } from './../../../_services/data.service';
 import { MahasiswaService } from './../../../_services/mahasiswa.service';
 import { DepartemenService } from './../../../_services/departemen.service';
 
+import { Validators, FormGroup, FormBuilder } from "@angular/forms";
 
 
 @Component({
@@ -17,6 +18,8 @@ import { DepartemenService } from './../../../_services/departemen.service';
   styleUrls: ['./detail-ipe-mahasiswa.component.scss']
 })
 export class DetailIpeMahasiswaComponent implements OnInit {
+
+  form :FormGroup;
 
   private download;
   private list_ekskul=[];
@@ -35,7 +38,7 @@ export class DetailIpeMahasiswaComponent implements OnInit {
   private dtOptions: DataTables.Settings = {};
   private dtTrigger: Subject<any> = new Subject();
 
-  constructor(private data: DataService, private departemenservice: DepartemenService, private MahasiswaService:MahasiswaService,private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private data: DataService, private departemenservice: DepartemenService, private MahasiswaService:MahasiswaService,private router: Router, private activatedRoute: ActivatedRoute) {
     //captured the params url
     this.activatedRoute.params.subscribe((params: Params)=>{
       this.params = params;
@@ -53,6 +56,7 @@ export class DetailIpeMahasiswaComponent implements OnInit {
       pageLength: 10,
       retrieve: true
     };
+    this.initForm();
     this.getAllEkskulMahasiswa();
     this.download = false;
   }
@@ -91,6 +95,12 @@ export class DetailIpeMahasiswaComponent implements OnInit {
     )
   }
 
+  initForm(){
+    this.form = this.fb.group({
+      tanggal_lulus: ['', Validators.required],      
+    });
+  }
+
   getCountedSkor(ekskul){
     var total = 0
     for(let x in this.list_ekskul){
@@ -100,18 +110,25 @@ export class DetailIpeMahasiswaComponent implements OnInit {
   }
 
   downloadIpe(){
-    this.download = true;
-    this.departemenservice.DownloadIPE(this.data.url_download_ipe, this.data.token, this.id_mahasiswa)
-    .subscribe(
-      data =>{
-        console.log('data', data)
-        if(data.status){
-          this.download = false;
-          window.open('assets/public/ipe/'+data.result)
+    if(this.form.controls.tanggal_lulus.valid){
+      console.log(this.form)
+      let creds = JSON.stringify({nim: this.nim, tanggal_lulus: this.form.value.tanggal_lulus});
+      
+      this.download = true;
+      this.departemenservice.DownloadIPE(this.data.url_download_ipe, this.data.token, this.nim)
+      .subscribe(
+        data =>{
+          console.log('data', data)
+          if(data.status){
+            this.download = false;
+            window.open('assets/public/ipe/'+data.result)
+          }
+          else{
+            this.download = false;
+            this.data.showError(data.message);
+          }
         }
-        else
-          this.data.showError(data.message);
-      }
-    )
+      )      
+    }
   }
 }

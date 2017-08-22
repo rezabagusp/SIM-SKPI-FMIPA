@@ -16,25 +16,24 @@
            <table datatable [dtOptions]="dtOptions" style="display: inline-block;width: 100%;overflow: auto;" [dtTrigger]="dtTrigger" class="row-border hover table-simple table-responsive">
             <thead>
               <tr>
-                <th>No</th>
-                <th>Nama </th>
-                <th>jenis</th>
+                <th>Nama kegiatan</th>
+                <th>Jenis kegiatan</th>
                 <th>Tingkat</th>
                 <th>Kota</th>
                 <th>Negara</th>
                 <th>Tanggal mulai</th>
                 <th>Tanggal selesai</th>
-                <th>skor</th>  
-                <th>Bukti</th>              
-                <th>Status</th>                
+                <th>Skor</th>  
+                <th>Bukti kegiatan</th>              
+                <th>Status</th>
+                <th>Keterangan</th>                
                 <th></th>                                                                                     
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let ekskul of list_ekskul; let i = index">
-                <td>{{i+1}}</td>                
+              <tr *ngFor="let ekskul of list_ekskul; let i = index">              
                 <td>{{ekskul.nama_ekstrakurikuler}}</td>
-                <td>{{ekskul.skor.sub_kategori.nama_sub_kategori}}</td>
+                <td><strong>{{ekskul.skor.sub_kategori.kategori.nama_kategori}}</strong> : {{ekskul.skor.sub_kategori.nama_sub_kategori}}</td>
                 <td>{{ekskul.skor.tingkat.nama_tingkat}}</td>
                 <td>{{ekskul.kota}}</td>
                 <td>{{ekskul.negara}}</td>
@@ -48,11 +47,12 @@
                   <span *ngIf="ekskul.status_verifikasi_ekstrakurikuler==0" class="badge badge-default">Belum diproses</span>
                   <span *ngIf="ekskul.status_verifikasi_ekstrakurikuler==1" class="badge badge-success">Diterima</span>
                   <span *ngIf="ekskul.status_verifikasi_ekstrakurikuler==2" class="badge badge-danger">Ditolak</span>                       
-                </td>         
+                </td> 
+                <td>{{ekskul.keterangan}}</td>                            
                 <td>
-                  <span><a href="javascript:void(0)" (click)="deleteEkskul(ekskul.id);" ><i class="fa fa-trash-o" aria-hidden="true" title="Hapus"></i>Delete</a></span> &nbsp;
-                  <span><a href="javascript:void(0)" (click)="changeState(1);clickRow(ekskul); editEkskulModal.show()" ><i class="fa fa-pencil-square-o" aria-hidden="true" title="Edit"></i>Update</a> </span>
-                </td>      
+                  <span><a *ngIf="ekskul.status_verifikasi_ekstrakurikuler!=1" href="javascript:void(0)" (click)="deleteEkskul(ekskul.id);" ><i class="fa fa-trash-o" aria-hidden="true" title="Hapus"></i>Delete</a></span> &nbsp;
+                  <span><a *ngIf="ekskul.status_verifikasi_ekstrakurikuler!=1" href="javascript:void(0)" (click)="changeState(1);clickRow(ekskul); editEkskulModal.show()" ><i class="fa fa-pencil-square-o" aria-hidden="true" title="Edit"></i>Update</a> </span>
+                </td>  
               </tr>
             </tbody>
           </table> 
@@ -133,8 +133,8 @@
           <div class="form-group row">
             <label class="col-md-3 form-control-label" for="bukti">Upload bukti</label>
             <div class="col-md-9">
-              <input type="file" id="bukti" name="bukti" class="form-control form-control-sm" (change)="onChangeFile($event)" accept="image/jpeg, application/pdf"  single required>
-              <small class="help-block" style="color:crimson">Silahkan upload ulang jika ingin mengganti file bukti <br>Extensi: *.pdf / *.jpeg / *.png</small>
+              <input type="file" id="bukti" name="bukti" class="form-control form-control-sm" (change)="onChangeFile($event)" accept="image/jpeg, x-png"  single required>
+              <small class="help-block" style="color:crimson">Silahkan upload ulang jika ingin mengganti file bukti <br>Extensi: *.jpeg / *.png</small>
             </div>
           </div>
           <div class="progress" *ngIf="fileValid && uploadProgress!=100 " >
@@ -215,7 +215,7 @@
           <div class="form-group row">
             <label class="col-md-3 form-control-label" for="bukti">Upload bukti</label>
             <div class="col-md-9">
-              <input type="file" id="bukti" name="bukti" class="form-control form-control-sm" (change)="onChangeFile($event)" accept="image/jpeg, application/pdf"  single required>
+              <input type="file" id="bukti" name="bukti" class="form-control form-control-sm" (change)="onChangeFile($event)" accept="image/jpeg, image/x-png"  single required>
               <small class="help-block" style="color:crimson">Upload hasil <i>scan</i> bukti (sertifikat atau lainnya).  <br>Extensi: *.pdf / *.jpeg / *.png</small>
             </div>
           </div>

@@ -1,0 +1,97 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <strong>Tambah Skor</strong>
+    </div>
+    <form [formGroup]='form' (submit)="addSkor()" class="form-horizontal">
+      <div class="card-block">
+        <div class="form-group row">
+          <label class="col-md-3 form-control-label" for="sub_kategori">Jenis kegiatan</label>
+          <div class="col-md-9">
+            <select id="tingkat_kegiatan" name="sub_kategori" formControlName="sub_kategori" (change)="onChange()"  class="form-control form-control-sm" required>
+              <option disabled selected value></option>                  
+              <option *ngFor="let sub_kategori of list_sub_kategori" [ngValue]="sub_kategori">{{sub_kategori.nama_sub_kategori}}</option>
+            </select>
+          </div>
+        </div> 
+        <div class="form-group row">
+          <label class="col-md-3 form-control-label" for="tingkat">Tingkat kegiatan</label>
+          <div class="col-md-9">
+              <select id="tingkat_kegiatan" name="tingkat_kegiatan" formControlName="tingkat" (change)="onChange()" class="form-control form-control-sm" required>
+                <option disabled selected value></option>                  
+                <option *ngFor="let tingkat_kegiatan of list_tingkat" [ngValue]="tingkat_kegiatan">{{tingkat_kegiatan.nama_tingkat}}</option>
+              </select>
+          </div>
+        </div>                 
+        <div [hidden] ="!combination_valid" class="form-group row">
+          <label class="col-md-3 form-control-label" for="skor">Skor</label>
+          <div class="col-md-9">
+            <input type="number" formControlName="skor" class="form-control form-control-sm" required>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-sm btn-primary" [disabled]="!form.valid"><i class="fa fa-dot-circle-o"></i> Tambah</button>
+        <button type="reset" class="btn btn-sm btn-danger" (click)="resetForm()"><i class="fa fa-ban"></i> Reset</button>
+      </div>
+    </form>
+  </div>  
+
+  <div class="card">
+    <div class="card-header">
+        <i class="fa fa-align-justify"></i> Skor
+    </div>
+    <div class="card-block">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover table-simple table-responsive">
+        <thead>
+          <tr>
+            <th>Jenis kegiatan</th>
+            <th>Tingkat kegiatan</th>
+            <th>Skor</th>            
+            <th></th>                                                                                     
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of list_skor; let i = index">              
+            <td><strong>{{data.sub_kategori.kategori.nama_kategori}}</strong>: {{data.sub_kategori.nama_sub_kategori}}</td>    
+            <td>{{data.tingkat.nama_tingkat}}</td>     
+            <td>{{data.skor}}</td>           
+            <td>
+              <span><a href="javascript:void(0)" (click)="deleteRowSkor(data.id);" ><i class="fa fa-trash-o" aria-hidden="true" title="Hapus"></i>Delete</a></span> &nbsp;
+              <span><a href="javascript:void(0)" (click)="clickRow(data); editSkorModal.show()" ><i class="fa fa-pencil-square-o" aria-hidden="true" title="Edit"></i>Update</a> </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>          
+    </div>
+  </div>  
+</div>
+
+
+<div bsModal #editSkorModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editSkorModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit skor</h4>
+        <button type="button" class="close" (click)="editSkorModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" (submit)="updateSkor();" novalidate>
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="nama_kegiatan">Skor</label>
+            <div class="col-md-9">
+              <input type="number" formControlName="skor" id="nama_kegiatan" name="skor" class="form-control form-control-sm" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="editSkorModal.hide()">Batal</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!form.controls.skor.valid"(click)="editSkorModal.hide()">Simpan</button>            
+          </div>
+        </form>
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

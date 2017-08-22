@@ -31,10 +31,30 @@ export class DataService {
   
 
   // API admin
+    // user
   public url_get_all_user = 'http://localhost:8000/admin/getalluser';  
   public url_add_user = 'http://localhost:8000/admin/adduser';    
-  public url_delete_user = 'http://localhost:8000/departemen/deleteuser';      
+  public url_delete_user = 'http://localhost:8000/admin/deleteuser';
+  public url_update_user = 'http://localhost:8000/admin/updateuser';  
+    // get all
+  public url_get_all_sub_kategori = 'http://localhost:8000/admin/getallsubkategori';  
+  public url_get_all_kategori = 'http://localhost:8000/admin/getallkategori';
+  public url_get_all_skor = 'http://localhost:8000/admin/getallskor';  
+    // kategori   
+  public url_add_kategori = 'http://localhost:8000/admin/addkategori';
+  public url_delete_kategori = 'http://localhost:8000/admin/deletekategori';   
+    // sub kategori
+  public url_add_sub_kategori = 'http://localhost:8000/admin/addsubkategori';   
+  public url_delete_sub_kategori = 'http://localhost:8000/admin/deletesubkategori';    
+    // skor
+  public url_add_skor = 'http://localhost:8000/admin/addskor';
+  public url_delete_skor = 'http://localhost:8000/admin/deleteskor';
+  public url_update_skor = 'http://localhost:8000/admin/updateskor';
+  public url_get_skor = 'http://localhost:8000/admin/getskor';  
   
+      
+
+
   public token;
   public nama_user;
 

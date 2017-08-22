@@ -6,6 +6,6 @@ kategori.sync().then(()=>{
     },
     {
 		nama_kategori:'Himpunan/Organisasi Profesi Kemahasiswaan'
-	}
+		}
     ]);
 });

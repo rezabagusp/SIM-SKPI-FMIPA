@@ -5,14 +5,14 @@
         <div class="card-block">
           <h4 class="card-title">List Prestasi Mahasiswa</h4>
           <br>  
-          <table datatable class="row-border hover table-sm"  style="width: 100%;overflow: auto;"   [dtOptions]="dtOptions"  [dtTrigger]="dtTrigger">
+          <table datatable class="row-border hover table-sm"  style="display: inline-block;width: 100%;overflow: auto;"   [dtOptions]="dtOptions"  [dtTrigger]="dtTrigger">
             <thead>
               <tr>
                 <th>Nama mahasiswa</th>
                 <th>NIM</th>
                 <th>Departemen</th>
                 <th>Nama kegiatan</th>
-                <th>jenis kegiatan</th>
+                <th>Jenis kegiatan</th>
                 <th>Tingkat/region</th>
                 <th>Status</th>        
                 <th>Keterangan</th>    
@@ -24,7 +24,7 @@
                 <td>{{presma?.mahasiswa.nim_mahasiswa}}</td>
                 <td>{{presma?.mahasiswa.departemen.nama_departemen}}</td>
                 <td>{{presma?.nama_ekstrakurikuler}}</td>     
-                <td>{{presma?.skor.sub_kategori.nama_sub_kategori}}</td>
+                <td> <strong>{{presma?.skor.sub_kategori.kategori.nama_kategori}}</strong> : {{presma?.skor.sub_kategori.nama_sub_kategori}}</td>
                 <td>{{presma?.skor.tingkat.nama_tingkat}}</td>   
                 <td>     
                   <span *ngIf="presma.status_verifikasi_ekstrakurikuler==0" class="badge badge-default">Belum diproses</span>

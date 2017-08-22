@@ -19,6 +19,7 @@ export class UserComponent implements OnInit {
   private nama_user;
   private email_user;
   private password_user;
+  private id_user;
   private list_departemen = [
     {
       id:1,
@@ -126,6 +127,8 @@ export class UserComponent implements OnInit {
   //for edit user
   clickRow(data:any):void{
     console.log('data click:', data)
+    this.id_user = data.id;
+
     this.form.controls.nama_user.setValue(data.nama_user,  { onlySelf: true });
     this.form.controls.email_user.setValue(data.email_user,  { onlySelf: true });
     this.form.controls.password_user.setValue(data.password_user,  { onlySelf: true });   
@@ -153,7 +156,7 @@ export class UserComponent implements OnInit {
         this.data.showSuccess('Berhasil menambah user')
       }
       else
-        this.data.showError('something wrong')
+        this.data.showError(result.message)
     })    
 
   }
@@ -169,23 +172,24 @@ export class UserComponent implements OnInit {
             this.ngOnInit();
           }
           else
-            this.data.showError('something wrong')
+            this.data.showError(data.message)
         }
       )
     })
 
   }
   updateUser(){
-    console.log('adduser')
+    console.log('update User')
     var creds = JSON.stringify({
                                 nama_user: this.form.value.nama_user,
                                 email_user: this.form.value.email_user,
                                 password_user: this.form.value.password_user,
                                 role: this.form.value.role.id,
-                                id_departemen: this.form.value.departemen.id
+                                id_departemen: this.form.value.departemen.id,
+                                id_user: this.id_user
                                 })
 
-    this.admin.addUser(this.data.url_add_user, this.data.token, creds)
+    this.admin.addUser(this.data.url_update_user, this.data.token, creds)
     .subscribe((result)=>{
       if (result.status){   
         console.log(result)
@@ -194,7 +198,7 @@ export class UserComponent implements OnInit {
         this.data.showSuccess('Berhasil Update user')
       }
       else
-        this.data.showError('something wrong')
+        this.data.showError(result.message)
     })    
 
   }  

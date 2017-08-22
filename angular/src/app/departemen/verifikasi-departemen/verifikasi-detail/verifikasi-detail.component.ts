@@ -74,7 +74,7 @@ export class VerifikasiDetailComponent implements OnInit {
       }
     )    
   }
-  //unverif ditolak
+  //verif ditolak
   verifCommentConfirm(){
     swal({
       title: 'Masukan keterangan',
@@ -98,7 +98,6 @@ export class VerifikasiDetailComponent implements OnInit {
         this.verifikasiPresma(status_baru);
     })
   }
-
   //verif diterima
   verifConfirm(){
     swal({

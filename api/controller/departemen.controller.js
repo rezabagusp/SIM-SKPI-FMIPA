@@ -8,6 +8,7 @@ var mahasiswa = sequelize.import('../models/mahasiswa.model.js');
 var departemen = sequelize.import('../models/departemen.model.js');
 var skor = sequelize.import('../models/skor.model.js');
 var mutu = sequelize.import('../models/mutu.model.js');
+var kategori = sequelize.import('../models/kategori.model.js');
 
 
 mahasiswa.belongsTo(departemen, {foreignKey:'fk_departemen_id'})
@@ -28,7 +29,10 @@ class Departemen{
                     include:[{
                         model: tingkat
                     }, {
-                        model: sub_kategori
+                        model: sub_kategori,
+                        include:[{
+                            model: kategori
+                        }]
                     }]
                 },{
                     model: mahasiswa,
@@ -53,7 +57,10 @@ class Departemen{
                     include: [{
                         model: tingkat
                     },{
-                        model: sub_kategori
+                        model: sub_kategori,
+                        include:[{
+                            model: kategori
+                        }]
                     }]
                 },{
                     model: mahasiswa,

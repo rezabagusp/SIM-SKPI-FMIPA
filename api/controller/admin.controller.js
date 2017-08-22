@@ -8,6 +8,10 @@ var sub_kategori = sequelize.import('../models/sub_kategori.model.js');
 var user = sequelize.import('../models/user.model.js');
 var tingkat = sequelize.import('../models/tingkat.model.js');
 var departemen = sequelize.import('../models/departemen.model.js');
+var mutu = sequelize.import('../models/mutu.model.js');
+var mahasiswa = sequelize.import('../models/mahasiswa.model.js');
+
+
 
 sub_kategori.belongsTo(kategori, {foreignKey:'fk_kategori_id'})
 skor.belongsTo(tingkat, {foreignKey:'fk_tingkat_id'})
@@ -23,9 +27,9 @@ class Admin{
         kategori.findAll({
 
         }).then((hasil)=>{
-            res.json(hasil)
+            res.json({status: true, message:'berhasil get all kategori', result: hasil})
         }).catch(()=>{
-            res.json({status:false, message:'error saat menenukan all kategori'})
+            res.json({status: false, message:'error saat menenukan all kategori'})
         })
     }
     getAllSubKategori(data, res){
@@ -34,14 +38,15 @@ class Admin{
                 model: kategori
             }]
         }).then((hasil)=>{
-            res.json(hasil)
+            res.json({status: true, message: 'Berhasil get all sub kategori', result: hasil})
         }).catch((err)=>{
-            res.json(err)
+            res.json({status: false, message: 'error saat get all sub kategori'})
         })
     }
     getAllSkor(data, res){
         console.log('masuk all skor')
         skor.findAll({
+            order:[['createdAt', 'DESC']],
             include:[{
                 model:tingkat
             },{
@@ -51,9 +56,9 @@ class Admin{
                 }]
             }]
         }).then((hasil)=>{
-            res.json(hasil)
+            res.json({status:true, message:'berhasil get all skor', result:hasil})
         }).catch((err)=>{
-            res.json(err)
+            res.json({statuss:true, mesage:'error saat get all skor'})
         })
     }
     getAllUser(data, res){
@@ -66,6 +71,33 @@ class Admin{
             res.json({status:true, message:'berhasil get all user', result: hasil});
         }).catch((err)=>{
             res.json({status:false, message:'gagal get all user'});
+        })
+    }
+    getAllDepartemen(data, res){
+        departemen.findAll({
+
+        }).then((hasil)=>{
+            res.json({status: true, message:'berhasil get all departemen', result: hasil})
+        }).catch((err)=>{
+            res.json({status:false, message:'gagal get all departemen'})
+        })
+    }
+    getAllMutu(data, res){
+        mutu.findAll({
+
+        }).then((hasil)=>{
+            res.json({status: true, message:'berhasil get all mutu', result:hasil})
+        }).catch((err)=>{
+            res.json({status: false, message:'gagal get all muru'})
+        })
+    }
+    getAllMahasiswa(data, res){
+        mahasiswa.findAll({
+
+        }).then((hasil)=>{
+            res.json({status:true, message:'berhasil get all mahasiswa', result: hasil})
+        }).catch((err)=>{
+            res.json({status:false, message:'gagal get all mahasiswa'})
         })
     }
     
@@ -130,8 +162,9 @@ class Admin{
                     }
                 }).then(()=>{
                     res.json({status:true, message:'berhasil menghapus kategori'});
-                }).catch(()=>{
-                    res.json({status: false, message:'error saat menghapus kategori'})
+                }).catch((err)=>{
+                    console.log(err)
+                    res.json({status:false, message:'Cannot delete or update a parent row: a foreign key constraint fails'})
                 });                    
             }
         }).catch(()=>{
@@ -227,9 +260,9 @@ class Admin{
             }
         }).then((hasil)=>{
             if(hasil == null)
-                res.json({status: false, message:'kombinasi skor belum pernah ada'})
+                res.json({status:true, message:'kombinasi skor belum pernah ada'})
             else
-                res.json({status:true, message:' kombinasi skor sudah pernah ada'})
+                res.json({status:false, message:' kombinasi skor sudah pernah ada'})
         }).catch((err)=>{
             res.json({status: false, message:'error saat melakukan pencarian kombinasi skor'})
         })
@@ -346,6 +379,7 @@ class Admin{
     }
     updateUser(data, res){
         console.log(data.body)
+        // menerima nama user, email user, password user, role, id_departemen, id_user
         var nama_user = data.body.nama_user,
             email_user = data.body.email_user,
             password_user = data.body.password_user,
@@ -407,6 +441,162 @@ class Admin{
             res.json({status:false, message:'eror pada saat pencarian user'})
         })
     }
+
+    // table mutu
+    addMutu(data, res){
+        //menerima nama_mutu, nilai batas_bawah, dan batas_atas
+        var nama_mutu = data.body.nama_mutu,
+            batas_bawah = data.body.batas_bawah,
+            batas_atas = data.body.batas_atas
+        if(!nama_mutu || !batas_bawah || !batas_atas)
+            res.json({status:false, message: 'request tidak lengkap'})
+        else 
+            mutu.create({
+                nama_mutu: nama_mutu,
+                batas_atas: batas_atas,
+                batas_bawah: batas_bawah
+            }).then((hasil)=>{
+                res.json({status: true, message:'berhasil menambahkan mutu baru'})
+            }).catch((err)=>{
+                res.json({status:false, message:'error saat menambahakan mutu'})
+            })
+    }
+    updateMutu(data, res){
+        //menerima nama_mutu, batas_bawah, batas_atas
+        var nama_mutu = data.body.nama_mutu,
+            batas_bawah = data.body.batas_bawah,
+            batas_atas = data.body.batas_atas,
+            id_mutu = data.body.id_mutu
+        if(!nama_mutu || !batas_bawah || !batas_atas)
+            res.json({status:false, message: 'request tidak lengkap'})
+        else
+            mutu.findOne({
+                where:{
+                    id:id_mutu
+                }
+            }).then((hasil)=>{
+                if(hasil==null)
+                    res.json({status:false, message:'mutu tidak ditemukan'})
+                else
+                    mutu.update({
+                        nama_mutu: nama_mutu,
+                        batas_atas: batas_atas,
+                        batas_bawah :batas_bawah
+                    }, {
+                        where:{
+                            id: id_mutu
+                        }
+                    }).then((hasil)=>{
+                        res.json({status: true, message:'berhasil update mutu'})
+                    }).catch((err)=>{
+                        res.json({status:false, mesage:'error saat update mutu'})
+                    })
+            })
+    }
+    deleteMutu(data, res){
+        // menerima id_mutu
+        var id_mutu = data.body.id_mutu;
+        if(!id_mutu)
+            res.json({status: false, message:'request tidak lengkap'})
+        else
+            mutu.findOne({
+                where:{
+                    id: id_mutu
+                }
+            }).then((hasil)=>{
+                if(hasil==null)
+                    res.json({status:false, message:'mutu tidak ditemukan'})
+                else 
+                    mutu.destroy({
+                        where:{
+                            id: id_mutu
+                        }
+                    }).then((hasil)=>{
+                        res.json({status: true, mesage: 'berhasil delete mutu'})
+                    }).catch((err)=>{
+                        res.json({status:false, message:'error saat delete mutu '})
+                    })
+            }).catch((err)=>{
+                res.json({status:false, mesage:'error saat menghapus mutu'})
+            })
+    }
+
+    // table departemen
+    addDepartemen(data, res){
+        // menerima nama_departemen
+        var nama_departemen=data.body.nama_departemen
+        if(!nama_departemen)
+            res.json({status:false, message:'request tidak lengkap'})
+        else
+            departemen.create({
+                nama_departemen: nama_departemen
+            }).then((hasil)=>{
+                res.json({status: true, message:'berhasil menambahkan departemen'})
+            }).catch((err)=>{
+                res.json({status: false, message:'error saat menambahkan departemen'})
+            })
+    }
+    updateDepartemen(data, res){
+        // menerima id_departemen, nama_departemen
+        var id_departemen = data.body.id_departemen,
+            nama_departemen = data.body.nama_departemen
+        if(!id_departemen || !nama_departemen)
+            res.json({status:false, message:'request tidak lengkap'})
+        else 
+            departemen.findOne({
+                where:{
+                    id: id_departemen
+                }
+            }).then((hasil)=>{
+                if(hasil == null)
+                    res.json({status:false, message:'departemen tidak ditemukan'})
+                else 
+                    departemen.update({
+                        nama_departemen: nama_departemen
+                    },{
+                        where:{
+                            id: id_departemen
+                        }
+                    }).then((hasil)=>{
+                        res.json({status: true, message:'berhasil update departemen'})
+                    }).catch((err)=>{
+                        res.json({status: false, mesage:'error saat melakukan update'})
+                    })
+            }).catch((err)=>{
+                res.json({status: false, message:'error saat pencarian departemen'})
+            })
+    }
+    deleteDepartemen(data, res){
+        // menerima id_departemen
+        var id_departemen = data.body.id_departemen;
+
+
+        if(!id_departemen)
+            res.json({status:false, message:'request tidak lengkap'})
+        else
+            departemen.findOne({
+                where:{
+                    id: id_departemen
+                }
+            }).then((hasil)=>{
+                if(hasil == null)
+                    res.json({status:false, message:'departemen tidak ditemukan'})
+                else 
+                    departemen.destroy({
+                        where:{
+                            id: id_departemen
+                        }
+                    }).then((hasil)=>{
+                        res.json({status: true, message:'berhasil mmenghapus departemen'})
+                    }).catch((err)=>{
+                        res.json({status: false, mesage:'gagal melakukan penghapusan departemen'})
+                    })
+            }).catch((err)=>{
+                res.json({status: false, message:'error saat pencarian departemen'})
+            })
+    }
+
+    // table mahasiswa
 }
 
 module.exports = new Admin;

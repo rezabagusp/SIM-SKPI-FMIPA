@@ -113,8 +113,9 @@ export class EkskulComponent implements OnInit {
     this.MahasiswaService.getSubKategori(this.data.token, this.data.url_get_sub_kategori)
     .subscribe(
       data=> {
-        if(data.status)
+        if(data.status){
           this.list_sub_kategori = data.result;
+        }
         else
           this.data.showError(data.message)
      }
@@ -164,7 +165,8 @@ export class EkskulComponent implements OnInit {
       this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
-      retrieve: true
+      retrieve: true,
+      order: [9, 'desc']
     };
   } 
   getCountedSkor(ekskul){
@@ -194,10 +196,10 @@ export class EkskulComponent implements OnInit {
     var ext = sementara[0].type;
     var size = Number(sementara[0].size);
     console.log(this.max_size)
-    if(ext !== 'image/jpeg' && ext !=='application/pdf' ){
+    if(ext !== 'image/jpeg' && ext !=='image/png' ){
         swal(
           'Perhatian',
-          'file harus *.jpeg/ *.pdf/ *.pdf',
+          'file harus *.jpeg/ *.png',
           'warning'
         )
     }
@@ -233,10 +235,10 @@ export class EkskulComponent implements OnInit {
     this.form.controls.kota.setValue(data.kota,  { onlySelf:   true });
     this.form.controls.negara.setValue(data.negara,  { onlySelf: true });
     this.tanggal_mulai = new Date(data.tanggal_mulai)
-    console.log(this.tanggal_mulai.toISOString().substring(0, 10))
+    //console.log(this.tanggal_mulai.toISOString().substring(0, 10))
     
     this.tanggal_selesai = new Date(data.tanggal_selesai)
-    console.log(this.tanggal_selesai.toISOString().substring(0, 10))
+    //console.log(this.tanggal_selesai.toISOString().substring(0, 10))
 
     this.form.controls.tanggal_mulai.setValue(this.tanggal_mulai,  { onlySelf: true });
     this.form.controls.tanggal_selesai.setValue(this.tanggal_selesai,  { onlySelf: true });        
@@ -247,14 +249,12 @@ export class EkskulComponent implements OnInit {
   getSelectedTingkat(id){
     for(let x in this.list_tingkat)
       if(this.list_tingkat[x].id == id){
-        console.log(this.list_tingkat[x])
         return this.list_tingkat[x]
       }
   }
   getSelectedSubKategori(id){
     for(let x in this.list_sub_kategori)
       if(this.list_sub_kategori[x].id == id){
-        console.log(this.list_sub_kategori[x])
         return this.list_sub_kategori[x]
       }
   }

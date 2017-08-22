@@ -21,9 +21,12 @@
           <a class="nav-link" routerLinkActive="active" [routerLink]="['dashboard']"><i class="icon-speedometer"></i> Dashboard </a>
         </li>
         <li class="divider"></li>
-        <li class="nav-title">
+        <li *ngIf="role != 'admin'" class="nav-title">
           SKPI
         </li>        
+        <li *ngIf="role == 'admin'" class="nav-title">
+          TABLE
+        </li>                
         <li *ngIf="role == 'mahasiswa' " class="nav-item">
           <a class="nav-link" routerLinkActive="active" [routerLink]="['ekskul']"><i class="icon-puzzle"></i> Ekstrakurikuler </a>
         </li>
@@ -37,8 +40,11 @@
           <a class="nav-link" routerLinkActive="active" [routerLink]="['user']"><i class="icon-puzzle"></i> Users</a>
         </li>   
         <li *ngIf="role == 'admin' " class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="['transkripkegiatan']"><i class="icon-puzzle"></i> Transkrip Kegiatan</a>
-        </li>                  
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['jeniskegiatan']"><i class="icon-puzzle"></i> Jenis Kegiatan</a>
+        </li>      
+        <li *ngIf="role == 'admin' " class="nav-item">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['skor']"><i class="icon-puzzle"></i> Skor</a>
+        </li>                    
         <li class="nav-title">
           USER {{nama_user}}
         </li>
@@ -65,3 +71,9 @@
     </div><!-- /.conainer-fluid -->
   </main>
 </div>
+
+<footer class="app-footer">
+  SIM SKPI FMIPA IPB 2017
+  <span class="float-right">Powered by <a href="http://coreui.io">CoreUI</a></span>
+</footer>
+

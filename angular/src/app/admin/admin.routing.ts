@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FullLayoutComponent } from '../layouts/full-layout.component';
 
+import { UserComponent } from './user/user.component';
+import { JenisKegiatanComponent } from './jenis-kegiatan/jenis-kegiatan.component';
+import { SkorComponent } from './skor/skor.component';
+
 import { AuthGuard } from '../_guards/auth.guard';
 
 const routes: Routes = [
@@ -20,13 +24,26 @@ const routes: Routes = [
         loadChildren: './dashboard-admin/dashboard.module#DashboardAdminModule'
       },
       {
-        path: 'transkripkegiatan',
-        loadChildren: './transkrip/transkrip.module#TranskripModule'
+        path: 'user',
+        component: UserComponent,
+        data: {
+          title:'User'
+        }
       },
       {
-        path: 'user',
-        loadChildren: './user/user.module#UserModule'
-      },      
+        path: 'jeniskegiatan',
+        component: JenisKegiatanComponent,
+        data: {
+          title: 'Jenis Kegiatan'
+        }
+      },
+      {
+        path: 'skor',
+        component: SkorComponent,
+        data: {
+          title: 'Skor'
+        }
+      },             
                  
     ]
   },

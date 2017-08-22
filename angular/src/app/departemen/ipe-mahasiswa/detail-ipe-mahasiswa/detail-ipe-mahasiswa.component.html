@@ -1,10 +1,29 @@
 <div class="animated fadeIn">
+  <!-- form tanggal_lulus -->
+  <div class="card">
+    <div class="card-header">
+      <strong>Masukkan tanggal lulus</strong>
+    </div>
+    <form [formGroup]="form" class="form-horizontal">
+      <div class="card-block">
+        <div class="form-group row">
+          <label class="col-md-3 form-control-label" for="tanggal_lulus">Tanggal lulus</label>
+          <div class="col-md-9">
+            <date-picker formControlName="tanggal_lulus" name="tanggal_lulus"></date-picker>            
+          </div>
+        </div> 
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-success btn-sm" (click)="downloadIpe()" [disabled]="download || jumlah_skor<minimum_skor"><i *ngIf="download" class="fa fa-spinner fa-spin"></i> Download IPE</button>
+      </div>
+    </form>
+  </div>  
+
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
             <i class="fa fa-align-justify"></i> List Prestasi <strong>{{nama_mahasiswa}} ({{nim}})</strong> 
-            <button type="button" class="btn btn-success btn-sm pull-right" (click)="downloadIpe()" [disabled]="download || jumlah_skor<minimum_skor"><i *ngIf="download" class="fa fa-spinner fa-spin"></i> Download IPE</button>
         </div>
         <div class="card-block">
            <table datatable [dtOptions]="dtOptions"  style="width: 100%;overflow: auto;" [dtTrigger]="dtTrigger" class="row-border hover">
@@ -44,5 +63,5 @@
   </div>
   <!--/.row-->
 
-  
+ 
 </div>
