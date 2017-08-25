@@ -53,7 +53,19 @@ export class AdminService {
         .map((response: Response) => 
 	        	response.json()
         );    
-  }      
+  }    
+  getAllMutu(url, token){
+    let header= new Headers();
+
+    header.append('Content-type', 'application/json' );
+		header.append('token', token );//put token to request API
+
+    return this.http.get(url ,{headers:header})
+        .map((response: Response) => 
+	        	response.json()
+        );    
+  }    
+  
 
   addUser(url, token, creds){
     let header= new Headers();
@@ -194,4 +206,38 @@ export class AdminService {
         );        
   }    
 
+  //mutu      
+  addMutu(url, token, creds){
+    let header= new Headers();
+
+    header.append('Content-type', 'application/json' );
+		header.append('token', token );//put token to request API
+
+    return this.http.post(url ,creds, {headers:header})
+        .map((response: Response) => 
+	        	response.json()
+        );        
+  }
+  deleteMutu(url, token, creds){
+    let header= new Headers();
+
+    header.append('Content-type', 'application/json' );
+		header.append('token', token );//put token to request API
+
+    return this.http.post(url ,creds, {headers:header})
+        .map((response: Response) => 
+	        	response.json()
+        );        
+  }
+  updateMutu(url, token, creds){
+    let header= new Headers();
+
+    header.append('Content-type', 'application/json' );
+		header.append('token', token );//put token to request API
+
+    return this.http.post(url ,creds, {headers:header})
+        .map((response: Response) => 
+	        	response.json()
+        );        
+  }    
 }

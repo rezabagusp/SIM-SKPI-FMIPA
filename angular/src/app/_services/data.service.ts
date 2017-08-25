@@ -17,6 +17,7 @@ export class DataService {
   public url_upload = 'http://localhost:8000/mahasiswa/upload';
   public url_delete = 'http://localhost:8000/mahasiswa/deleteekskul';
   public url_update = 'http://localhost:8000/mahasiswa/updateekskul';  
+  public url_submit_ekskul = 'http://localhost:8000/mahasiswa/submitekskul';    
   
 
   // API departemen
@@ -28,6 +29,10 @@ export class DataService {
   public url_get_mutu = 'http://localhost:8000/departemen/getmutu';    
   public url_get_mahasiswa = 'http://localhost:8000/departemen/getmahasiswa';  
   public url_download_ipe = 'http://localhost:8000/departemen/downloadipe';
+  public url_get_all_departemen = 'http://localhost:8000/departemen/getalldepartemen';  
+  public url_post_pencarian = 'http://localhost:8000/departemen/postpencarian';    
+  public url_get_all_detail_ipe_mahasiswa = 'http://localhost:8000/departemen/getalldetailipemahasiswa';    
+  
   
 
   // API admin
@@ -39,7 +44,8 @@ export class DataService {
     // get all
   public url_get_all_sub_kategori = 'http://localhost:8000/admin/getallsubkategori';  
   public url_get_all_kategori = 'http://localhost:8000/admin/getallkategori';
-  public url_get_all_skor = 'http://localhost:8000/admin/getallskor';  
+  public url_get_all_skor = 'http://localhost:8000/admin/getallskor'; 
+  public url_get_all_mutu = 'http://localhost:8000/admin/getallmutu';    
     // kategori   
   public url_add_kategori = 'http://localhost:8000/admin/addkategori';
   public url_delete_kategori = 'http://localhost:8000/admin/deletekategori';   
@@ -51,8 +57,11 @@ export class DataService {
   public url_delete_skor = 'http://localhost:8000/admin/deleteskor';
   public url_update_skor = 'http://localhost:8000/admin/updateskor';
   public url_get_skor = 'http://localhost:8000/admin/getskor';  
-  
-      
+    // mutu
+  public url_add_mutu = 'http://localhost:8000/admin/addmutu';
+  public url_delete_mutu = 'http://localhost:8000/admin/deletemutu';
+  public url_update_mutu = 'http://localhost:8000/admin/updatemutu';    
+
 
 
   public token;

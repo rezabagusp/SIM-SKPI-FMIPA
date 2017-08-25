@@ -47,10 +47,6 @@ export class DepartemenService {
 	        	response.json()
         );           
   }
-  
-  getSummary(url, token, id_departemen){
-
-  }
 
   // for fakutlas only
   getAllMahasiswa(url, token){
@@ -89,8 +85,31 @@ export class DepartemenService {
 	        	response.json()
         );         
   }
-      
-  DownloadIPE(url, token, nim){
+  DownloadIPE(url, token, creds){
+    let header= new Headers();
+
+    header.append('Content-type', 'application/json' );
+		header.append('token', token );//put token to request API
+
+
+    return this.http.post(url, creds, {headers:header})
+        .map((response: Response) => 
+	        	response.json()
+        );         
+  }
+  getAllDepartemen(url, token){
+    let header= new Headers();
+
+    header.append('Content-type', 'application/json' );
+		header.append('token', token );//put token to request API
+
+
+    return this.http.get(url, {headers:header})
+        .map((response: Response) => 
+	        	response.json()
+        );         
+  } 
+  getAllDetailIPEMahasiswa(url, token, nim){
     let header= new Headers();
 
     header.append('Content-type', 'application/json' );
@@ -100,6 +119,19 @@ export class DepartemenService {
     return this.http.get(url+'/'+nim, {headers:header})
         .map((response: Response) => 
 	        	response.json()
+        );       
+  }
+  postPencarian(url, token, creds){
+    let header= new Headers();
+
+    header.append('Content-type', 'application/json' );
+		header.append('token', token );//put token to request API
+
+
+    return this.http.post(url, creds, {headers:header})
+        .map((response: Response) => 
+	        	response.json()
         );         
-  } 
+  }
+  
 }
