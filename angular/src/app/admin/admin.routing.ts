@@ -5,6 +5,7 @@ import { FullLayoutComponent } from '../layouts/full-layout.component';
 import { UserComponent } from './user/user.component';
 import { JenisKegiatanComponent } from './jenis-kegiatan/jenis-kegiatan.component';
 import { SkorComponent } from './skor/skor.component';
+import { MutuComponent } from './mutu/mutu.component';
 
 import { AuthGuard } from '../_guards/auth.guard';
 
@@ -43,7 +44,14 @@ const routes: Routes = [
         data: {
           title: 'Skor'
         }
-      },             
+      },        
+      {
+        path: 'mutu',
+        component: MutuComponent,
+        data: {
+          title: 'Mutu'
+        }
+      },                   
                  
     ]
   },

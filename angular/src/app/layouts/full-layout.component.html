@@ -44,7 +44,10 @@
         </li>      
         <li *ngIf="role == 'admin' " class="nav-item">
           <a class="nav-link" routerLinkActive="active" [routerLink]="['skor']"><i class="icon-puzzle"></i> Skor</a>
-        </li>                    
+        </li>           
+        <li *ngIf="role == 'admin' " class="nav-item">
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['mutu']"><i class="icon-puzzle"></i> Mutu</a>
+        </li>                            
         <li class="nav-title">
           USER {{nama_user}}
         </li>

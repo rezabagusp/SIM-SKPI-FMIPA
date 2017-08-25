@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-header">
           <i class="fa fa-align-justify"></i> List User
-          <span class="float-right"><button type="button" class="btn btn-sm btn-primary" (click)="userModal.show()" >Tambah</button></span>
+          <span class="float-right"><button type="button" class="btn btn-sm btn-success" (click)="userModal.show()" >Tambah</button></span>
         </div>
         <div class="card-block">
           <table class="table table-sm table-simple table-responsive" style="display: inline-block;width: 100%;overflow: auto;">
@@ -29,8 +29,10 @@
                 <td *ngIf="user.fk_departemen_id != null">{{user?.departemen.nama_departemen}}</td>
                 <td *ngIf="user.fk_departemen_id == null">NaN</td>                
                 <td>
-                  <span><a href="javascript:void(0)" (click)="deleteUser(user.id)">Hapus</a> </span> &nbsp;
-                  <span><a href="javascript:void(0)" (click)="clickRow(user); updateModal.show()">update</a> </span>
+                  <div>
+                    <button type="button" class="btn-primary btn-xs" (click)="clickRow(user); updateModal.show()">Update</button>
+                    <button type="button" class="btn-danger btn-xs" (click)="deleteUser(user.id)">Hapus</button>                          
+                  </div>            
                 </td>        
               </tr>
             </tbody>
@@ -58,7 +60,7 @@
             <div class="col-md-9">
               <input type="text" id="username" name="nama_user" formControlName="nama_user" class="form-control form-control-sm" placeholder="username" required>
             </div>
-          </div>      
+          </div> 
           <div class="form-group row">
             <label class="col-md-3 form-control-label" for="email_user">Email</label>
               <div class="col-md-9">
