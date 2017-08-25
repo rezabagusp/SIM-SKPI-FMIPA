@@ -37,9 +37,20 @@ router.get('/getmutu/:jumlah_skor', function(req, res, next){
     departemen.getMutu(req, res);
 });
 
-router.get('/downloadipe/:nim', function(req, res, next){
+router.post('/downloadipe', function(req, res, next){
     createPDF.CreateGeneratePDF(req, res);
 });
 
+router.get('/getalldepartemen', function(req, res, next){
+    departemen.getAllDepartemen(req, res);
+});
+
+router.get('/getalldetailipemahasiswa/:nim', function(req, res, next){
+    departemen.getAllDetailIPEMahasiswa(req, res);
+});
+
+router.post('/postpencarian', function(req, res, next){
+    departemen.postPencarian(req, res);
+});
 
 module.exports = router;

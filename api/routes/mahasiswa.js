@@ -1,4 +1,6 @@
 var express = require('express'),
+
+
     multer = require('multer'),
 	mahasiswa = require('./../controller/mahasiswa.controller'),
     router = express.Router(),
@@ -24,7 +26,7 @@ var express = require('express'),
 	}).any();        
 
 
-//routing mahasiswa
+
 router.post('/addekskul', function(req, res, next){
     mahasiswa.addEkskul(req,res);
 });
@@ -49,8 +51,8 @@ router.get('/gettingkat', function(req, res, next){
 	mahasiswa.getTingkat(req, res);
 });
 
-// for detail ekskul
-router.post('/getekskul', function(req, res, next){
+
+router.post('/getekskul', function(req, res, next){// for detail ekskul
 	mahasiswa.getEkskulByID(req, res);
 })
 
@@ -67,4 +69,7 @@ router.post('/asset', function(request, response){
   });
 });
 
+router.post('/submitekskul', function(req, res, next){// for detail ekskul
+	mahasiswa.submitEkskul(req, res);
+})
 module.exports = router;

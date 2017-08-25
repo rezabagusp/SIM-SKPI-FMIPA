@@ -12,6 +12,10 @@ module.exports = function(sequelize, DataType){
 		negara:DataType.STRING,
 		bukti_ekstrakurikuler: DataType.STRING,
 		keterangan:DataType.STRING,
+		status_submit: {
+			type: DataType.BOOLEAN, 
+			defaultValue: false
+		},
 		status_verifikasi_ekstrakurikuler: {
 			type: DataType.INTEGER, 
 			defaultValue: 0
