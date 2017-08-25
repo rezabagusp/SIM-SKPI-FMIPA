@@ -14,6 +14,10 @@ var kategori = sequelize.import('../models/kategori.model.js');
 mahasiswa.belongsTo(departemen, {foreignKey:'fk_departemen_id'})
 ekskul.belongsTo(mahasiswa, {foreignKey:'fk_mahasiswa_id'})
 
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
 
 class Departemen{
     constructor(){}
@@ -42,7 +46,11 @@ class Departemen{
                     where:{
                         fk_departemen_id:id_departemen
                     },                
-                }]
+                }],
+                where:{
+                    status_verifikasi_ekstrakurikuler:0,
+                    status_submit:true
+                }
             }).then((hasil)=>{
                 res.json({status:true, message:'berhasil mendapatkan presma', result:hasil})
             }).catch(()=>{
@@ -67,7 +75,11 @@ class Departemen{
                     include:[{
                         model:departemen
                     }]
-                }]
+                }],
+                where:{
+                    status_verifikasi_ekstrakurikuler:0,
+                    status_submit:true
+                }                
             }).then((hasil)=>{
                 res.json({status:true, message:'berhasil mengambil data presma', result:hasil})
             }).catch((err)=>{
@@ -192,7 +204,7 @@ class Departemen{
             })            
         }
     }
-    getMutu(data, res){// kategori cuku[, baik, sangat baik]
+    getMutu(data, res){// kategori cukup, baik, sangat baik]
         // menerima jumlah skor
         var jumlah_skor = data.params.jumlah_skor;
 
@@ -214,6 +226,121 @@ class Departemen{
             res.json({status: false, message:'error saat pencarian mutu', result: err})
         })
     }
+    getAllDepartemen(data, res){
+        departemen.findAll({
+        }).then((hasil)=>{
+            res.json({status: true, message: 'berhasil get all departemen', result: hasil})
+        }).catch((err)=>{
+            res.json({status: false, message:'gagal get all departemen'})
+        })
+    }
+    getAllDetailIPEMahasiswa(data, res){
+        // menerima nim mahasiswa, dan id_mahasiswa untuk get ekskul mahasiswswa yang belum di verif
+        var nim_mahasiswa = data.params.nim;
+
+        if(!nim_mahasiswa)
+            res.json({status: false, message:'request tidak lengkap'})
+        else {
+            mahasiswa.findOne({
+                where:{
+                    nim_mahasiswa: nim_mahasiswa
+                }
+            }).then((hasil)=>{
+                var id_mahasiswa = hasil.dataValues.id
+                ekskul.findAll({
+                    where:{
+                        fk_mahasiswa_id: id_mahasiswa,
+                        status_verifikasi_ekstrakurikuler:1
+                    },
+                    include:[{
+                        model: mahasiswa
+                    },{
+                        model:skor,
+                        include:[{
+                            model: sub_kategori
+                        },{
+                            model: tingkat
+                        }]
+                    }]
+                }).then((hasil)=>{
+                    if(hasil.length == 0)
+                        res.json({status: false, message:'mahasiswa tidak memiliki prestasi', result: hasil})
+                    else
+                        res.json({status: true, message:'Berhasil get all ipe mahasiswa', result: hasil})
+                }).catch((err)=>{
+                    res.json({status:false, message:'gagal saat menemukan ekstrakurikuler'})
+                })
+            }).catch((err)=>{
+                res.json({status: false, message:'gagal menemukan mahasiswa'})
+            })            
+        }
+    }
+    postPencarian(data, res){
+        // menerima string search_by nama_mahasiswa/ NIM/ departemen
+        var search_by = data.body.search_by,
+            search_data = data.body.search_data;
+        
+        if(search_by.toLowerCase() == 'nim'){
+            mahasiswa.findAll({
+                    where: {
+                        nim_mahasiswa: search_data
+                    },
+                    include:[{
+                        model: departemen
+                    }]
+            }).then((hasil)=>{
+                if(hasil.length == 0)
+                    res.json({status: false, message:'Pencarian tidak ditemukan'})
+                else 
+                    res.json({status: true, message:'Pencarian ditemukan', result: hasil})
+            }).catch((err)=>{
+                console.log('masuk', err)
+                res.json({status: false, message:'Pencarian gagal ditemukan', err: err})
+            })
+        }
+        else if (search_by.toLowerCase() == 'departemen') {
+            mahasiswa.findAll({
+                where:{
+                    fk_departemen_id: search_data
+                },
+                include:[{
+                    model:departemen
+                }]
+                                
+            }).then((hasil)=>{
+                if(hasil.length == 0)
+                    res.json({status: false, message:'Pencarian tidak ditemukan'})
+                else 
+                    res.json({status:true, message:'Pencarian ditemukan', result: hasil})
+            }).catch((err)=>{
+                res.json({status: false, messge:'Pencarian gagal ditemukan'})
+            })
+        }
+        else if (search_by.toLowerCase() == 'nama mahasiswa'){
+            mahasiswa.findAll({
+                where: {
+                    nama_mahasiswa: {
+                        $or:[{
+                            $like: search_data+'%'
+                        },{
+                            $like: '%'+search_data
+                        },{
+                            $like: '%'+search_data+'%'
+                        }]
+                    }
+                }, include:[{
+                    model: departemen
+                }]        
+            }).then((hasil)=>{
+                if(hasil.length == 0)
+                    res.json({status: false, message:'Pencarian tidak ditemukan'})
+                else
+                    res.json({status:true, message:'Pencarian ditemukan', result: hasil})
+            }).catch((err)=>{
+                res.json({status:false, message: 'Pencarian gagal ditemukan'})
+            })
+        }
+     }
 }
 
 module.exports = new Departemen;
