@@ -3,9 +3,7 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
-
-            <i class="fa fa-align-justify"></i> List Ekstrakurikuler            
-
+            <i class="fa fa-align-justify"></i> List Ekstrakurikuler
        	  <div class="pull-right">
           	<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" (click)="changeState(0);resetForm();addEkskulModal.show()">
             	Tambah
@@ -13,53 +11,55 @@
           </div>
         </div>
         <div class="card-block">
-           <table datatable [dtOptions]="dtOptions" style="display: inline-block;width: 100%;overflow: auto;" [dtTrigger]="dtTrigger" class="row-border hover table-simple table-responsive">
+          <div>
+            <strong>Jumlah skor: {{jumlah_skor}}<br/>Kategori: {{kategori}}</strong>
+          </div><br/>
+           <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" style="display: inline-block;width: 100%;overflow: auto;" class="row-border compact table-simple table-responsive">
             <thead>
               <tr>
                 <th>Nama kegiatan</th>
                 <th>Jenis kegiatan</th>
                 <th>Tingkat</th>
-                <th>Kota</th>
-                <th>Negara</th>
-                <th>Tanggal mulai</th>
-                <th>Tanggal selesai</th>
+                <th>Tempat</th>
+                <th>Tanggal</th>
                 <th>Skor</th>  
                 <th>Bukti kegiatan</th>              
                 <th>Status</th>
-                <th>Keterangan</th>                
+                <th>Keterangan</th> 
+                <th>Aksi</th>               
                 <th></th>                                                                                     
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let ekskul of list_ekskul; let i = index">              
+              <tr *ngFor="let ekskul of list_ekskul; let i = index" style="vertical-align: top;">              
                 <td>{{ekskul.nama_ekstrakurikuler}}</td>
                 <td><strong>{{ekskul.skor.sub_kategori.kategori.nama_kategori}}</strong> : {{ekskul.skor.sub_kategori.nama_sub_kategori}}</td>
                 <td>{{ekskul.skor.tingkat.nama_tingkat}}</td>
-                <td>{{ekskul.kota}}</td>
-                <td>{{ekskul.negara}}</td>
-                <td>{{ekskul.tanggal_mulai | date}}</td>
-                <td>{{ekskul.tanggal_selesai | date}}</td>
+                <td>{{ekskul.kota}}, {{ekskul.negara}}</td>
+                <td>{{ekskul.tanggal_mulai | date: 'dd/MM/yyyy'}}-{{ekskul.tanggal_selesai | date:'dd/MM/yyyy'}}</td>
                 <td>
                   {{ekskul.skor.skor}}
                 </td> 
-                <td><a href="assets/public/images/{{ekskul.bukti_ekstrakurikuler}}" target="_blank">{{ekskul.bukti_ekstrakurikuler}}</a></td>
+                <td><a href="assets/public/images/{{ekskul.bukti_ekstrakurikuler}}" target="_blank">lihat</a></td>
                 <td>
                   <span *ngIf="ekskul.status_verifikasi_ekstrakurikuler==0" class="badge badge-default">Belum diproses</span>
                   <span *ngIf="ekskul.status_verifikasi_ekstrakurikuler==1" class="badge badge-success">Diterima</span>
                   <span *ngIf="ekskul.status_verifikasi_ekstrakurikuler==2" class="badge badge-danger">Ditolak</span>                       
                 </td> 
-                <td>{{ekskul.keterangan}}</td>                            
+                <td>{{ekskul.keterangan}}</td>
                 <td>
-                  <span><a *ngIf="ekskul.status_verifikasi_ekstrakurikuler!=1" href="javascript:void(0)" (click)="deleteEkskul(ekskul.id);" ><i class="fa fa-trash-o" aria-hidden="true" title="Hapus"></i>Delete</a></span> &nbsp;
-                  <span><a *ngIf="ekskul.status_verifikasi_ekstrakurikuler!=1" href="javascript:void(0)" (click)="changeState(1);clickRow(ekskul); editEkskulModal.show()" ><i class="fa fa-pencil-square-o" aria-hidden="true" title="Edit"></i>Update</a> </span>
+                  <span><a *ngIf="ekskul.status_verifikasi_ekstrakurikuler!=1" href="javascript:void(0)" (click)="deleteEkskul(ekskul.id);" ><i class="fa fa-trash-o" aria-hidden="true" title="Hapus"></i></a></span> &nbsp;
+                  <span><a *ngIf="ekskul.status_verifikasi_ekstrakurikuler!=1" href="javascript:void(0)" (click)="changeState(1);clickRow(ekskul); editEkskulModal.show()" ><i class="fa fa-pencil-square-o" aria-hidden="true" title="Edit"></i></a> </span>
                 </td>  
+                <td>
+                  <div>
+                    <button type="button" class="btn-xs btn-success" *ngIf="!ekskul.status_submit" (click)="submit(ekskul)" [disabled]="ekskul.status_submit" >Submit</button>                  
+                  </div>
+                </td>
+
               </tr>
             </tbody>
           </table> 
-          <div>
-            <strong>Jumlah skor: {{jumlah_skor}}<br/>Kategori: {{kategori}}</strong>
-            
-          </div>          
         </div>
       </div>
     </div>
@@ -161,7 +161,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="form" (submit)="submit();" novalidate>
+        <form [formGroup]="form" (submit)="addEkskul();" novalidate>
           <div class="form-group row">
             <label class="col-md-3 form-control-label" for="nama_kegiatan">Nama kegiatan</label>
             <div class="col-md-9">

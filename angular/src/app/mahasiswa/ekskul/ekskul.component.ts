@@ -50,6 +50,7 @@ export class EkskulComponent implements OnInit {
   private fileValid:boolean;
   private today;
   private dateValid:boolean;
+  private ispropose:boolean;
 
   // datatables
   private dtOptions: DataTables.Settings = {};
@@ -164,9 +165,13 @@ export class EkskulComponent implements OnInit {
   dataTables(){
       this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10,
+      pageLength: 25,
       retrieve: true,
-      order: [9, 'desc']
+      autoWidth:true,
+      order: [9, 'desc'],
+      columnDefs: [
+        { "orderable": false, "targets": [-1, -2, -3] }
+      ],      
     };
   } 
   getCountedSkor(ekskul){
@@ -203,12 +208,6 @@ export class EkskulComponent implements OnInit {
           'warning'
         )
     }
-    else if(size > this.max_size)
-        swal(
-          'Perhatian',
-          'ukuran file max 1 MB',
-          'warning'
-        )      
     else{
       this.filesToUpload = <Array<File>> fileinput.target.files;
       this.MahasiswaService.uploadFile(this.data.url_upload, this.data.token, this.filesToUpload).
@@ -219,7 +218,7 @@ export class EkskulComponent implements OnInit {
           this.bukti = JSON.parse(JSON.stringify(data)).nama;
         }
         else   
-          this.data.showError('error upload');
+          this.data.showError(JSON.parse(JSON.stringify(data)).message);
       })
       console.log(this.filesToUpload)
     }
@@ -228,22 +227,19 @@ export class EkskulComponent implements OnInit {
 
   // for edit
   clickRow(data:any):void{
-    console.log('data click:', data)
     this.form.controls.nama_kegiatan.setValue(data.nama_ekstrakurikuler,  { onlySelf: true });
     this.form.controls.jenis_kegiatan.setValue(this.getSelectedSubKategori(data.skor.sub_kategori.id),  { onlySelf: true });
     this.form.controls.tingkat_kegiatan.setValue(this.getSelectedTingkat(data.skor.tingkat.id),  { onlySelf: true });    
     this.form.controls.kota.setValue(data.kota,  { onlySelf:   true });
     this.form.controls.negara.setValue(data.negara,  { onlySelf: true });
     this.tanggal_mulai = new Date(data.tanggal_mulai)
-    //console.log(this.tanggal_mulai.toISOString().substring(0, 10))
     
     this.tanggal_selesai = new Date(data.tanggal_selesai)
-    //console.log(this.tanggal_selesai.toISOString().substring(0, 10))
 
     this.form.controls.tanggal_mulai.setValue(this.tanggal_mulai,  { onlySelf: true });
     this.form.controls.tanggal_selesai.setValue(this.tanggal_selesai,  { onlySelf: true });        
     this.bukti = data.bukti_ekstrakurikuler;
-    console.log('bukti', this.bukti)
+
     this.id_ekskul = data.id;                
   }
   getSelectedTingkat(id){
@@ -259,7 +255,7 @@ export class EkskulComponent implements OnInit {
       }
   }
   
-  submit(){
+  addEkskul(){
     var creds = JSON.stringify({
                                 nama_ekstrakurikuler: this.form.value.nama_kegiatan,
                                 fk_sub_kategori_id:this.form.value.jenis_kegiatan.id,
@@ -279,10 +275,10 @@ export class EkskulComponent implements OnInit {
         this.form.reset();
         this.ngOnInit();
         this.dtTrigger.next();        
-        this.data.showSuccess('Berhasil menambah ekskul')
+        this.data.showSuccess(result.message)
       }
       else
-        this.data.showError('something wrong')
+        this.data.showError(result.message)
     })
   }
   deleteEkskul(value){
@@ -358,6 +354,30 @@ export class EkskulComponent implements OnInit {
       return false
     }
   }
+
+  submit(data){
+    let creds = JSON.stringify({
+      id_ekskul: data.id,
+      status_submit: !data.status_submit
+    })
+    this.ispropose = true;
+    console.log(creds)
+    this.MahasiswaService.submit(this.data.url_submit_ekskul, this.data.token, creds)
+    .subscribe(
+      data =>{
+        if(data.status){
+          this.ispropose=false;
+          this.ngOnInit();
+          this.data.showSuccess(data.message);
+        }
+        else{
+          this.ispropose=false;
+          this.data.showError(data.message);
+        }
+      }
+    )
+  }
+  
 
   cek(){
     var date = new Date('2017-08-03T00:00:00.000Z')
