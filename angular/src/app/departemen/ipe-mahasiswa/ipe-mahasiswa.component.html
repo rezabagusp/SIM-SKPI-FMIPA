@@ -34,22 +34,74 @@
 
 <div class="card">
   <div class="card-header">
-    <strong>Cari Mahasiswa</strong>
+    <strong>Cari</strong>
   </div>
-  <form #form = 'ngForm' class="form-horizontal">
+  <form [formGroup] = 'form' class="form-horizontal">
     <div class="card-block">
-
       <div class="form-group row">
-        <label class="col-md-3 form-control-label" for="hf-email">NIM</label>
-        <div class="col-md-9">
-          <input type="text" id="nim" name="nim" [(ngModel)]="nim" class="form-control" placeholder="Masukan NIM">
-        </div>
-      </div>
-
+      <div class="col-md-3 ">
+        <select id="search_by" name="search_by" formControlName='search_by' (change)="changeSearch($event.target.value)" class="form-control form-control-sm" required>
+          <option disabled selected value> --- Cari berdasarkan ---</option>                  
+          <ng-container *ngFor="let search of list_search" >
+          <option [ngValue]="search">{{search.label}}</option>
+          </ng-container>
+        </select>
+      </div>   
+      <div class="col-md-9" *ngIf="form.value.search_by.label == 'Nama mahasiswa' ">
+        <input type="text" formControlName="nama_mahasiswa" placeholder="Masukan nama mahasiswa" name="nama_mahasiswa" class="form-control form-control-sm" required>
+      </div>  
+      <div class="col-md-9" *ngIf="form.value.search_by.label == 'NIM' ">
+        <input type="text" formControlName="nim" name="nim" placeholder="Masukan NIM" class="form-control form-control-sm" required>
+      </div>        
+      <div class="col-md-9" *ngIf="form.value.search_by.label == 'Departemen' ">
+        <select id="departemen" name="departemen" formControlName="departemen"  class="form-control form-control-sm" required>
+          <option disabled selected value>-- Pilih departemen --</option>                  
+          <ng-container *ngFor="let departemen of list_departemen" >
+          <option *ngIf="departemen!=null" [ngValue]="departemen">{{departemen.nama_departemen}}</option>
+          </ng-container>
+        </select>
+      </div>        
     </div>
+    </div> <!-- card block -->
     <div class="card-footer">
-      <button type="submit" class="btn btn-sm btn-primary" (click)="submit()" [disabled]="!nim"><i class="fa fa-dot-circle-o"></i> Cari</button>
-      <button type="reset" class="btn btn-sm btn-danger" (click)="form.reset()"><i class="fa fa-ban"></i> Reset</button>
+      <button type="submit" class="btn btn-sm btn-primary" (click)="submit()"><i class="fa fa-dot-circle-o"></i> Cari</button>
     </div>
   </form>
-</div>    
+</div>
+
+<!-- table hasil pencarian -->
+<div [hidden]="!list_hasil_pencarian.length"class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+            <i class="fa fa-align-justify"></i> Hasil penelusuran          
+        </div>
+        <div class="card-block">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border compact">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama </th>
+                <th>Nim</th>
+                <th>Departemen</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor = "let mahasiswa of list_hasil_pencarian; let i = index" >
+                <td>{{i+1}}</td>
+                <td>{{mahasiswa.nama_mahasiswa}}</td>
+                <td>{{mahasiswa.nim_mahasiswa}}</td>
+                <td>{{mahasiswa.departemen.nama_departemen}}</td>      
+                <td>
+                  <button type="button" class="btn btn-primary btn-sm" [routerLink]="['detailipe', mahasiswa.id, mahasiswa.nama_mahasiswa, mahasiswa.nim_mahasiswa]" >Detail</button>
+                </td>                                                        
+              </tr>
+            </tbody>
+          </table> 
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

@@ -51,27 +51,33 @@ export class DetailIpeMahasiswaComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.initForm();
+    this.dataTables();
+    this.getAllDetailIPEMahasiswa();
+    this.download = false;
+  }
+  dataTables(){
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
-      retrieve: true
-    };
-    this.initForm();
-    this.getAllEkskulMahasiswa();
-    this.download = false;
+      autoWidth: true,         
+      retrieve: true,
+      searching: false,
+      paging:true,
+      columnDefs: [
+        { "orderable": false, "targets": [-1] }
+      ],        
+      destroy: true
+    };  
   }
-
-  getAllEkskulMahasiswa(){
-    this.MahasiswaService.getAllEkskul(this.data.token, this.data.url_get_all_Ekskul, this.id_mahasiswa)
+  getAllDetailIPEMahasiswa(){
+    this.departemenservice.getAllDetailIPEMahasiswa(this.data.url_get_all_detail_ipe_mahasiswa, this.data.token , this.nim)
     .subscribe(
       data=> {
         console.log(data)
         if(data.status){
-          // loop to filter ekskul with status ==1
-          for (let x in data.result)
-            if(data.result[x].status_verifikasi_ekstrakurikuler==1)
-              this.list_ekskul.push(data.result[x])
-          console.log('list ekskul', this.list_ekskul)
+          this.list_ekskul = data.result;
           this.dtTrigger.next();
           this.jumlah_skor = this.getCountedSkor(this.list_ekskul);
           this.getMutu();
@@ -109,19 +115,20 @@ export class DetailIpeMahasiswaComponent implements OnInit {
     return total
   }
 
+  // harus post jumlah skor, nim_mahasiswa, dan tanggal_lulus 
   downloadIpe(){
     if(this.form.controls.tanggal_lulus.valid){
       console.log(this.form)
-      let creds = JSON.stringify({nim: this.nim, tanggal_lulus: this.form.value.tanggal_lulus});
-      
+      let creds = JSON.stringify({nim: this.nim, tanggal_lulus: this.form.value.tanggal_lulus});    
       this.download = true;
-      this.departemenservice.DownloadIPE(this.data.url_download_ipe, this.data.token, this.nim)
+      this.departemenservice.DownloadIPE(this.data.url_download_ipe, this.data.token, creds)
       .subscribe(
         data =>{
           console.log('data', data)
           if(data.status){
             this.download = false;
-            window.open('assets/public/ipe/'+data.result)
+            window.open('assets/public/ipe/pdf.pdf')              
+
           }
           else{
             this.download = false;
