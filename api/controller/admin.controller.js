@@ -512,7 +512,7 @@ class Admin{
                             id: id_mutu
                         }
                     }).then((hasil)=>{
-                        res.json({status: true, mesage: 'berhasil delete mutu'})
+                        res.json({status: true, message: 'berhasil delete mutu'})
                     }).catch((err)=>{
                         res.json({status:false, message:'error saat delete mutu '})
                     })
