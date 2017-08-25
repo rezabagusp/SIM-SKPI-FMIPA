@@ -24,8 +24,15 @@ export class VerifikasiComponent implements OnInit {
       this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
+      autoWidth:true,
       retrieve: true,
-      order: [6, 'desc']
+      order: [6, 'desc'],
+      columnDefs: [
+        { "orderable": false, "targets": [-1,-2,,-3] }
+      ],            
+      language: {
+        emptyTable: 'tidak ada ekstrakurikuler yang diajukan'
+      },
     };
 
     this.getAllPresma();

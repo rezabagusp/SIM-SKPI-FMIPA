@@ -98,7 +98,7 @@
                   {{presma?.tanggal_selesai | date}}
                 </div>
               </div>
-              <div *ngIf = "status==2"class="form-group row">
+              <div *ngIf = "!presma.keterangan=='' " class="form-group row">
                 <label class="col-md-4 form-control-label" for="password-input"><strong>Keterangan</strong></label>
                 <div class="col-md-1">
                   :
@@ -118,8 +118,8 @@
                   <button *ngIf="status==1" type="button" (click)="verifCommentConfirm()" class="btn btn-danger btn-sm">Tolak </button>
                 </div>
                 <div *ngIf="status==0">
-                  <button type="button" (click)="verifConfirm()" class="btn btn-primary pull-right">Terima</button>
-                  <button type="button" (click)="verifCommentConfirm()" class="btn btn-danger pull-right">Tolak </button>
+                  <button type="button" (click)="verifConfirm()" class="btn btn-primary btn-sm">Terima</button>
+                  <button type="button" (click)="verifCommentConfirm()" class="btn btn-danger btn-sm">Tolak </button>
                 </div>
               </div>               
             </div>         

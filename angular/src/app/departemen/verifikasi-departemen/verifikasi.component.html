@@ -5,7 +5,7 @@
         <div class="card-block">
           <h4 class="card-title">List Prestasi Mahasiswa</h4>
           <br>  
-          <table datatable class="row-border hover table-sm"  style="display: inline-block;width: 100%;overflow: auto;"   [dtOptions]="dtOptions"  [dtTrigger]="dtTrigger">
+          <table datatable class="row-border compact table-sm table-responsive" style="display: inline-block;width: 100%;overflow: auto;"  [dtOptions]="dtOptions"  [dtTrigger]="dtTrigger">
             <thead>
               <tr>
                 <th>Nama mahasiswa</th>
@@ -15,11 +15,12 @@
                 <th>Jenis kegiatan</th>
                 <th>Tingkat/region</th>
                 <th>Status</th>        
-                <th>Keterangan</th>    
+                <th>Keterangan</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let presma of list_presma" [routerLink]="['verifikasidetail', presma.id]">
+              <tr *ngFor="let presma of list_presma" style="vertical-align: top;">
                 <td>{{presma?.mahasiswa.nama_mahasiswa}}</td>
                 <td>{{presma?.mahasiswa.nim_mahasiswa}}</td>
                 <td>{{presma?.mahasiswa.departemen.nama_departemen}}</td>
@@ -32,6 +33,9 @@
                   <span *ngIf="presma.status_verifikasi_ekstrakurikuler==2" class="badge badge-danger">Ditolak</span>                                       
                 </td>
                 <td>{{presma?.keterangan}}</td>
+                <td>
+                  <button type="button" class="btn btn-primary btn-sm" [routerLink]="['verifikasidetail', presma.id]" >Proses</button>
+                </td>
               </tr>
             </tbody>
           </table> 
