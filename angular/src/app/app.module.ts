@@ -44,6 +44,7 @@ import { DataService } from './_services/data.service';
 import { AdminService } from './_services/admin.service';
 import { MahasiswaService } from './_services/mahasiswa.service';
 import { DepartemenService } from './_services/departemen.service';
+import { SummaryService } from './_services/summary.service'
 
 @NgModule({
   imports: [
@@ -92,8 +93,8 @@ import { DepartemenService } from './_services/departemen.service';
   AuthenticationService,
   AdminService,
   MahasiswaService,
-  DepartemenService
-
+  DepartemenService,
+  SummaryService
   ],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [ AppComponent ]

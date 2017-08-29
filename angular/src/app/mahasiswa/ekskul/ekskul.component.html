@@ -42,7 +42,8 @@
                 </td> 
                 <td><a href="assets/public/images/{{ekskul.bukti_ekstrakurikuler}}" target="_blank">lihat</a></td>
                 <td>
-                  <span *ngIf="ekskul.status_verifikasi_ekstrakurikuler==0" class="badge badge-default">Belum diproses</span>
+                  <span *ngIf="ekskul.status_submit==0 && ekskul.status_verifikasi_ekstrakurikuler==0" class="badge badge-warning"> Belum disubmit</span>
+                  <span *ngIf="ekskul.status_submit==1 && ekskul.status_verifikasi_ekstrakurikuler==0" class="badge badge-default">Belum diproses</span>
                   <span *ngIf="ekskul.status_verifikasi_ekstrakurikuler==1" class="badge badge-success">Diterima</span>
                   <span *ngIf="ekskul.status_verifikasi_ekstrakurikuler==2" class="badge badge-danger">Ditolak</span>                       
                 </td> 

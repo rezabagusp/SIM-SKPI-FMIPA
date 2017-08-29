@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 22 Agu 2017 pada 03.09
+-- Generation Time: 25 Agu 2017 pada 04.34
 -- Versi Server: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -63,6 +63,7 @@ CREATE TABLE `ekstrakurikulers` (
   `negara` varchar(255) DEFAULT NULL,
   `bukti_ekstrakurikuler` varchar(255) DEFAULT NULL,
   `keterangan` varchar(255) DEFAULT NULL,
+  `status_submit` tinyint(1) NOT NULL,
   `status_verifikasi_ekstrakurikuler` int(11) DEFAULT '0',
   `fk_mahasiswa_id` int(11) DEFAULT NULL,
   `fk_tingkat_id` int(11) DEFAULT NULL,
@@ -76,18 +77,22 @@ CREATE TABLE `ekstrakurikulers` (
 -- Dumping data untuk tabel `ekstrakurikulers`
 --
 
-INSERT INTO `ekstrakurikulers` (`id`, `nama_ekstrakurikuler`, `tanggal_mulai`, `tanggal_selesai`, `kota`, `negara`, `bukti_ekstrakurikuler`, `keterangan`, `status_verifikasi_ekstrakurikuler`, `fk_mahasiswa_id`, `fk_tingkat_id`, `fk_sub_kategori_id`, `fk_skor_id`, `createdAt`, `updatedAt`) VALUES
-(72, 'kegiatan baru', '2017-08-15 07:00:00', '2017-08-15 07:00:00', 'Bekasi', 'Indonesia', '2ty5v5.jpg', '', 1, 1, 2, 1, 7, '2017-08-15 12:38:06', '2017-08-18 14:07:19'),
-(73, 'Bagus upd', '2017-08-15 07:00:00', '2017-08-15 07:00:00', 'Jakarta', 'Indonesia', 'ctjl2f.jpg', '', 1, 1, 1, 3, 3, '2017-08-15 12:38:40', '2017-08-21 07:25:18'),
-(74, 'coba tambah edit update', '2017-08-15 07:00:00', '2017-08-15 07:00:00', 'Bekasi kota', 'Germany', '2snjwb.jpg', '', 1, 1, NULL, NULL, 7, '2017-08-15 13:28:35', '2017-08-18 13:45:01'),
-(75, 'tambahan aja upda', '2017-08-15 07:00:00', '2017-08-15 07:00:00', 'Bekasi', 'asdfaf', '4yur0k.pdf', '', 0, 1, NULL, NULL, 8, '2017-08-15 13:52:11', '2017-08-21 07:18:13'),
-(76, 'Nisa kegiatanrfrfrf', '2017-08-15 07:00:00', '2017-08-15 07:00:00', 'Jakarta', 'Germany', 'yrjqrw.jpg', '', 1, 2, NULL, NULL, 14, '2017-08-15 14:21:48', '2017-08-18 15:56:37'),
-(79, 'Tambah dikit update', '2017-08-18 07:00:00', '2017-08-18 07:00:00', 'Tanggerang', 'Indonesia', 'lyhjln.pdf', '', 0, 1, NULL, NULL, 17, '2017-08-18 09:02:46', '2017-08-21 07:16:18'),
-(80, 'tambah desc update2', '2017-08-18 07:00:00', '2017-08-18 07:00:00', 'Indonesia', 'Bekasi', 'yc2p2m.pdf', '', 0, 1, NULL, NULL, 11, '2017-08-18 09:11:38', '2017-08-21 07:19:02'),
-(81, 'tambah des upt', '2017-08-18 07:00:00', '2017-08-18 07:00:00', 'Jakarta', 'Indonesia', '7wah9o.pdf', 'Belum lengkap antara bukti dan detail', 2, 1, NULL, NULL, 2, '2017-08-18 10:35:26', '2017-08-21 07:24:47'),
-(82, 'tambah nisa update', '2017-08-18 07:00:00', '2017-08-18 07:00:00', 'Jakarta', 'Indonesia', '7nirc.pdf', '', 0, 2, NULL, NULL, 13, '2017-08-18 10:36:43', '2017-08-18 15:35:34'),
-(83, 'nama kegiatannyaa', '2017-08-18 07:00:00', '2017-08-18 07:00:00', 'Bogor', 'Germany', 'f79r49.pdf', '', 1, 2, NULL, NULL, 8, '2017-08-18 14:09:47', '2017-08-18 14:31:31'),
-(84, 'tambahan update', '2017-08-21 07:00:00', '2017-08-21 07:00:00', 'Bekasi', 'Indonesia', 'e030lv.jpg', '', 0, 1, NULL, NULL, 26, '2017-08-21 08:54:22', '2017-08-21 08:55:34');
+INSERT INTO `ekstrakurikulers` (`id`, `nama_ekstrakurikuler`, `tanggal_mulai`, `tanggal_selesai`, `kota`, `negara`, `bukti_ekstrakurikuler`, `keterangan`, `status_submit`, `status_verifikasi_ekstrakurikuler`, `fk_mahasiswa_id`, `fk_tingkat_id`, `fk_sub_kategori_id`, `fk_skor_id`, `createdAt`, `updatedAt`) VALUES
+(72, 'kegiatan baru', '2017-08-15 07:00:00', '2017-08-15 07:00:00', 'Bekasi', 'Indonesia', '2ty5v5.jpg', '', 1, 1, 1, 2, 1, 7, '2017-08-15 12:38:06', '2017-08-18 14:07:19'),
+(73, 'Bagus upd', '2017-08-15 07:00:00', '2017-08-15 07:00:00', 'Jakarta', 'Indonesia', 'ctjl2f.jpg', '', 1, 1, 1, 1, 3, 3, '2017-08-15 12:38:40', '2017-08-21 07:25:18'),
+(74, 'coba tambah edit update', '2017-08-15 07:00:00', '2017-08-15 07:00:00', 'Bekasi kota', 'Germany', '2snjwb.jpg', '', 1, 1, 1, NULL, NULL, 7, '2017-08-15 13:28:35', '2017-08-18 13:45:01'),
+(75, 'tambahan aja upda', '2017-08-15 07:00:00', '2017-08-15 07:00:00', 'Bekasi', 'asdfaf', '4yur0k.pdf', '', 1, 0, 1, NULL, NULL, 8, '2017-08-15 13:52:11', '2017-08-24 10:15:54'),
+(76, 'Nisa kegiatanrfrfrf', '2017-08-15 07:00:00', '2017-08-15 07:00:00', 'Jakarta', 'Germany', 'yrjqrw.jpg', '', 1, 1, 2, NULL, NULL, 14, '2017-08-15 14:21:48', '2017-08-18 15:56:37'),
+(79, 'Tambah dikit update', '2017-08-18 07:00:00', '2017-08-18 07:00:00', 'Tanggerang', 'Indonesia', 'lyhjln.pdf', '', 1, 1, 1, NULL, NULL, 17, '2017-08-18 09:02:46', '2017-08-23 16:09:33'),
+(80, 'tambah desc update2', '2017-08-18 07:00:00', '2017-08-18 07:00:00', 'Indonesia', 'Bekasi', 'yc2p2m.pdf', '', 1, 1, 1, NULL, NULL, 11, '2017-08-18 09:11:38', '2017-08-23 16:09:29'),
+(81, 'tambah des uptaed', '2017-08-18 07:00:00', '2017-08-19 07:00:00', 'Jakarta', 'Indonesia', 'o0ahq.jpg', '', 1, 1, 1, NULL, NULL, 2, '2017-08-18 10:35:26', '2017-08-23 16:09:21'),
+(82, 'tambah nisa update', '2017-08-18 07:00:00', '2017-08-18 07:00:00', 'Jakarta', 'Indonesia', '7nirc.pdf', '', 1, 1, 2, NULL, NULL, 13, '2017-08-18 10:36:43', '2017-08-22 12:49:26'),
+(83, 'nama kegiatannyaa', '2017-08-18 07:00:00', '2017-08-18 07:00:00', 'Bogor', 'Germany', 'f79r49.pdf', '', 1, 1, 2, NULL, NULL, 8, '2017-08-18 14:09:47', '2017-08-18 14:31:31'),
+(84, 'tambahan update 2', '2017-08-21 07:00:00', '2017-08-21 07:00:00', 'Bekasi Kecil', 'Indonesia', 'e030lv.jpg', '', 1, 0, 1, NULL, NULL, 26, '2017-08-21 08:54:22', '2017-08-24 11:34:40'),
+(85, 'Ekskul baru', '2017-08-22 07:00:00', '2017-08-22 07:00:00', 'Bekasi', 'Indonesia', '4yck8.jpg', '', 1, 1, 2, NULL, NULL, 16, '2017-08-22 15:49:30', '2017-08-23 16:09:25'),
+(86, 'update', '2017-08-22 07:00:00', '2017-08-22 07:00:00', 'asdfa', 'asdfa', '8oovct.jpg', '', 1, 1, 2, NULL, NULL, 9, '2017-08-22 15:50:02', '2017-08-24 08:45:13'),
+(88, 'ngtes aja', '2017-08-24 07:00:00', '2017-08-24 07:00:00', 'Palembang', 'Papua Nugini Nugeno', '0nw4ms.PNG', '', 1, 1, 1, NULL, NULL, 27, '2017-08-24 10:46:33', '2017-08-24 11:52:51'),
+(89, 'Lomba Makan Kerupuk', '2017-08-02 07:00:00', '2017-08-05 07:00:00', 'New York', 'Amerika Serikat', 'sjifp.jpg', '', 0, 0, 1, NULL, NULL, 1, '2017-08-24 10:53:53', '2017-08-24 11:40:05');
 
 -- --------------------------------------------------------
 
@@ -158,7 +163,7 @@ CREATE TABLE `mutus` (
 
 INSERT INTO `mutus` (`id`, `nama_mutu`, `batas_bawah`, `batas_atas`, `createdAt`, `updatedAt`) VALUES
 (1, 'Sangat Baik', 40, 200, '2017-08-15 15:17:16', '2017-08-15 15:17:16'),
-(2, 'Baik', 20, 39, '2017-08-15 15:17:16', '2017-08-15 15:17:16'),
+(2, 'Baik', 20, 39, '2017-08-15 15:17:16', '2017-08-22 12:23:51'),
 (3, 'Cukup', 10, 19, '2017-08-15 15:17:16', '2017-08-15 15:17:16'),
 (4, 'Kurang', 5, 9, '2017-08-15 15:17:16', '2017-08-21 19:47:40');
 
@@ -242,8 +247,7 @@ INSERT INTO `sub_kategoris` (`id`, `value`, `nama_sub_kategori`, `fk_kategori_id
 (7, 7, 'Sebagai ketua', 2, '2017-08-02 19:28:54', '2017-08-02 19:28:54'),
 (8, 8, 'Sebagai wakil ketua', 2, '2017-08-02 19:28:54', '2017-08-02 19:28:54'),
 (9, 9, 'Sebagai ketua seksi', 2, '2017-08-02 19:28:54', '2017-08-02 19:28:54'),
-(10, 10, 'Sebagai anggota', 2, '2017-08-02 19:28:54', '2017-08-02 19:28:54'),
-(18, 0, 'jenis baru', 2, '2017-08-21 15:31:34', '2017-08-21 15:31:34');
+(10, 10, 'Sebagai anggota', 2, '2017-08-02 19:28:54', '2017-08-02 19:28:54');
 
 -- --------------------------------------------------------
 
@@ -296,9 +300,9 @@ INSERT INTO `users` (`id`, `nama_user`, `email_user`, `password_user`, `role`, `
 (6, 'admin_fmipa', NULL, 'admin_fmipa', 'departemen', 8, '2017-08-03 11:24:41', '2017-08-03 11:24:41'),
 (7, 'admin_fmipa', 'admin_fmipa@gmail.com', 'admin_fmipa', 'departemen', 8, '2017-08-03 11:25:43', '2017-08-03 11:25:43'),
 (8, 'admin_fmipa update lah ini bisa', 'admin_fmipa@gmail.com', 'c04356f531d0967e564617402c4822dc069bebf07336dac889c122fee426cc17', 'departemen', 9, '2017-08-03 11:28:03', '2017-08-21 07:00:22'),
-(9, 'admin', 'admin@gmail.com', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (11, 'asdfadsf', 'asdfasfs', 'a335a7f67e2ffb0cbf075e488cd27187484a88bc62134f2110f0cbd9908b6070', 'departemen', 1, '2017-08-08 16:05:22', '2017-08-08 16:05:22'),
-(13, 'fakultas', 'fakultas@gmail.com', '432829e5d286441084f58417153302429f8431191bd685709866cc442dd93de8', 'departemen', 9, '2017-08-09 10:07:55', '2017-08-20 11:19:35');
+(13, 'fakultas', 'fakultas@gmail.com', '432829e5d286441084f58417153302429f8431191bd685709866cc442dd93de8', 'departemen', 9, '2017-08-09 10:07:55', '2017-08-20 11:19:35'),
+(14, 'admin', 'admin@gmail.com', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin', 9, '2017-08-24 08:22:13', '2017-08-24 08:23:28');
 
 --
 -- Indexes for dumped tables
@@ -379,7 +383,7 @@ ALTER TABLE `departemens`
 -- AUTO_INCREMENT for table `ekstrakurikulers`
 --
 ALTER TABLE `ekstrakurikulers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 --
 -- AUTO_INCREMENT for table `kategoris`
 --
@@ -404,7 +408,7 @@ ALTER TABLE `skors`
 -- AUTO_INCREMENT for table `sub_kategoris`
 --
 ALTER TABLE `sub_kategoris`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `tingkats`
 --
@@ -414,7 +418,7 @@ ALTER TABLE `tingkats`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --

@@ -9,6 +9,8 @@ import { DepartemenService } from './../../_services/departemen.service';
 
 import { Validators, FormGroup, FormBuilder } from "@angular/forms";
 
+import { Router, ActivatedRoute, Params } from '@angular/router';
+
 @Component({
   selector: 'app-ekskul',
   templateUrl: './ekskul.component.html',
@@ -55,14 +57,19 @@ export class EkskulComponent implements OnInit {
   // datatables
   private dtOptions: DataTables.Settings = {};
   private dtTrigger: Subject<any> = new Subject();
-  private message=''; 
+  private message='';
+
+  private kondisi = ''
+  private searchbox = true
 
   constructor(private http: Http, 
               private toastrService:ToastrService,
               private MahasiswaService:MahasiswaService,
               private data:DataService,
               private departemenservice: DepartemenService ,
-              private fb: FormBuilder){
+              private fb: FormBuilder, 
+              private activatedRoute: ActivatedRoute){
+
     // init loading fileupload
     this.MahasiswaService.progress$.subscribe(status => {
       this.uploadProgress = status;
@@ -72,10 +79,25 @@ export class EkskulComponent implements OnInit {
     this.getSubKategori();
     this.getKategori();
     this.getTingkat();
+
   }
 
   ngOnInit() {   
     // init
+    this.activatedRoute.params.subscribe((params: Params)=>{
+      if(params['kondisi'] == 'all') {
+        this.kondisi = ''
+      } else if(params['kondisi'] == 'Diterima') {
+        this.kondisi = 'Diterima'
+        console.log(this.kondisi)
+      } else if(params['kondisi'] == 'Ditolak') {
+        this.kondisi = 'Ditolak'
+      } else if(params['kondisi'] == 'Belum_diajukan') {
+        this.kondisi = 'Belum disubmit'
+      } else if(params['kondisi'] == 'total') {
+        this.kondisi = ''
+      }
+    })
     this.initForm();  
     this.dataTables();    
     this.getAllEkskul();          
@@ -171,8 +193,9 @@ export class EkskulComponent implements OnInit {
       order: [9, 'desc'],
       columnDefs: [
         { "orderable": false, "targets": [-1, -2, -3] }
-      ],      
-    };
+      ],
+      search: {search: this.kondisi}
+    };                                                                                                                                                                                                                                                                
   } 
   getCountedSkor(ekskul){
     var total = 0

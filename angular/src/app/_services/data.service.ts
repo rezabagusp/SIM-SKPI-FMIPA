@@ -60,7 +60,14 @@ export class DataService {
     // mutu
   public url_add_mutu = 'http://localhost:8000/admin/addmutu';
   public url_delete_mutu = 'http://localhost:8000/admin/deletemutu';
-  public url_update_mutu = 'http://localhost:8000/admin/updatemutu';    
+  public url_update_mutu = 'http://localhost:8000/admin/updatemutu';
+
+  /*API Summary*/
+  /*Mahasiswa*/
+  public dir = 'http://localhost:8000'
+  public url_summary_mahasiswa = this.dir + '/summary/mahasiswasummary'
+  public url_summary_departement = this.dir + '/summary/departementsummary'
+  public url_summary_listdepartement = this.dir + '/summary/departementdata'
 
 
 

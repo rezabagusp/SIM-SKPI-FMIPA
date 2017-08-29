@@ -10,8 +10,10 @@ var express = require('express'),
     jwt = require('jsonwebtoken'),
     mahasiswa = require('./routes/mahasiswa'),
     departemen = require('./routes/departemen'), 
-    admin = require('./routes/admin');   
-    users = require('./routes/users');
+    admin = require('./routes/admin'),  
+    users = require('./routes/users'),
+    summary = require(__dirname + '/routes/summary.route');
+
     
 
 var app = express();
@@ -49,6 +51,7 @@ app.use('/login', login);
 app.use('/mahasiswa', mahasiswa);
 app.use('/departemen', departemen);
 app.use('/admin', admin);
+app.use('/summary', summary)
 app.use('*', function(req, res, next){
   res.json({status:false, message:'non API implemented'})
 })
