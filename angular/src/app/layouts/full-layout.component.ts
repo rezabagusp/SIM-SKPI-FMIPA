@@ -15,9 +15,13 @@ export class FullLayoutComponent implements OnInit {
   public disabled = false;
   public status: {isopen: boolean} = {isopen: false};
   
-  //admin, or departemen
+  //admin,mahasiswa departemen
   public role:string;
   public nama_user:string;
+
+  //mahassiwwa only
+  public nim:string;
+  public nama_mahasiswa;
 
   //to spesified user as id
   public id;
@@ -31,6 +35,8 @@ export class FullLayoutComponent implements OnInit {
 
       this.role = this.data.role;
       this.nama_user = this.data.decode.nama_user;
+      this.nim = this.data.decode.nim_mahasiswa;
+      this.nama_mahasiswa = this.data.nama_mahasiswa
       // get id for check if mahasiswa then get the id mahasiswa, if fakultas or departemen dthen get the id departemen. id == null admin
       this.id = this.data.getId();
       // get data routes

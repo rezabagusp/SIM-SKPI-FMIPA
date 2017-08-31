@@ -68,6 +68,7 @@ class GeneratePDF {
 	}
 	/*Set identitas of mahasiswa*/
 	SetIdentitasMahasiswa(data, res/*need params*/) {
+		console.log(data.body)
 		var nim = data.body.nim,
 			tanggal_lulus = moment(data.body.tanggal_lulus).locale('id').format('DD MMMM YYYY');
 		mahasiswa

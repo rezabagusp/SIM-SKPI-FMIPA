@@ -77,7 +77,7 @@ export class VerifikasiDetailComponent implements OnInit {
   //verif ditolak
   verifCommentConfirm(){
     swal({
-      title: 'Masukan keterangan',
+      title: 'Keterangan revisi',
       input: 'text',
       showCancelButton: true,
       confirmButtonText: 'Submit',
@@ -86,7 +86,7 @@ export class VerifikasiDetailComponent implements OnInit {
         return new Promise(function (resolve, reject) {
           setTimeout(function() {
             resolve();
-          }, 1000)
+          }, 500)
         })
       },
       allowOutsideClick: false

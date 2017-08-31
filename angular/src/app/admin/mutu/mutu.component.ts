@@ -48,7 +48,6 @@ export class MutuComponent implements OnInit {
       retrieve: true,
       searching: false,
       paging:true,
-      order: [1, 'asc'],
       destroy: true
     };    
   }
@@ -138,9 +137,11 @@ export class MutuComponent implements OnInit {
       })  
   }
   clickRow(data){
+    console.log(data)
     this.form.controls.nama_mutu.setValue(data.nama_mutu,  { onlySelf: true });
-    this.form.controls.batas_bawah.setValue(data.batas_bawah,  { onlySelf: true });
     this.form.controls.batas_atas.setValue(data.batas_atas,  { onlySelf: true });
+    this.form.controls.batas_bawah.setValue(data.batas_bawah,  { onlySelf: true });
+
     this.id_mutu = data.id;
   }
 

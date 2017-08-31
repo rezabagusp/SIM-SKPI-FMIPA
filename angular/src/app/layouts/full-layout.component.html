@@ -1,15 +1,21 @@
 <header class="app-header navbar">
   <button class="navbar-toggler d-lg-none" type="button" appMobileSidebarToggler>&#9776;</button>
-  <a class="navbar-brand" href="#"></a>
+  <a class="navbar-brand" href="javascript:void(0)"></a>
   <ul class="nav navbar-nav d-md-down-none">
     <li class="nav-item">
       <a class="nav-link navbar-toggler" href="#" appSidebarToggler>&#9776;</a>
     </li>
     <li class="nav-item px-3">
-      <a class="nav-link" [routerLink]="['dashboard']">Dashboard</a>
+      <a class="nav-link">SIM-SKPI</a>
     </li>
   </ul>
   <ul class="nav navbar-nav ml-auto">
+    <!-- <li class="nav-item px-3 ">
+        <div class="visible-sm-12">
+            <a *ngIf="role == 'mahasiswa' " class="nav-link"> {{nama_mahasiswa}}</a>
+            <a *ngIf="role != 'mahasiswa' " class="nav-link"> {{nama_user}}</a>            
+        </div>
+    </li>   -->
   </ul>
 </header>
 
@@ -49,7 +55,7 @@
           <a class="nav-link" routerLinkActive="active" [routerLink]="['mutu']"><i class="icon-puzzle"></i> Mutu</a>
         </li>                            
         <li class="nav-title">
-          USER {{nama_user}}
+          <span *ngIf="role != 'mahasiswa' ">{{nama_user}}</span> <span *ngIf="role == 'mahasiswa' ">{{nama_mahasiswa}}</span> <br/> <span *ngIf="role == 'mahasiswa' " >({{nim}})</span> 
         </li>
         <li class="nav-item">
           <a class="nav-link" href="javascript:void(0)" (click)="logout()"><i class="icon-logout"></i>Log Out</a>
@@ -76,7 +82,7 @@
 </div>
 
 <footer class="app-footer">
-  SIM SKPI FMIPA IPB 2017
+  &copy; SIM SKPI FMIPA IPB 2017
   <span class="float-right">Powered by <a href="http://coreui.io">CoreUI</a></span>
 </footer>
 

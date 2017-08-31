@@ -6,65 +6,65 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 
 export class DataService {
-
+  public dir = 'http://localhost:8000'
   // API mahasiswa
-  public url_tambah_ekskul = 'http://localhost:8000/mahasiswa/addekskul'; 
-  public url_get_sub_kategori = 'http://localhost:8000/mahasiswa/getsubkategori';
-  public url_get_kategori = 'http://localhost:8000/mahasiswa/getkategori';  
-  public url_get_tingkat = 'http://localhost:8000/mahasiswa/gettingkat';
-  public url_get_all_Ekskul = 'http://localhost:8000/mahasiswa/getallekskul';
-  public url_get_ekskul_byId = 'http://localhost:8000/mahasiswa/getekskul';
-  public url_upload = 'http://localhost:8000/mahasiswa/upload';
-  public url_delete = 'http://localhost:8000/mahasiswa/deleteekskul';
-  public url_update = 'http://localhost:8000/mahasiswa/updateekskul';  
-  public url_submit_ekskul = 'http://localhost:8000/mahasiswa/submitekskul';    
+  public url_tambah_ekskul = this.dir+'/mahasiswa/addekskul'; 
+  public url_get_sub_kategori = this.dir+'/mahasiswa/getsubkategori';
+  public url_get_kategori = this.dir+'/mahasiswa/getkategori';  
+  public url_get_tingkat = this.dir+'/mahasiswa/gettingkat';
+  public url_get_all_Ekskul = this.dir+'/mahasiswa/getallekskul';
+  public url_get_ekskul_byId = this.dir+'/mahasiswa/getekskul';
+  public url_upload = this.dir+'/mahasiswa/upload';
+  public url_delete = this.dir+'/mahasiswa/deleteekskul';
+  public url_update = this.dir+'/mahasiswa/updateekskul';  
+  public url_submit_ekskul = this.dir+'/mahasiswa/submitekskul';    
   
 
   // API departemen
-  public url_get_all_presma = 'http://localhost:8000/departemen/getallpresma';
-  public url_get_detil_presma = 'http://localhost:8000/departemen/detilprestasi';
-  public url_verif_ekskul = 'http://localhost:8000/departemen/verifikasiekskul';  
+  public url_get_all_presma = this.dir+'/departemen/getallpresma';
+  public url_get_detil_presma = this.dir+'/departemen/detilprestasi';
+  public url_verif_ekskul = this.dir+'/departemen/verifikasiekskul';  
   // api fakultas departemen
-  public url_get_all_mahasiswa = 'http://localhost:8000/departemen/getallmahasiswa';  
-  public url_get_mutu = 'http://localhost:8000/departemen/getmutu';    
-  public url_get_mahasiswa = 'http://localhost:8000/departemen/getmahasiswa';  
-  public url_download_ipe = 'http://localhost:8000/departemen/downloadipe';
-  public url_get_all_departemen = 'http://localhost:8000/departemen/getalldepartemen';  
-  public url_post_pencarian = 'http://localhost:8000/departemen/postpencarian';    
-  public url_get_all_detail_ipe_mahasiswa = 'http://localhost:8000/departemen/getalldetailipemahasiswa';    
+  public url_get_all_mahasiswa = this.dir+'/departemen/getallmahasiswa';  
+  public url_get_mutu = this.dir+'/departemen/getmutu';    
+  public url_get_mahasiswa = this.dir+'/departemen/getmahasiswa';  
+  public url_download_ipe = this.dir+'/departemen/downloadipe';
+  public url_get_all_departemen = this.dir+'/departemen/getalldepartemen';  
+  public url_post_pencarian = this.dir+'/departemen/postpencarian';    
+  public url_get_all_detail_ipe_mahasiswa = this.dir+'/departemen/getalldetailipemahasiswa';    
   
   
 
   // API admin
     // user
-  public url_get_all_user = 'http://localhost:8000/admin/getalluser';  
-  public url_add_user = 'http://localhost:8000/admin/adduser';    
-  public url_delete_user = 'http://localhost:8000/admin/deleteuser';
-  public url_update_user = 'http://localhost:8000/admin/updateuser';  
+  public url_get_all_user = this.dir+'/admin/getalluser';  
+  public url_add_user = this.dir+'/admin/adduser';    
+  public url_delete_user = this.dir+'/admin/deleteuser';
+  public url_update_user = this.dir+'/admin/updateuser';  
     // get all
-  public url_get_all_sub_kategori = 'http://localhost:8000/admin/getallsubkategori';  
-  public url_get_all_kategori = 'http://localhost:8000/admin/getallkategori';
-  public url_get_all_skor = 'http://localhost:8000/admin/getallskor'; 
-  public url_get_all_mutu = 'http://localhost:8000/admin/getallmutu';    
+  public url_get_all_sub_kategori = this.dir+'/admin/getallsubkategori';  
+  public url_get_all_kategori = this.dir+'/admin/getallkategori';
+  public url_get_all_skor = this.dir+'/admin/getallskor'; 
+  public url_get_all_mutu = this.dir+'/admin/getallmutu';    
     // kategori   
-  public url_add_kategori = 'http://localhost:8000/admin/addkategori';
-  public url_delete_kategori = 'http://localhost:8000/admin/deletekategori';   
+  public url_add_kategori = this.dir+'/admin/addkategori';
+  public url_delete_kategori = this.dir+'/admin/deletekategori';   
     // sub kategori
-  public url_add_sub_kategori = 'http://localhost:8000/admin/addsubkategori';   
-  public url_delete_sub_kategori = 'http://localhost:8000/admin/deletesubkategori';    
+  public url_add_sub_kategori = this.dir+'/admin/addsubkategori';   
+  public url_delete_sub_kategori = this.dir+'/admin/deletesubkategori';    
     // skor
-  public url_add_skor = 'http://localhost:8000/admin/addskor';
-  public url_delete_skor = 'http://localhost:8000/admin/deleteskor';
-  public url_update_skor = 'http://localhost:8000/admin/updateskor';
-  public url_get_skor = 'http://localhost:8000/admin/getskor';  
+  public url_add_skor = this.dir+'/admin/addskor';
+  public url_delete_skor = this.dir+'/admin/deleteskor';
+  public url_update_skor = this.dir+'/admin/updateskor';
+  public url_get_skor = this.dir+'/admin/getskor';  
     // mutu
-  public url_add_mutu = 'http://localhost:8000/admin/addmutu';
-  public url_delete_mutu = 'http://localhost:8000/admin/deletemutu';
-  public url_update_mutu = 'http://localhost:8000/admin/updatemutu';
+  public url_add_mutu = this.dir+'/admin/addmutu';
+  public url_delete_mutu = this.dir+'/admin/deletemutu';
+  public url_update_mutu = this.dir+'/admin/updatemutu';
 
   /*API Summary*/
   /*Mahasiswa*/
-  public dir = 'http://localhost:8000'
+
   public url_summary_mahasiswa = this.dir + '/summary/mahasiswasummary'
   public url_summary_departement = this.dir + '/summary/departementsummary'
   public url_summary_listdepartement = this.dir + '/summary/departementdata'
@@ -79,6 +79,8 @@ export class DataService {
   
   //mahasiswa
   public id_mahasiswa;
+  public nama_mahasiswa;
+  public nim;
 
   //admin
   public id_admin
@@ -107,7 +109,7 @@ export class DataService {
       console.log('masuk id admin', this.decode)
       return this.id_admin;      
     }
-    else{  
+    else if(this.role == 'mahasiswa'){
       this.id_mahasiswa = this.decode.id;
       console.log('masuk id mahasiswa', this.id_mahasiswa)
       return this.id_mahasiswa
@@ -125,6 +127,8 @@ export class DataService {
         this.id_admin = this.decode.fk_departemen_id
       else if(this.role == 'mahasiswa'){
         this.id_mahasiswa = this.decode.id;
+        this.nama_mahasiswa = this.decode.nama_mahasiswa
+        this.nim = this.decode.nim_mahasiswa;        
       }
   }
   showSuccess(message:string){

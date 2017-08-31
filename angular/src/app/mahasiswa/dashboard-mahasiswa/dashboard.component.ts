@@ -55,6 +55,7 @@ export class DashboardMahasiswaComponent {
   }
   public chartClicked2(e:any):void {
     console.log(e);
+
   }
  
   public chartHovered2(e:any):void {
@@ -62,7 +63,8 @@ export class DashboardMahasiswaComponent {
   }    
 
     constructor(private http: Http,
-	  	private data:DataService, 
+      private data:DataService, 
+      private router: Router,
 	    private Summary: SummaryService) {
     console.log("dashboard mahasiswa")
   }

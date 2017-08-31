@@ -1,5 +1,4 @@
 var express = require('express'),
-
     sequelize = require('../dbsequelize'),
     multer = require('multer'),
     path = require('path'),
@@ -8,12 +7,14 @@ var express = require('express'),
 	        callback(null, 'public/images');
 	    },
 	    filename: function (req, file, callback) {
-	    let ext = path.extname(file.originalname);
-	        callback(null, `${Math.random().toString(36).substring(7)}${ext}`);
+
+            console.log(file.fieldname)
+	        let ext = path.extname(file.originalname);
+	        callback(null, file.fieldname+'-'+ Date.now());
         }
     }),
 	upload = multer({
-        limits: {fileSize: 512 * 1000}, // 512 Kb
+        limits: {fileSize: 512 * 1000 * 1}, // 512 Kb
 		fileFilter: function (req, file, callback) {
             var ext = path.extname(file.originalname);
 			if(ext !== '.jpg' && ext !== '.jpeg' && ext !== '.png' && ext !== '.PNG') {
@@ -31,8 +32,7 @@ var mahasiswa = sequelize.import('../models/mahasiswa.model.js');
 var skor = sequelize.import('../models/skor.model.js');
 var ekskul = sequelize.import('../models/ekstrakurikuler.model.js');
 
-function toTitleCase(str)
-{
+function toTitleCase(str){
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
@@ -47,7 +47,7 @@ class Mahasiswa {
     fileUpload(data,res){
         upload(data, res, function(err){
             if(err) {
-                res.json({status:false, message:'Gagal upload file, format harus gambar dengan max size 512 Kb'})}
+                res.json({status:false, message:'Format harus gambar dengan max size 512 KB'})}
             else res.json({status:true, message:'Berhasil upload', nama: data.files[0].filename})
         });
     }
@@ -271,7 +271,6 @@ class Mahasiswa {
             res.json(err);
         })
     }
-
     submitEkskul(data, res){
         // menerima id_ekskul, status_submit
         var id_ekskul = data.body.id_ekskul,
@@ -289,7 +288,8 @@ class Mahasiswa {
                     res.json({status: false, message:'ekstrakurikuler tidak ditemukan'})
                 else 
                     ekskul.update({
-                        status_submit: status_submit
+                        status_submit: status_submit,
+                        keterangan:''
                     },{
                         where:{
                             id: id_ekskul

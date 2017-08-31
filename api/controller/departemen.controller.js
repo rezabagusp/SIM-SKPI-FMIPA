@@ -20,7 +20,9 @@ function toTitleCase(str)
 }
 
 class Departemen{
-    constructor(){}
+    
+    constructor(){
+    }
     
     getAllpresma(data, res){
         //menerima params id_departemen
@@ -294,7 +296,6 @@ class Departemen{
                 else 
                     res.json({status: true, message:'Pencarian ditemukan', result: hasil})
             }).catch((err)=>{
-                console.log('masuk', err)
                 res.json({status: false, message:'Pencarian gagal ditemukan', err: err})
             })
         }

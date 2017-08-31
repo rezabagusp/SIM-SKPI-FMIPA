@@ -1,15 +1,17 @@
 import { ToastrService } from 'toastr-ng2';
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { Subject } from 'rxjs/Rx'; // dipake buat datatables
 
 import { MahasiswaService } from './../../_services/mahasiswa.service'
 import { DataService } from './../../_services/data.service';
 import { DepartemenService } from './../../_services/departemen.service';
+import { ModalDirective } from 'ngx-bootstrap/modal/modal.component';
 
 import { Validators, FormGroup, FormBuilder } from "@angular/forms";
-
 import { Router, ActivatedRoute, Params } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-ekskul',
@@ -18,6 +20,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 })
 
 export class EkskulComponent implements OnInit {
+ @ViewChild('addEkskulModal') addEkskulModal: ModalDirective;  
+ @ViewChild('editEkskulModal') editEkskulModal: ModalDirective;   
   
   //modal state for formgroup atribute datepicker which is not compit by same formcontrol nam
   private state=0;
@@ -51,7 +55,6 @@ export class EkskulComponent implements OnInit {
   private id_ekskul;
   private fileValid:boolean;
   private today;
-  private dateValid:boolean;
   private ispropose:boolean;
 
   // datatables
@@ -59,7 +62,7 @@ export class EkskulComponent implements OnInit {
   private dtTrigger: Subject<any> = new Subject();
   private message='';
 
-  private kondisi = ''
+  private kondisi;
   private searchbox = true
 
   constructor(private http: Http, 
@@ -85,6 +88,7 @@ export class EkskulComponent implements OnInit {
   ngOnInit() {   
     // init
     this.activatedRoute.params.subscribe((params: Params)=>{
+      console.log('params', params['kondisi'])
       if(params['kondisi'] == 'all') {
         this.kondisi = ''
       } else if(params['kondisi'] == 'Diterima') {
@@ -190,12 +194,12 @@ export class EkskulComponent implements OnInit {
       pageLength: 25,
       retrieve: true,
       autoWidth:true,
-      order: [9, 'desc'],
+      order: [10,'desc'],
       columnDefs: [
-        { "orderable": false, "targets": [-1, -2, -3] }
+        { "orderable": false, "targets": [-1, -2, -3, -5] }
       ],
       search: {search: this.kondisi}
-    };                                                                                                                                                                                                                                                                
+    };                                                                                                                                                                                                                                                     
   } 
   getCountedSkor(ekskul){
     var total = 0
@@ -218,7 +222,7 @@ export class EkskulComponent implements OnInit {
     )
   }  
 
-  // file
+  // file upload
   onChangeFile(fileinput:any){
     var sementara = <Array<File>> fileinput.target.files
     var ext = sementara[0].type;
@@ -233,7 +237,7 @@ export class EkskulComponent implements OnInit {
     }
     else{
       this.filesToUpload = <Array<File>> fileinput.target.files;
-      this.MahasiswaService.uploadFile(this.data.url_upload, this.data.token, this.filesToUpload).
+      this.MahasiswaService.uploadFile(this.data.url_upload, this.data.token, this.filesToUpload, this.data.nim).
       then(data =>{
         console.log(data)
         if(JSON.parse(JSON.stringify(data)).status){
@@ -295,6 +299,7 @@ export class EkskulComponent implements OnInit {
     .subscribe((result)=>{
       if (result.status){   
         console.log(result)
+        this.addEkskulModal.hide();
         this.form.reset();
         this.ngOnInit();
         this.dtTrigger.next();        
@@ -350,6 +355,7 @@ export class EkskulComponent implements OnInit {
       if (result.status){   
         this.ngOnInit();
         this.dtTrigger.next();
+        this.editEkskulModal.hide();
         this.data.showSuccess('Berhasil update ekskul')
       }
       else
@@ -401,7 +407,6 @@ export class EkskulComponent implements OnInit {
     )
   }
   
-
   cek(){
     var date = new Date('2017-08-03T00:00:00.000Z')
 
@@ -409,6 +414,7 @@ export class EkskulComponent implements OnInit {
     console.log('form', this.form);    
     console.log(new Date().toISOString().substring(0, 10));    
     console.log('id_mahasiwa', this.data.id_mahasiswa) 
+    console.log('nim', this.data.nim)
   }
 
 

@@ -9,14 +9,14 @@ const routes: Routes = [
     path: '',
     component: IpeMahasiswaComponent,
     data: {
-      title: 'IPE Mahasiswa'
+      title: 'Indeks Prestasi Ekstrakurikuler Mahasiswa'
     }
   },
   {
     path: 'detailipe/:id/:nama/:nim',
     component: DetailIpeMahasiswaComponent,
     data: {
-      title: 'Detail IPE Mahasiswa'
+      title: 'Detail Indeks Prestasi Ekstrakurikuler Mahasiswa'
     }
   }
 

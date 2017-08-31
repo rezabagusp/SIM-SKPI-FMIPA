@@ -29,9 +29,9 @@ export class DetailIpeMahasiswaComponent implements OnInit {
   private nama_mahasiswa;
   private nim;
   
-  private jumlah_skor = 45;
-  private kategori = 'Sangat Baik';
-  private minimum_skor = 10;
+  private jumlah_skor  ;
+  private kategori = '';
+  private minimum_skor  ;
 
 
   // datatables
@@ -127,7 +127,7 @@ export class DetailIpeMahasiswaComponent implements OnInit {
           console.log('data', data)
           if(data.status){
             this.download = false;
-            window.open('assets/public/ipe/pdf.pdf')              
+            window.open('assets/public/ipe/pdf1.pdf')              
 
           }
           else{

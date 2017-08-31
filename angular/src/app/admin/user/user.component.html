@@ -4,7 +4,6 @@
       <div class="card">
         <div class="card-header">
           <i class="fa fa-align-justify"></i> List User
-          <span class="float-right"><button type="button" class="btn btn-sm btn-success" (click)="userModal.show()" >Tambah</button></span>
         </div>
         <div class="card-block">
           <table class="table table-sm table-simple table-responsive" style="display: inline-block;width: 100%;overflow: auto;">
@@ -30,8 +29,8 @@
                 <td *ngIf="user.fk_departemen_id == null">NaN</td>                
                 <td>
                   <div>
-                    <button type="button" class="btn-primary btn-xs" (click)="clickRow(user); updateModal.show()">Update</button>
-                    <button type="button" class="btn-danger btn-xs" (click)="deleteUser(user.id)">Hapus</button>                          
+                    <button type="button" class="btn btn-primary btn-xs" (click)="clickRow(user); updateModal.show()">Update</button>
+                    <button type="button" class="btn btn-danger btn-xs" (click)="deleteUser(user.id)">Hapus</button>                          
                   </div>            
                 </td>        
               </tr>
@@ -159,3 +158,12 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div id="container-floating">
+
+  <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" (click)="userModal.show()">
+    <p class="plus">+</p>
+    <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
+  </div>
+
+</div>

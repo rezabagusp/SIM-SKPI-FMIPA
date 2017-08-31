@@ -1,16 +1,13 @@
-    <!-- cards -->
-    <div class="col-sm-12 col-md-12">
-      <div class="card card-inverse card-danger text-center">
-        <div class="card-block">
-          <blockquote class="card-blockquote">
-           <i class="fa fa-exclamation-triangle" aria-hidden="true"> Prestasi ekstrakurikuler Mahasiswa hanya dapat dicetak apabila memiliki jumlah skor lebih dari 10.</i>
-            <footer>
-              <cite title="Source Title">SIM SKPI FMIPA IPB 2017</cite>
-            </footer>
-          </blockquote>
-        </div>
-      </div>
-    </div><!--/.col-->
+<!-- cards -->
+<div class="col-sm-12 col-md-12">
+  <div class="alert alert-warning text-center" role="alert">
+    <i class="fa fa-exclamation-triangle" aria-hidden="true"> Prestasi ekstrakurikuler Mahasiswa hanya dapat dicetak apabila memiliki jumlah skor lebih dari 10.</i>
+    <footer>
+      <cite title="Source Title">SIM SKPI FMIPA IPB 2017</cite>
+    </footer>
+  </div>    
+</div><!--/.col-->
+    
     <!-- /cards -->    
 <div class="animated fadeIn">
   <div class="row">
@@ -18,9 +15,12 @@
       <div class="card">
         <div class="card-header">
             <i class="fa fa-align-justify"></i> List Prestasi <strong>{{nama_mahasiswa}} ({{nim}})</strong> 
-        </div>
+        </div>      
         <div class="card-block">
-           <table datatable [dtOptions]="dtOptions" style="overflow: auto;" [dtTrigger]="dtTrigger" class="row-border compact">
+          <div>
+            <strong>Jumlah skor: {{jumlah_skor}}<br/>Kategori: {{kategori}}</strong>   
+          </div><br/>              
+          <table datatable [dtOptions]="dtOptions" style="  width: 100%;overflow: auto;" [dtTrigger]="dtTrigger" class="row-border compact table-responsive">
             <thead>
               <tr>
                 <th>No</th>
@@ -47,9 +47,6 @@
               </tr>
             </tbody>
           </table> 
-          <div>
-            <strong>Jumlah skor: {{jumlah_skor}}<br/>Kategori: {{kategori}}</strong>   
-          </div>
         </div>
       </div>
     </div>

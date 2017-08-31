@@ -60,7 +60,6 @@ export class IpeMahasiswaComponent implements OnInit {
         retrieve: true,
         searching: false,
         paging:true,
-        order: [2, 'asc'],
         columnDefs: [
           { "orderable": false, "targets": [-1] }
         ],        
