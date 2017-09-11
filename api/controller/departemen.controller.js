@@ -1,5 +1,6 @@
 var express = require('express'),
     sequelize = require('../dbsequelize'),
+    nodemailer = require(__dirname + '/mailer.controller.js'),
     ekskul = sequelize.import('../models/ekstrakurikuler.model.js');
 
 var tingkat = sequelize.import('../models/tingkat.model.js');
@@ -98,31 +99,37 @@ class Departemen{
             status = data.body.status_verifikasi,
             keterangan = data.body.keterangan;
 
-        ekskul.findOne({
-            where: {
-                id:id
-            }
-        }).then((hasil)=>{
-            if (hasil.length==0 || hasil==null)
-                res.json({status:false, message:'prestasi tidak ditemukan'})
-            else{
-                ekskul.update({
-                    status_verifikasi_ekstrakurikuler:status,
-                    keterangan: keterangan
-                },
-                {
-                    where:{
-                        id:id
-                    }
-                }).then(()=>{
-                    res.json({status:true, message:'berhasil update status verifikasi'})
-                }).catch(()=>{
-                    res.json({status:false, message:'error saat update'})
-                })      
-            }
-        }).catch((err)=>{
-            res.json({status:false, message:'error saat pencarian ekskul'})
-        })
+        if(!id || !status || !keterangan){
+            res.json({status:false, message:'request tidak lengkap'})
+        }
+        else{
+            ekskul.findOne({
+                where: {
+                    id:id
+                }
+            }).then((hasil)=>{
+                if (hasil.length==0 || hasil==null)
+                    res.json({status:false, message:'prestasi tidak ditemukan'})
+                else{
+                    ekskul.update({
+                        status_verifikasi_ekstrakurikuler:status,
+                        keterangan: keterangan
+                    },
+                    {
+                        where:{
+                            id:id
+                        }
+                    }).then(()=>{
+                        // nodemailer.SendEmail('rezabaguspermana.rbp@gmail.com', res)
+                        res.json({status:true, message:'berhasil update status verifikasi'})
+                    }).catch(()=>{
+                        res.json({status:false, message:'error saat update'})
+                    })      
+                }
+            }).catch((err)=>{
+                res.json({status:false, message:'error saat pencarian ekskul'})
+            })            
+        }
     }
     getPresmaById(data, res){
         // menerima paramsnya id ekskul

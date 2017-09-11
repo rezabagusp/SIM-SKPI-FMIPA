@@ -128,7 +128,12 @@
           <div class="form-group row">
             <label class="col-md-3 form-control-label" for="tanggal_selesai">Tanggal selesai kegiatan</label>
             <div class="col-md-9">
-                <date-picker formControlName="tanggal_selesai" [showClearButton]="false"></date-picker>      
+                <date-picker formControlName="tanggal_selesai" [showClearButton]="true"></date-picker>    
+                <small>
+                  <div class="alert alert-warning alert-dismissible fade show animated fadeIn" role="alert" [hidden]="checkPeriode()">
+                    <strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></strong> Tanggal tidak valid
+                  </div>                    
+                </small>                
             </div>
           </div>  
           <div class="form-group row">
@@ -241,10 +246,8 @@
 </div><!-- /.modal -->
 
 <div id="container-floating">
-
   <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" (click)="changeState(0);resetForm();addEkskulModal.show()">
     <p class="plus">+</p>
     <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
   </div>
-
 </div>

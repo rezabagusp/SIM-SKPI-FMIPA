@@ -86,7 +86,7 @@
                   :
                 </div>                
                 <div class="col-md-7">
-                  {{presma?.tanggal_mulai | date}} 
+                  {{presma?.tanggal_mulai | date:'fullDate'}} 
                 </div>
               </div>
               <div class="form-group row">
@@ -95,14 +95,18 @@
                   :
                 </div>                
                 <div class="col-md-7">
-                  {{presma?.tanggal_selesai | date}}
+                  {{presma?.tanggal_selesai | date:'fullDate'}}
                 </div>
-              </div>
-              <div class = "form-group row">
-                <div *ngIf = "status!=0" class="col-md-8"> 
-                  <input type="checkbox" (click)="checkbox()"> Ubah status 
-                </div>              
-              </div>
+              </div>  
+              <div class="form-group row">
+                <label class="col-md-4 form-control-label" for="password-input"><strong>Skor</strong></label>
+                <div class="col-md-1">
+                  :
+                </div>                
+                <div class="col-md-7">
+                  {{presma?.skor.skor}}
+                </div>
+              </div>                            
               <div class="form-group pull-right">
                 <div *ngIf="checked==true" class="animated fadeIn">
                   <button *ngIf="status==2" type="button" (click)="verifConfirm()" class="btn btn-primary btn-sm">Terima</button>
