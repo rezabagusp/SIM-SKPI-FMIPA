@@ -10,8 +10,7 @@ var express = require('express'),
     jwt = require('jsonwebtoken'),
     mahasiswa = require('./routes/mahasiswa'),
     departemen = require('./routes/departemen'), 
-    admin = require('./routes/admin'),  
-    users = require('./routes/users'),
+    admin = require('./routes/admin'),
     summary = require(__dirname + '/routes/summary.route');
 
     
@@ -45,8 +44,63 @@ app.use(express.static(path.join(__dirname, 'public')));
 //   });
 // })
 
+// ------------ SSO ---------//
+// Set the configuration settings
+const credentials = {
+client: {
+    id: 'fmipa.skpi',
+    secret: '445634566'
+},
+auth: {
+    tokenHost: 'https://accounts.ipb.ac.id',
+    tokenPath: '/OAuth/token.php',
+    authorizePath: '/OAuth/authorize.php',
+}
+};
+
+// Initialize the OAuth2 Library
+const oauth2 = require('simple-oauth2').create(credentials);   
+
+//---*  authorization codee flow*----//    
+// Authorization oauth2 URI
+const authorizationUri = oauth2.authorizationCode.authorizeURL({
+  redirect_url: 'https://fmipa.skpi/IPBLoginCallback',
+  scope: 'core_applications',
+  state: '3(#0/!~'
+});
+
+
+app.get('/auth', (req, res) => {
+  console.log('authorisasi: ', authorizationUri);
+  res.redirect(authorizationUri);
+});      
+//abis login di SSO IPB bikin redirect urlnya ke sini
+app.get('/IPBLoginCallback', (req, res) => {
+  const code = req.query.code;
+  console.log('kodenya', code)
+  const options = {
+    code,
+  };
+
+  oauth2.authorizationCode.getToken(options, (error, result) => {
+    if (error) {
+      console.error('Access Token Error', error.message);
+      return res.json('Authentication failed');
+    }
+
+    console.log('The resulting token: ', result);
+    const token = oauth2.accessToken.create(result);
+
+    console.log('token codenya: ', token)
+    return res
+      .status(200)
+      .json(token);
+  });
+});
+
+
+//route apps
 app.use('/', index);
-app.use('/users', users);
 app.use('/login', login);
 app.use('/mahasiswa', mahasiswa);
 app.use('/departemen', departemen);

@@ -35,6 +35,7 @@ class GeneratePDF {
 		this.kesimpulan = ''
 		this.banyaksubperkategori = []
 		this.indexekstrakurikuler = 0
+		this.indikator = 0
 	}
 	InitGeneratePDF(data, res) {
 		// this.Redefine()
@@ -205,6 +206,7 @@ class GeneratePDF {
 				`
 				this.resource = this.resource.replace('{{bukti}}', kategorisbukti)
 				let indexsubkategori = 1
+				this.indikator = 0
 				/*Write tamplate sub_kategori for each kategori*/
 				for(let k=0; k<this.banyaksubperkategori[i]; k++) {
 					if(this.sub_kategoris[k+indexawalsubkategori].fk_kategori_id == this.kategoris[i].id) {
@@ -263,8 +265,8 @@ class GeneratePDF {
 				}
 				var bukti = `
 					<tr>
-						<td align="center">`+ (count+1) +`</td>
-						<td align="center">`+ this.ekstrakurikulers[this.indexekstrakurikuler].nama_ekstrakurikuler +`</td>
+						<td align="center">`+ (this.indikator+1) +`</td>
+						<td style="vertical-align: top; text-align: left">`+ this.ekstrakurikulers[this.indexekstrakurikuler].nama_ekstrakurikuler +`</td>
 						<td align="center">`+ tanggal +`</td>
 						<td align="center">`+ skor.skor +`</td>
 						<td align="center"> ada </td>
@@ -273,6 +275,7 @@ class GeneratePDF {
 					`
 				this.resource = this.resource.replace('{{daftar}}', bukti)
 				count++
+				this.indikator++
 				this.indexekstrakurikuler++
 				if(this.ekstrakurikulers.length == this.indexekstrakurikuler) {
 					break

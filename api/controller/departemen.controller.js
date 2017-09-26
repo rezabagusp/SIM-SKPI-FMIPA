@@ -99,7 +99,7 @@ class Departemen{
             status = data.body.status_verifikasi,
             keterangan = data.body.keterangan;
 
-        if(!id || !status || !keterangan){
+        if(!id || !status){
             res.json({status:false, message:'request tidak lengkap'})
         }
         else{
