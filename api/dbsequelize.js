@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 
 module.exports = new Sequelize('skpi', 'root', '', {//database, username, passwotd
-	host: 'localhost',
+	host: '127.0.0.1',
 	dialect: 'mysql',
 	pool: {
 		max: 5,

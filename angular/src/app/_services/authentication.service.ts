@@ -15,7 +15,7 @@ export class AuthenticationService {
 
   login(nama_user: string, password_user: string) {
     let send = JSON.stringify({nama_user: nama_user, password_user:password_user });//bikin data inputan lu jadi string json
-    console.log("yang akan dikirim vias service: ", send);    
+    console.log("yang akan dikirim vias service: ", send); 
     let header= new Headers();
     header.append('Content-type', 'application/json' );
 
@@ -23,7 +23,6 @@ export class AuthenticationService {
       .map((response: Response) => {
         //login succesful if there is token response
         let token = response.json() && response.json().token;
-        console.log('ini token balikan', response.json().token);
         if(token){
           this.token = token;
           localStorage.setItem('token', token);

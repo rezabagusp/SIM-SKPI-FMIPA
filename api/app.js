@@ -5,30 +5,25 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     cors = require('cors')
-<<<<<<< HEAD
     login = require('./routes/login'),
-=======
-    login = require('./routes/Login'),
->>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
     index = require('./routes/index'),
     jwt = require('jsonwebtoken'),
     mahasiswa = require('./routes/mahasiswa'),
     departemen = require('./routes/departemen'), 
-    admin = require('./routes/admin');   
-    users = require('./routes/users');
+    admin = require('./routes/admin'),
+    summary = require(__dirname + '/routes/summary.route');
+
     
 
 var app = express();
 
-/*global secret key*/
+/*global secret token key*/
 SECRET_KEY='secret_admire';
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -36,17 +31,89 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//check connection
+// app.use(function(req, res, next){
+//   require('dns').resolve('www.google.com', function(err) {
+//     if (err ) {
+//       console.log('ERR')
+//       res.json(err)
+//     } else {
+//       console.log("Connected");
+//       next();
+//     }
+//   });
+// })
 
+// ------------ SSO ---------//
+// Set the configuration settings
+const credentials = {
+client: {
+    id: 'fmipa.skpi',
+    secret: '445634566'
+},
+auth: {
+    tokenHost: 'https://accounts.ipb.ac.id',
+    tokenPath: '/OAuth/token.php',
+    authorizePath: '/OAuth/authorize.php',
+}
+};
+
+// Initialize the OAuth2 Library
+const oauth2 = require('simple-oauth2').create(credentials);   
+
+//---*  authorization codee flow*----//    
+// Authorization oauth2 URI
+const authorizationUri = oauth2.authorizationCode.authorizeURL({
+  redirect_url: 'https://fmipa.skpi/IPBLoginCallback',
+  scope: 'core_applications',
+  state: '3(#0/!~'
+});
+
+
+app.get('/auth', (req, res) => {
+  console.log('authorisasi: ', authorizationUri);
+  res.redirect(authorizationUri);
+});      
+//abis login di SSO IPB bikin redirect urlnya ke sini
+app.get('/IPBLoginCallback', (req, res) => {
+  const code = req.query.code;
+  console.log('kodenya', code)
+  const options = {
+    code,
+  };
+
+  oauth2.authorizationCode.getToken(options, (error, result) => {
+    if (error) {
+      console.error('Access Token Error', error.message);
+      return res.json('Authentication failed');
+    }
+
+    console.log('The resulting token: ', result);
+    const token = oauth2.accessToken.create(result);
+
+    console.log('token codenya: ', token)
+    return res
+      .status(200)
+      .json(token);
+  });
+});
+
+
+//route apps
 app.use('/', index);
-app.use('/users', users);
 app.use('/login', login);
 app.use('/mahasiswa', mahasiswa);
 app.use('/departemen', departemen);
 app.use('/admin', admin);
+app.use('/summary', summary)
+app.use('*', function(req, res, next){
+  res.json({status:false, message:'non API implemented'})
+})
+
+
 
 /*jwt middleware*/
 app.use(function(req, res, next){
-  console.log(req.headers)
   var token = req.body.token || req.headers['token'];
   if (token){
     jwt.verify(token, SECRET_KEY, function(err, decode){
@@ -56,10 +123,6 @@ app.use(function(req, res, next){
     });
   }else res.json("please send me a token");
 });
-
-app.use('/coba', function(req, res, next){
-  res.json("ada token")
-})
 
 
 // catch 404 and forward to error handler

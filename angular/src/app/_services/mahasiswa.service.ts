@@ -111,14 +111,15 @@ export class MahasiswaService {
         );    		
 
 	}
-	uploadFile(url, token, files: Array<File>){
+	uploadFile(url, token, files: Array<File>, nim){
 		return new Promise((resolve, reject) => {
 			var formData: any = new FormData();
 			var xhr = new XMLHttpRequest();
 			for(var i = 0; i < files.length; i++) {
-				formData.append("bukti" ,files[i],files[i].name);
+				formData.append(nim ,files[i],files[i].name);
 			}
 
+			formData.append('nim_mahasiswa', nim);
 			xhr.onreadystatechange = function () {
 				if (xhr.readyState == 4) {
 					if (xhr.status == 200) {
@@ -139,6 +140,17 @@ export class MahasiswaService {
 			xhr.setRequestHeader('token', token);//put token to header
 			xhr.send(formData);
 		});
+	}
+	submit(url, token, creds){
+    let header= new Headers();
+
+    header.append('Content-type', 'application/json' );
+		header.append('token', token );//put token to request API
+
+    return this.http.post(url, creds ,{headers:header})
+        .map((response: Response) => 
+	        	response.json()
+        );		
 	}
 
 

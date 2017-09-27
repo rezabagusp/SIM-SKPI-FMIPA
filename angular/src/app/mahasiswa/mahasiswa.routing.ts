@@ -19,7 +19,7 @@ const routes: Routes = [
         loadChildren: './dashboard-mahasiswa/dashboard.module#DashboardMahasiswaModule'
       },
       {
-        path: 'ekskul',
+        path: 'ekskul/:kondisi',
         loadChildren: './ekskul/ekskul.module#EkskulModule'
       },    
     ]

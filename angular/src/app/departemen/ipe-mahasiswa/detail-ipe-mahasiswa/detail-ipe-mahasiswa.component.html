@@ -1,13 +1,26 @@
+<!-- cards -->
+<div class="col-sm-12 col-md-12">
+  <div class="alert alert-warning text-center" role="alert">
+    <i class="fa fa-exclamation-triangle" aria-hidden="true"> Prestasi ekstrakurikuler Mahasiswa hanya dapat dicetak apabila memiliki jumlah skor lebih dari 10.</i>
+    <footer>
+      <cite title="Source Title">SIM SKPI FMIPA IPB 2017</cite>
+    </footer>
+  </div>    
+</div><!--/.col-->
+    
+    <!-- /cards -->    
 <div class="animated fadeIn">
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
             <i class="fa fa-align-justify"></i> List Prestasi <strong>{{nama_mahasiswa}} ({{nim}})</strong> 
-            <button type="button" class="btn btn-success btn-sm pull-right" (click)="downloadIpe()" >Download IPE</button>
-        </div>
+        </div>      
         <div class="card-block">
-           <table datatable [dtOptions]="dtOptions" style="width: 100%;overflow: auto;" [dtTrigger]="dtTrigger" class="row-border hover">
+          <div>
+            <strong>Jumlah skor: {{jumlah_skor}}<br/>Kategori: {{kategori}}</strong>   
+          </div><br/>              
+          <table datatable [dtOptions]="dtOptions" style="  width: 100%;overflow: auto;" [dtTrigger]="dtTrigger" class="row-border compact table-responsive">
             <thead>
               <tr>
                 <th>No</th>
@@ -16,25 +29,24 @@
                 <th>Tingkat</th>
                 <th>Kota</th>
                 <th>Negara</th>
+                <th>Skor</th>
                 <th>Bukti</th>                                                                                 
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let ekskul of list_ekskul; let i = index">
-                <td>{{i+1}}</td>                
+                <td>{{i+1}}</td>
                 <td>{{ekskul.nama_ekstrakurikuler}}</td>
-                <td>{{ekskul.sub_kategori.nama_sub_kategori}}</td>
-                <td>{{ekskul.tingkat.nama_tingkat}}</td>
+                <td>{{ekskul.skor.sub_kategori.nama_sub_kategori}}</td>
+                <td>{{ekskul.skor.tingkat.nama_tingkat}}</td>
                 <td>{{ekskul.kota}}</td>
                 <td>{{ekskul.negara}}</td>
-                <td><a href="assets/public/images/{{ekskul.bukti_ekstrakurikuler}}" target="_blank">{{ekskul.bukti_ekstrakurikuler}}</a></td>    
+                <td>{{ekskul.skor.skor}}</td>
+                <!-- <td><a href="assets/../../../api/public/images/{{ekskul.bukti_ekstrakurikuler}}" target="_blank">lihat</a></td>     -->
+                <td><a href="assets/bg-publik2.jpg" target="_blank">lihat</a></td>    
               </tr>
             </tbody>
           </table> 
-          <div>
-            <strong>Jumlah skor: {{jumlah_skor}}<br/>Kategori: {{kategori}}</strong>
-            
-          </div>
         </div>
       </div>
     </div>
@@ -42,5 +54,24 @@
   </div>
   <!--/.row-->
 
-  
+  <!-- form tanggal_lulus -->
+  <div class="card">
+    <div class="card-header">
+      <strong>Masukkan tanggal lulus</strong>
+    </div>
+    <form [formGroup]="form" class="form-horizontal">
+      <div class="card-block">
+        <div class="form-group row">
+          <label class="col-md-3 form-control-label" for="tanggal_lulus">Tanggal lulus</label>
+          <div class="col-md-9">
+            <date-picker formControlName="tanggal_lulus" name="tanggal_lulus"></date-picker>            
+          </div>
+        </div> 
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-success btn-sm" (click)="downloadIpe()" [hidden]="download" [disabled]="!form.valid || jumlah_skor<minimum_skor"> Download IPE</button>
+        <button type="button" class="btn btn-success btn-sm" [hidden]="!download" [disabled]="download || jumlah_skor<minimum_skor"><i *ngIf="download" class="fa fa-spinner fa-spin"></i> Download IPE</button>        
+      </div>
+    </form>
+  </div>  <br/><br/><br/><br/><br/><br/><br/><br/>
 </div>

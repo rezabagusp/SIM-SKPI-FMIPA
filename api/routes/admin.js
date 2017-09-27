@@ -18,6 +18,15 @@ router.get('/getallskor', function(req, res, next){
 router.get('/getalluser', function(req, res, next){
     admin.getAllUser(req, res);
 });
+router.get('/getalldepartemen', function(req, res, next){
+    admin.getAllDepartemen(req, res);
+});
+router.get('/getallmutu', function(req, res, next){
+    admin.getAllMutu(req, res);
+});
+router.get('/getallmahasiswa', function(req, res, next){
+    admin.getAllMahasiswa(req, res);
+});
 
 
 router.post('/addkategori', function(req, res, next){
@@ -62,5 +71,31 @@ router.post('/updateuser', function(req, res, next){
 router.post('/deleteuser', function(req, res, next){
     admin.deleteUser(req, res);
 });
+
+router.post('/addmutu', function(req, res, next){
+    admin.addMutu(req, res);
+});
+router.post('/updatemutu', function(req, res, next){
+    admin.updateMutu(req, res);
+});
+router.post('/deletemutu', function(req, res, next){
+    admin.deleteMutu(req, res);
+});
+
+router.post('/adddepartemen', function(req, res, next){
+    admin.addDepartemen(req, res);
+});
+router.post('/updatedepartemen', function(req, res, next){
+    admin.updateDepartemen(req, res);
+});
+router.post('/deletedepartemen', function(req, res, next){
+    admin.deleteDepartemen(req, res);
+});
+
+
+
+
+
+
 
 module.exports = router;

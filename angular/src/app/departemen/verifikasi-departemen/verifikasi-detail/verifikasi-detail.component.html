@@ -2,7 +2,6 @@
   <div class = "row">
       <div class ="col-md-6">
         <div class="card">
-<<<<<<< HEAD
           <div class="card-block">
             <h4 class="card-title">Detail</h4>
             <br>
@@ -18,19 +17,6 @@
                   <span *ngIf="status==0" class="badge badge-default">Belum diproses</span>
                 </div>
               </div>
-=======
-          <div class="card-header">
-            Informasi prestasi
-            <div class="float-right">
-              Status: 
-              <span *ngIf = "status==1" class="badge badge-success">Diterima</span>    
-              <span *ngIf = "status==2" class="badge badge-danger">Ditolak</span>     
-              <span *ngIf = "status==0" class="badge badge-default">Belum diproses</span>                                        
-            </div>
-          </div>
-          <div class="card-block"> 
-            <div class="container">    
->>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
               <div class="form-group row">
                 <label class="col-md-4 form-control-label"><strong>Nama mahasiswa</strong></label>
                 <div class="col-md-1">
@@ -50,11 +36,7 @@
                 </div>
               </div>
               <div class="form-group row">
-<<<<<<< HEAD
                 <label class="col-md-4 form-control-label" for="password-input"><strong>Departemen</strong></label>
-=======
-                <label class="col-md-4 form-control-label" for="password-input"><strong>NIM</strong></label>
->>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
                 <div class="col-md-1">
                   :
                 </div>                
@@ -77,7 +59,7 @@
                   :
                 </div>
                 <div class="col-md-7 ">
-                  {{presma?.sub_kategori.nama_sub_kategori}}
+                  {{presma?.skor.sub_kategori.nama_sub_kategori}}
                 </div>
               </div>
               <div class="form-group row">
@@ -86,7 +68,7 @@
                   :
                 </div>                
                 <div class="col-md-7">
-                  {{presma?.tingkat.nama_tingkat}}
+                  {{presma?.skor.tingkat.nama_tingkat}}
                 </div>
               </div>        
               <div class="form-group row">
@@ -104,7 +86,7 @@
                   :
                 </div>                
                 <div class="col-md-7">
-                  {{presma?.tanggal_mulai | date}} 
+                  {{presma?.tanggal_mulai | date:'fullDate'}} 
                 </div>
               </div>
               <div class="form-group row">
@@ -113,44 +95,28 @@
                   :
                 </div>                
                 <div class="col-md-7">
-                  {{presma?.tanggal_selesai | date}}
+                  {{presma?.tanggal_selesai | date:'fullDate'}}
                 </div>
-              </div>
+              </div>  
               <div class="form-group row">
-                <label class="col-md-4 form-control-label" for="password-input"><strong>Keterangan</strong></label>
+                <label class="col-md-4 form-control-label" for="password-input"><strong>Skor</strong></label>
                 <div class="col-md-1">
                   :
                 </div>                
                 <div class="col-md-7">
-                  {{presma?.keterangan}}
+                  {{presma?.skor.skor}}
                 </div>
-              </div>              
-              <div class = "form-group row">
-                <div *ngIf = "status!=0" class="col-md-8"> 
-                  <input type="checkbox" (click)="checkbox()"> Ubah status 
-                </div>              
-              </div>
-<<<<<<< HEAD
+              </div>                            
               <div class="form-group pull-right">
                 <div *ngIf="checked==true" class="animated fadeIn">
                   <button *ngIf="status==2" type="button" (click)="verifConfirm()" class="btn btn-primary btn-sm">Terima</button>
                   <button *ngIf="status==1" type="button" (click)="verifCommentConfirm()" class="btn btn-danger btn-sm">Tolak </button>
                 </div>
                 <div *ngIf="status==0">
-                  <button type="button" (click)="verifConfirm()" class="btn btn-primary pull-right">Terima</button>
-                  <button type="button" (click)="verifCommentConfirm()" class="btn btn-danger pull-right">Tolak </button>
+                  <button type="button" (click)="verifConfirm()" class="btn btn-primary btn-sm">Terima</button>
+                  <button type="button" (click)="verifCommentConfirm()" class="btn btn-danger btn-sm">Tolak </button>
                 </div>
               </div>               
-=======
-              <div *ngIf="checked==true" class="animated fadeIn">
-                <button *ngIf="status==2" type="button" (click)="verifConfirm()" class="btn btn-primary btn-sm">Terima</button>
-                <button *ngIf="status==1" type="button" (click)="verifCommentConfirm()"class="btn btn-danger btn-sm">Tolak </button>                
-              </div>
-              <div *ngIf = "status==0">
-                <button type="button" (click)="verifConfirm()" class="btn btn-primary btn-sm">Terima</button>
-                <button type="button" (click)="verifCommentConfirm()"class="btn btn-danger btn-sm">Tolak </button>
-              </div>                   
->>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
             </div>         
           </div>`
         </div>
@@ -158,108 +124,13 @@
 
       <div class = "col-md-6">
         <div class="card">
-<<<<<<< HEAD
           <div class="card-block">
             <h4 class="card-title">Bukti Prestasi</h4>
-=======
-          <div class="card-header">
-            Bukti prestasi
-          </div>
-          <div class="card-block">
->>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
             <div class="portrait">
-              <img src="assets/abby.png" alt="Bukti prestasi" class="fit">
+              <a href="assets/abby.jpg" target="_blank"><img src="assets/abby.jpg" alt="Bukti prestasi" class="fit"></a>
             </div>
           </div>`
         </div>
       </div>      
   </div>
-<<<<<<< HEAD
 </div>
-=======
-</div>
-
-
-<!-- <div class="row">
-  <div class="card">
-    <div class="card-header">
-      Informasi prestasi
-      <div class="float-right">
-        Status: 
-        <span class="badge badge-success">Sudah Terverifikasi</span>
-      </div>
-    </div>
-    <div class="card-block">     
-      <div class="row">
-        <div class="col-md-6">
-          <div class="container">    
-            <div class="form-group row">
-              <label class="col-md-3 form-control-label"><strong>Nama mahasiswa</strong></label>
-              <div class="col-md-8 push-1">
-                  Reza Bagus Permana
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-3 form-control-label" for="password-input"><strong>NIM</strong></label>
-              <div class="col-md-8 push-1">
-                  G64140023
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-3 form-control-label" for="password-input"><strong>Nama kegiatan</strong></label>
-              <div class="col-md-8 push-1">
-                  Organisasi mahasiswa lalalaa
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-3 form-control-label" for="password-input"><strong>Jenis kegiatan</strong></label>
-              <div class="col-md-8 push-1">
-                  presentasi dalam seminar
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-3 form-control-label" for="password-input"><strong>Tingkat/region</strong></label>
-              <div class="col-md-8 push-1">
-                  Nasional
-              </div>
-            </div>        
-            <div class="form-group row">
-              <label class="col-md-3 form-control-label" for="password-input"><strong>Tempat(kota)</strong></label>
-              <div class="col-md-8 push-1">
-                  Nasional
-              </div>
-            </div>                            
-            <div class="form-group row">
-              <label class="col-md-3 form-control-label" for="password-input"><strong>Tanggal mulai kegiatan</strong></label>
-              <div class="col-md-8 push-1">
-                  30/08/1998
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-md-3 form-control-label" for="password-input"><strong>Tanggal selesai kegiatan</strong></label>
-              <div class="col-md-8 push-1">
-                  30/20/1998
-              </div>
-            </div>  
-          </div>                    
-
-        </div>
-        <div class="col-md-6">
-          <div class="card-block">
-            <form>
-            <div class="form-group row">
-              <label class="col-md-3 form-control-label"><strong>Bukti</strong></label>
-              <div class="col-md-8 push-1">    
-              </div>
-            </div>
-            </form>            
-            <div class="portrait">
-              <img src="assets/abby.png" alt="Bukti prestasi" class="fit">
-            </div>
-          </div>`        
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
->>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30

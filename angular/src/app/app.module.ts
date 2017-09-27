@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { LocationStrategy, HashLocationStrategy, CommonModule } from '@angular/common';
@@ -34,8 +30,6 @@ import { AdminModule } from './admin/admin.module';
 import { MahasiswaModule } from './mahasiswa/mahasiswa.module';
 // departemen
 import { DepartemenModule } from './departemen/departemen.module';
-// fakultas
-import { FakultasModule } from './fakultas/fakultas.module';
 // Modal Component
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalsComponent } from './modals/modals.component';
@@ -50,6 +44,7 @@ import { DataService } from './_services/data.service';
 import { AdminService } from './_services/admin.service';
 import { MahasiswaService } from './_services/mahasiswa.service';
 import { DepartemenService } from './_services/departemen.service';
+import { SummaryService } from './_services/summary.service'
 
 @NgModule({
   imports: [
@@ -71,13 +66,8 @@ import { DepartemenService } from './_services/departemen.service';
     AuthModule,
     AdminModule,
     MahasiswaModule,
-    DepartemenModule,
-<<<<<<< HEAD
-    FakultasModule,
+    DepartemenModule
     
-=======
-    FakultasModule
->>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
   ],
   declarations: [
     AppComponent,
@@ -103,8 +93,8 @@ import { DepartemenService } from './_services/departemen.service';
   AuthenticationService,
   AdminService,
   MahasiswaService,
-  DepartemenService
-
+  DepartemenService,
+  SummaryService
   ],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [ AppComponent ]

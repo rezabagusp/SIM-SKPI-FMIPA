@@ -18,6 +18,8 @@ var tingkat = sequelize.import(__dirname + '/../models/tingkat.model.js');
 var user = sequelize.import(__dirname + '/../models/user.model.js');
 var departemen = sequelize.import(__dirname + '/../models/departemen.model.js');
 var skor = sequelize.import(__dirname + '/../models/skor.model.js');
+var mutu = sequelize.import(__dirname + '/../models/mutu.model.js');
+
 
 // create table
 
@@ -29,6 +31,7 @@ kategori.sync().then(() => {
               mahasiswa.sync().then(()=> {
                 user.sync().then(()=>{
                   ekstrakurikuler.sync();
+                  mutu.sync();
                 })
               });
             });

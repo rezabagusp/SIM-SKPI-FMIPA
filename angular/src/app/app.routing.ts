@@ -1,3 +1,4 @@
+
 import { AuthGuard } from './_guards/auth.guard';
 import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -22,11 +23,7 @@ export const routes: Routes = [
   {
     path:'departemen',
     redirectTo:'departemen/dashboard'
-  },
-  {
-    path:'fakultas',
-    redirectTo:'fakultas/dashboard'
-  },  
+  }
 ];
 
 @NgModule({

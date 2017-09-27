@@ -1,12 +1,17 @@
 import { ToastrService } from 'toastr-ng2';
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { Subject } from 'rxjs/Rx'; // dipake buat datatables
 
 import { MahasiswaService } from './../../_services/mahasiswa.service'
 import { DataService } from './../../_services/data.service';
+import { DepartemenService } from './../../_services/departemen.service';
+import { ModalDirective } from 'ngx-bootstrap/modal/modal.component';
 
 import { Validators, FormGroup, FormBuilder } from "@angular/forms";
+import { Router, ActivatedRoute, Params } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-ekskul',
@@ -15,6 +20,8 @@ import { Validators, FormGroup, FormBuilder } from "@angular/forms";
 })
 
 export class EkskulComponent implements OnInit {
+ @ViewChild('addEkskulModal') addEkskulModal: ModalDirective;  
+ @ViewChild('editEkskulModal') editEkskulModal: ModalDirective;   
   
   //modal state for formgroup atribute datepicker which is not compit by same formcontrol nam
   private state=0;
@@ -26,6 +33,9 @@ export class EkskulComponent implements OnInit {
 
   //for datatables data
   private list_ekskul = [];
+  private jumlah_skor;
+  private kategori;
+  private status_verifikasi = 1; // to diterima; 0-uncheck, 1-diterima, 2-ditolak
 
   //exception
   public max_size = Math.pow(10,6);
@@ -45,17 +55,24 @@ export class EkskulComponent implements OnInit {
   private id_ekskul;
   private fileValid:boolean;
   private today;
+  private ispropose:boolean;
 
   // datatables
   private dtOptions: DataTables.Settings = {};
   private dtTrigger: Subject<any> = new Subject();
-  private message=''; 
+  private message='';
+
+  private kondisi;
+  private searchbox = true
 
   constructor(private http: Http, 
               private toastrService:ToastrService,
               private MahasiswaService:MahasiswaService,
               private data:DataService,
-              private fb: FormBuilder){
+              private departemenservice: DepartemenService ,
+              private fb: FormBuilder, 
+              private activatedRoute: ActivatedRoute){
+
     // init loading fileupload
     this.MahasiswaService.progress$.subscribe(status => {
       this.uploadProgress = status;
@@ -64,11 +81,27 @@ export class EkskulComponent implements OnInit {
     // get form select at the first time
     this.getSubKategori();
     this.getKategori();
-    this.getTingkat(); 
+    this.getTingkat();
+
   }
 
   ngOnInit() {   
     // init
+    this.activatedRoute.params.subscribe((params: Params)=>{
+      console.log('params', params['kondisi'])
+      if(params['kondisi'] == 'all') {
+        this.kondisi = ''
+      } else if(params['kondisi'] == 'Diterima') {
+        this.kondisi = 'Diterima'
+        console.log(this.kondisi)
+      } else if(params['kondisi'] == 'Ditolak') {
+        this.kondisi = 'Ditolak'
+      } else if(params['kondisi'] == 'Belum_diajukan') {
+        this.kondisi = 'Belum disubmit'
+      } else if(params['kondisi'] == 'total') {
+        this.kondisi = ''
+      }
+    })
     this.initForm();  
     this.dataTables();    
     this.getAllEkskul();          
@@ -100,14 +133,16 @@ export class EkskulComponent implements OnInit {
     this.form.controls.negara.setValue('',  { onlySelf: true });
     this.form.controls.tanggal_mulai.setValue(this.today,  { onlySelf: true });
     this.form.controls.tanggal_selesai.setValue(this.today,  { onlySelf: true });
+    this.fileValid = false;
   }
   //api service to get option form
   getSubKategori(){
     this.MahasiswaService.getSubKategori(this.data.token, this.data.url_get_sub_kategori)
     .subscribe(
       data=> {
-        if(data.status)
+        if(data.status){
           this.list_sub_kategori = data.result;
+        }
         else
           this.data.showError(data.message)
      }
@@ -142,11 +177,13 @@ export class EkskulComponent implements OnInit {
       data=> {
         if(data.status){
           this.list_ekskul = data.result;
-          this.dtTrigger.next();        
+          this.jumlah_skor=this.getCountedSkor(this.list_ekskul);
+          this.getMutu();
+          this.dtTrigger.next();
           console.log('all ekskul: ', this.list_ekskul)
         }
         else{
-          this.data.showError('erro saat mengambil data');
+          this.data.showError(data.message);
         }
       }
     )
@@ -154,32 +191,53 @@ export class EkskulComponent implements OnInit {
   dataTables(){
       this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 10,
-      retrieve: true
-    };
+      pageLength: 25,
+      retrieve: true,
+      autoWidth:true,
+      order: [10,'desc'],
+      columnDefs: [
+        { "orderable": false, "targets": [-1, -2, -3, -5] }
+      ],
+      search: {search: this.kondisi}
+    };                                                                                                                                                                                                                                                     
   } 
+  getCountedSkor(ekskul){
+    var total = 0
+    for(let x in this.list_ekskul){
+      if(this.list_ekskul[x].status_verifikasi_ekstrakurikuler == this.status_verifikasi)
+        total+=this.list_ekskul[x].skor.skor
+    }
+    return total
+  }
+  getMutu(){
+    this.departemenservice.getMutu(this.data.url_get_mutu, this.data.token, this.jumlah_skor)
+    .subscribe(
+      data => {
+        console.log(data)
+        if(data.status)
+          this.kategori = data.result;
+        else
+          this.data.showError(data.message)
+      }
+    )
+  }  
 
+  // file upload
   onChangeFile(fileinput:any){
     var sementara = <Array<File>> fileinput.target.files
     var ext = sementara[0].type;
     var size = Number(sementara[0].size);
     console.log(this.max_size)
-    if(ext !== 'image/jpeg' && ext !=='application/pdf' ){
+    if(ext !== 'image/jpeg' && ext !=='image/png' ){
         swal(
           'Perhatian',
-          'file harus *.jpeg/ *.pdf/ *.pdf',
+          'file harus *.jpeg/ *.png',
           'warning'
         )
     }
-    else if(size > this.max_size)
-        swal(
-          'Perhatian',
-          'ukuran file max 1 MB',
-          'warning'
-        )      
     else{
       this.filesToUpload = <Array<File>> fileinput.target.files;
-      this.MahasiswaService.uploadFile(this.data.url_upload, this.data.token, this.filesToUpload).
+      this.MahasiswaService.uploadFile(this.data.url_upload, this.data.token, this.filesToUpload, this.data.nim).
       then(data =>{
         console.log(data)
         if(JSON.parse(JSON.stringify(data)).status){
@@ -187,75 +245,44 @@ export class EkskulComponent implements OnInit {
           this.bukti = JSON.parse(JSON.stringify(data)).nama;
         }
         else   
-          this.data.showError('error upload');
+          this.data.showError(JSON.parse(JSON.stringify(data)).message);
       })
       console.log(this.filesToUpload)
     }
         
   }
-  // downloadPDF(){
-  //   console.log('masuk')
-  //   var headers = new Headers();
-  //   headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
-  //   this.http.post('http://localhost:8000/mahasiswa/asset', null,  {
-  //       headers: headers
-  //       })
-  //       .retry(3)
-  //       // .map( (res:any) => res.blob() ) // errors out
-  //       .subscribe(
-  //         (dataReceived:any) => {
-  //           var blob = new Blob([dataReceived._body], {type: 'application/pdf'});
-  //           var fileURL = URL.createObjectURL(dataReceived);
-  //           window.open(fileURL);            
-  //         },
-  //         (err:any) => console.log('error'),
-  //         () => console.log('Complete')
-  //       );
-  // }
-  // downloadPDF().subscribe(
-  //       (res) => {
-  //       var fileURL = URL.createObjectURL(res);
-  //       window.open(fileURL);
-  //       }
-  //   );
 
   // for edit
   clickRow(data:any):void{
-    console.log('data click:', data)
     this.form.controls.nama_kegiatan.setValue(data.nama_ekstrakurikuler,  { onlySelf: true });
-    this.form.controls.jenis_kegiatan.setValue(this.getSelectedSubKategori(data.sub_kategori.id),  { onlySelf: true });
-    this.form.controls.tingkat_kegiatan.setValue(this.getSelectedTingkat(data.tingkat.id),  { onlySelf: true });    
-    this.form.controls.kota.setValue(data.kota,  { onlySelf: true });
+    this.form.controls.jenis_kegiatan.setValue(this.getSelectedSubKategori(data.skor.sub_kategori.id),  { onlySelf: true });
+    this.form.controls.tingkat_kegiatan.setValue(this.getSelectedTingkat(data.skor.tingkat.id),  { onlySelf: true });    
+    this.form.controls.kota.setValue(data.kota,  { onlySelf:   true });
     this.form.controls.negara.setValue(data.negara,  { onlySelf: true });
     this.tanggal_mulai = new Date(data.tanggal_mulai)
-    console.log(this.tanggal_mulai.toISOString().substring(0, 10))
     
     this.tanggal_selesai = new Date(data.tanggal_selesai)
-    console.log(this.tanggal_selesai.toISOString().substring(0, 10))
 
     this.form.controls.tanggal_mulai.setValue(this.tanggal_mulai,  { onlySelf: true });
     this.form.controls.tanggal_selesai.setValue(this.tanggal_selesai,  { onlySelf: true });        
-    this.bukti = data.bukti;
+    this.bukti = data.bukti_ekstrakurikuler;
+
     this.id_ekskul = data.id;                
   }
-
   getSelectedTingkat(id){
     for(let x in this.list_tingkat)
       if(this.list_tingkat[x].id == id){
-        console.log(this.list_tingkat[x])
         return this.list_tingkat[x]
       }
   }
   getSelectedSubKategori(id){
     for(let x in this.list_sub_kategori)
       if(this.list_sub_kategori[x].id == id){
-        console.log(this.list_sub_kategori[x])
         return this.list_sub_kategori[x]
       }
-  }    
+  }
   
-  submit(){
+  addEkskul(){
     var creds = JSON.stringify({
                                 nama_ekstrakurikuler: this.form.value.nama_kegiatan,
                                 fk_sub_kategori_id:this.form.value.jenis_kegiatan.id,
@@ -272,13 +299,14 @@ export class EkskulComponent implements OnInit {
     .subscribe((result)=>{
       if (result.status){   
         console.log(result)
+        this.addEkskulModal.hide();
         this.form.reset();
         this.ngOnInit();
         this.dtTrigger.next();        
-        this.data.showSuccess('Berhasil menambah ekskul')
+        this.data.showSuccess(result.message)
       }
       else
-        this.data.showError('something wrong')
+        this.data.showError(result.message)
     })
   }
   deleteEkskul(value){
@@ -327,6 +355,7 @@ export class EkskulComponent implements OnInit {
       if (result.status){   
         this.ngOnInit();
         this.dtTrigger.next();
+        this.editEkskulModal.hide();
         this.data.showSuccess('Berhasil update ekskul')
       }
       else
@@ -345,7 +374,39 @@ export class EkskulComponent implements OnInit {
         confirmButtonText: 'Ya, hapus!'
       })  
   }
+  checkPeriode(){
+    let s = new Date(this.form.value.tanggal_mulai);
+    let e = new Date(this.form.value.tanggal_selesai);
+    if (s <= e) {
+      return true
+    }else {
+      return false
+    }
+  }
 
+  submit(data){
+    let creds = JSON.stringify({
+      id_ekskul: data.id,
+      status_submit: !data.status_submit
+    })
+    this.ispropose = true;
+    console.log(creds)
+    this.MahasiswaService.submit(this.data.url_submit_ekskul, this.data.token, creds)
+    .subscribe(
+      data =>{
+        if(data.status){
+          this.ispropose=false;
+          this.ngOnInit();
+          this.data.showSuccess(data.message);
+        }
+        else{
+          this.ispropose=false;
+          this.data.showError(data.message);
+        }
+      }
+    )
+  }
+  
   cek(){
     var date = new Date('2017-08-03T00:00:00.000Z')
 
@@ -353,6 +414,7 @@ export class EkskulComponent implements OnInit {
     console.log('form', this.form);    
     console.log(new Date().toISOString().substring(0, 10));    
     console.log('id_mahasiwa', this.data.id_mahasiswa) 
+    console.log('nim', this.data.nim)
   }
 
 

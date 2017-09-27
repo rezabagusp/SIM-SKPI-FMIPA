@@ -1,0 +1,105 @@
+<div class="animated fadeIn">
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <strong>Tambah jenis kegiatan</strong>
+      </div>
+      <form [formGroup]='form' class="form-horizontal">
+        <div class="card-block">
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="hf-email">Kategori</label>
+            <div class="col-md-9">
+              <select id="kategori" name="kategori" formControlName="kategori" class="form-control form-control-sm"  required>
+                <option disabled selected value></option>
+                <option *ngFor="let kategori of list_kategori" [ngValue]="kategori">{{kategori.nama_kategori}}</option>              
+              </select>
+            </div>        
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="sub_kategori">Jenis kegiatan</label>
+            <div class="col-md-9">
+              <input type="text" formControlName="sub_kategori" class="form-control form-control-sm" required>
+            </div>
+          </div> 
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-sm btn-primary" [disabled]="!form.valid" (click)="addJeniskegiatan()"><i class="fa fa-dot-circle-o"></i> Tambah</button>
+          <button type="reset" class="btn btn-sm btn-danger" (click)="form.reset()"><i class="fa fa-ban"></i> Reset</button>
+        </div>
+      </form>
+    </div>
+    <!-- data tables jenis_kegiatan -->
+    <div class="card">
+      <div class="card-header">
+          <i class="fa fa-align-justify"></i> Jenis kegiatan
+      </div>
+      <div class="card-block">
+          <table datatable [dtOptions]="dtOptions" style="display: inline-block;width: 100%;overflow: auto;" [dtTrigger]="dtTrigger" class="row-border hover table-simple table-responsive">
+          <thead>
+            <tr>
+              <th>Kategori</th>
+              <th>Jenis kegiatan</th>                
+              <th></th>                                                                                     
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let jenis of list_sub_kategori; let i = index">              
+              <td>{{jenis.kategori.nama_kategori}}</td>
+              <td>{{jenis.nama_sub_kategori}}</td>                        
+              <td>
+                <span><a href="javascript:void(0)" (click)="deleteSubKategori(jenis.id);" ><i class="fa fa-trash-o" aria-hidden="true" title="Hapus"></i>Delete</a></span> &nbsp;                </td>  
+            </tr>
+          </tbody>
+        </table>          
+      </div>
+    </div>    
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <strong>Tambah Kategori</strong>
+      </div>
+      <form #myForm='ngForm' class="form-horizontal">
+        <div class="card-block">
+          <div class="form-group row">
+            <label class="col-md-3 form-control-label" for="kategori">Nama Kategori</label>
+            <div class="col-md-9">
+              <input type="text" [(ngModel)]="nama_kategori" name="nama_kategori"  class="form-control form-control-sm" required>
+            </div>
+          </div> 
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-sm btn-primary" [disabled]="!nama_kategori" (click)="addKategori()"><i class="fa fa-dot-circle-o"></i> Tambah</button>
+          <button type="reset" class="btn btn-sm btn-danger" (click)="myForm.reset()"><i class="fa fa-ban"></i> Reset</button>
+        </div>
+      </form>
+    </div>
+    <!-- data tables kategori -->
+    <div class="card">
+      <div class="card-header">
+          <i class="fa fa-align-justify"></i> Kategori
+      </div>
+      <div class="card-block">
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover table-simple table-responsive">
+          <thead>
+            <tr>
+              <th>Nama kategori</th>                
+              <th></th>                                                                                     
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let kategori of list_kategori; let i = index">              
+              <td>{{kategori.nama_kategori}}</td>                    
+              <td>
+                <span><a href="javascript:void(0)" (click)="deleteKategori(kategori.id);" ><i class="fa fa-trash-o" aria-hidden="true" title="Hapus"></i>Delete</a></span> &nbsp;                </td>  
+            </tr>
+          </tbody>
+        </table>          
+      </div>
+    </div>    
+  </div>
+</div>
+</div>
+
+

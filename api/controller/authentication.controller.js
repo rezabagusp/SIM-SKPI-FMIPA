@@ -22,7 +22,6 @@ class Authentication{
     }
     
     login(data, res){
-        console.log('databody', data.body)
         this.setNamaUser(data.nama_user);
         this.setPasswordUser(data.password_user);
         user.findOne({
@@ -31,18 +30,15 @@ class Authentication{
                 password_user: this.password_user
             }
         }).then((hasil)=>{
-            console.log('hasilnya', hasil.dataValues)
             var token = jwt.sign(hasil.dataValues, SECRET_KEY);
             res.json({status:true, message:"login berhasil", token:token});
         }).catch((err)=> {
-            console.log('masuk err')
             mahasiswa.findOne({
                 where: {
                     nama_user:this.nama_user,
                     password_user:this.password_user
                 }
             }).then((data)=>{
-                console.log(data)
                 var token = jwt.sign(data.dataValues, SECRET_KEY);
                 res.json({status:true, message:"login berhasil", token:token});
             }).catch((err)=>{
@@ -50,7 +46,6 @@ class Authentication{
             })
         })
     }
-
 }
 
 module.exports = new Authentication;

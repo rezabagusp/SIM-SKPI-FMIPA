@@ -3,46 +3,61 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
-
-            <i class="fa fa-align-justify"></i> List Ekstrakurikuler            
-
+            <i class="fa fa-align-justify"></i> List Ekstrakurikuler
        	  <div class="pull-right">
-          	<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" (click)="changeState(0);resetForm();addEkskulModal.show()">
+          	<!-- <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" (click)="changeState(0);resetForm();addEkskulModal.show()">
             	Tambah
-          	</button>		
+          	</button>		 -->
           </div>
         </div>
         <div class="card-block">
-           <table datatable [dtOptions]="dtOptions" style="display: inline-block;width: 100%;overflow: auto;" [dtTrigger]="dtTrigger" class="row-border hover">
+          <div>
+            <strong>Jumlah skor: {{jumlah_skor}}<br/>Kategori: {{kategori}}</strong>
+          </div><br/>
+           <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" style="display:inline-block;width: 100%;overflow: auto;" class="row-border compact table-simple table-responsive">
             <thead>
               <tr>
-                <th>No</th>
-                <th>Nama </th>
-                <th>jenis</th>
+                <th>Nama kegiatan</th>
+                <th>Jenis kegiatan</th>
                 <th>Tingkat</th>
-                <th>Kota</th>
-                <th>Negara</th>
-                <th>Tanggal mulai</th>
-                <th>Tanggal selesai</th>
-                <th>Bukti</th>
+                <th>Tempat</th>
+                <th>Tanggal</th>
+                <th>Skor</th>  
+                <th>Bukti kegiatan</th>              
+                <th>Status</th>
+                <th>Keterangan</th> 
+                <th>Aksi </th>               
                 <th></th>                                                                                     
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let ekskul of list_ekskul; let i = index">
-                <td>{{i+1}}</td>                
+              <tr *ngFor="let ekskul of list_ekskul; let i = index" style="vertical-align: top;">              
                 <td>{{ekskul.nama_ekstrakurikuler}}</td>
-                <td>{{ekskul.sub_kategori.nama_sub_kategori}}</td>
-                <td>{{ekskul.tingkat.nama_tingkat}}</td>
-                <td>{{ekskul.kota}}</td>
-                <td>{{ekskul.negara}}</td>
-                <td>{{ekskul.tanggal_mulai | date}}</td>
-                <td>{{ekskul.tanggal_selesai | date}}</td>
-                <td><a href="assets/public/images/{{ekskul.bukti_ekstrakurikuler}}" target="_blank">{{ekskul.bukti_ekstrakurikuler}}</a></td>
+                <td><strong>{{ekskul.skor.sub_kategori.kategori.nama_kategori}}</strong> : {{ekskul.skor.sub_kategori.nama_sub_kategori}}</td>
+                <td>{{ekskul.skor.tingkat.nama_tingkat}}</td>
+                <td>{{ekskul.kota}}, {{ekskul.negara}}</td>
+                <td>{{ekskul.tanggal_mulai | date: 'dd/MM/yyyy'}}-{{ekskul.tanggal_selesai | date:'dd/MM/yyyy'}}</td>
                 <td>
-                  <span><a href="javascript:void(0)" (click)="deleteEkskul(ekskul.id);" ><i class="fa fa-trash-o" aria-hidden="true" title="Hapus"></i>Delete</a></span> &nbsp;
-                  <span><a href="javascript:void(0)" (click)="changeState(1);clickRow(ekskul); editEkskulModal.show()" ><i class="fa fa-pencil-square-o" aria-hidden="true" title="Edit"></i>Update</a> </span>
-                </td>      
+                  {{ekskul.skor.skor}}
+                </td> 
+                <td><a href="assets/public/abby.jpg" target="_blank">lihat</a></td>
+                <td>
+                  <span *ngIf="ekskul.status_submit==0 && ekskul.status_verifikasi_ekstrakurikuler==0" class="badge badge-warning"> Belum disubmit</span>
+                  <span *ngIf="ekskul.status_submit==1 && ekskul.status_verifikasi_ekstrakurikuler==0" class="badge badge-default">Sedang diproses</span>
+                  <span *ngIf="ekskul.status_verifikasi_ekstrakurikuler==1" class="badge badge-success">Diterima</span>
+                  <span *ngIf="ekskul.status_verifikasi_ekstrakurikuler==2" class="badge badge-danger">Ditolak</span>                       
+                </td> 
+                <td>{{ekskul.keterangan}}</td>
+                <td>
+                  <span><a *ngIf="ekskul.status_verifikasi_ekstrakurikuler!=1" href="javascript:void(0)" (click)="deleteEkskul(ekskul.id);" ><i class="fa fa-trash-o" aria-hidden="true" title="Hapus"></i></a></span> &nbsp;
+                  <span><a *ngIf="ekskul.status_verifikasi_ekstrakurikuler!=1" href="javascript:void(0)" (click)="changeState(1);clickRow(ekskul); editEkskulModal.show()" ><i class="fa fa-pencil-square-o" aria-hidden="true" title="Edit"></i></a> </span>
+                </td>  
+                <td>
+                  <div>
+                    <button type="button" class="btn btn-xs btn-success" *ngIf="!ekskul.status_submit" (click)="submit(ekskul)" [disabled]="ekskul.status_submit" >Submit</button>                  
+                  </div>
+                </td>
+
               </tr>
             </tbody>
           </table> 
@@ -54,12 +69,6 @@
   <!--/.row-->
 </div>
 
-<!-- <a href="javascipt:void(0)"><iframe src="https://research.google.com/pubs/archive/44678.pdf"
-   width="800px" height="600px" > -->
-
-
-
-<button type="button" (click)="cek()">cek</button>
 
 <div bsModal #editEkskulModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editEkskulModal" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -119,14 +128,19 @@
           <div class="form-group row">
             <label class="col-md-3 form-control-label" for="tanggal_selesai">Tanggal selesai kegiatan</label>
             <div class="col-md-9">
-                <date-picker formControlName="tanggal_selesai" [showClearButton]="false"></date-picker>      
+                <date-picker formControlName="tanggal_selesai" [showClearButton]="true"></date-picker>    
+                <small>
+                  <div class="alert alert-warning alert-dismissible fade show animated fadeIn" role="alert" [hidden]="checkPeriode()">
+                    <strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></strong> Tanggal tidak valid
+                  </div>                    
+                </small>                
             </div>
           </div>  
           <div class="form-group row">
             <label class="col-md-3 form-control-label" for="bukti">Upload bukti</label>
             <div class="col-md-9">
-              <input type="file" id="bukti" name="bukti" class="form-control form-control-sm" (change)="onChangeFile($event)" accept="image/jpeg, application/pdf"  single required>
-              <small class="help-block" style="color:crimson">Silahkan upload ulang jika ingin mengganti file bukti <br>Extensi: *.pdf / *.jpeg / *.png</small>
+              <input type="file" id="bukti" name="bukti" class="form-control form-control-sm" (change)="onChangeFile($event)" accept="image/jpeg, x-png"  single required>
+              <small class="help-block" style="color:crimson">Silahkan upload ulang jika ingin mengganti file bukti <br>Extensi: *.jpeg / *.png</small>
             </div>
           </div>
           <div class="progress" *ngIf="fileValid && uploadProgress!=100 " >
@@ -134,9 +148,8 @@
               </div>
           </div><br>          
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="cek()">cek</button>
             <button type="button" class="btn btn-secondary" (click)="editEkskulModal.hide()">Batal</button>
-            <button type="submit" class="btn btn-primary" [disabled]="!form.valid" (click)="editEkskulModal.hide()">Simpan</button>            
+            <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Simpan</button>            
           </div>
         </form>
       </div>
@@ -154,7 +167,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="form" (submit)="submit();" novalidate>
+        <form [formGroup]="form" (submit)="addEkskul();" novalidate>
           <div class="form-group row">
             <label class="col-md-3 form-control-label" for="nama_kegiatan">Nama kegiatan</label>
             <div class="col-md-9">
@@ -202,14 +215,19 @@
           <div class="form-group row">
             <label class="col-md-3 form-control-label" for="tanggal_selesai">Tanggal selesai kegiatan</label>
             <div class="col-md-9">
-                <date-picker formControlName="tanggal_selesai" [showClearButton]="true"></date-picker>      
+                <date-picker formControlName="tanggal_selesai" [showClearButton]="true"></date-picker>    
+                <small>
+                  <div class="alert alert-warning alert-dismissible fade show animated fadeIn" role="alert" [hidden]="checkPeriode()">
+                    <strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></strong> Tanggal tidak valid
+                  </div>                    
+                </small>                
             </div>
           </div>  
           <div class="form-group row">
             <label class="col-md-3 form-control-label" for="bukti">Upload bukti</label>
             <div class="col-md-9">
-              <input type="file" id="bukti" name="bukti" class="form-control form-control-sm" (change)="onChangeFile($event)" accept="image/jpeg, application/pdf"  single required>
-              <small class="help-block" style="color:crimson">Upload hasil <i>scan</i> bukti (sertifikat atau lainnya).  <br>Extensi: *.pdf / *.jpeg / *.png</small>
+              <input type="file" id="bukti" name="bukti" class="form-control form-control-sm" (change)="onChangeFile($event)" accept="image/jpeg, image/x-png"  single required>
+              <small class="help-block" style="color:crimson">Upload hasil <i>scan</i> bukti (sertifikat atau lainnya).  <br>Extensi: *.jpeg / *.png</small>
             </div>
           </div>
           <div class="progress" *ngIf="fileValid && uploadProgress!=100 " >
@@ -217,9 +235,8 @@
               </div>
           </div><br>          
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="cek()">cek</button>
             <button type="button" class="btn btn-secondary" (click)="addEkskulModal.hide()">Batal</button>
-            <button type="submit" class="btn btn-primary"  [disabled]="!form.valid || !fileValid" (click)="addEkskulModal.hide()">Simpan</button>            
+            <button type="submit" class="btn btn-primary"  [disabled]="!form.valid || !fileValid || !checkPeriode()">Simpan</button>            
           </div>
         </form>
       </div>
@@ -227,3 +244,10 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div id="container-floating">
+  <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" (click)="changeState(0);resetForm();addEkskulModal.show()">
+    <p class="plus">+</p>
+    <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
+  </div>
+</div>

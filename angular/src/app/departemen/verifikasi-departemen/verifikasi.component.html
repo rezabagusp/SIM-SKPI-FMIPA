@@ -2,46 +2,40 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
-<<<<<<< HEAD
         <div class="card-block">
           <h4 class="card-title">List Prestasi Mahasiswa</h4>
           <br>  
-          <table datatable class="row-border hover table-sm"  style="width: 100%;overflow: auto;"   [dtOptions]="dtOptions"  [dtTrigger]="dtTrigger">
-=======
-        <div class="card-header">
-          <i class="fa fa-align-justify"></i> List prestasi Mahasiswa
-       	  <span class="float-right">
-          </span>
-        </div>
-        <div class="card-block">
-           <table datatable class="row-border hover table-sm"  style="width: 100%;overflow: auto;"   [dtOptions]="dtOptions"  [dtTrigger]="dtTrigger">
->>>>>>> eda2ddadc7bbe6e20480eaab53f1795a8032df30
+          <table datatable class="row-border compact table-sm table-responsive" style="display:inline-block;: 100%;overflow: auto;"  [dtOptions]="dtOptions"  [dtTrigger]="dtTrigger">
             <thead>
               <tr>
                 <th>Nama mahasiswa</th>
                 <th>NIM</th>
                 <th>Departemen</th>
                 <th>Nama kegiatan</th>
-                <th>jenis kegiatan</th>
+                <th>Jenis kegiatan</th>
                 <th>Tingkat/region</th>
                 <th>Status</th>        
-                <th>Keterangan</th>    
+                <th>Keterangan</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let presma of list_presma" [routerLink]="['verifikasidetail', presma.id]">
+              <tr *ngFor="let presma of list_presma" style="vertical-align: top;">
                 <td>{{presma?.mahasiswa.nama_mahasiswa}}</td>
                 <td>{{presma?.mahasiswa.nim_mahasiswa}}</td>
                 <td>{{presma?.mahasiswa.departemen.nama_departemen}}</td>
                 <td>{{presma?.nama_ekstrakurikuler}}</td>     
-                <td>{{presma?.sub_kategori.nama_sub_kategori}}</td>
-                <td>{{presma?.tingkat.nama_tingkat}}</td>   
+                <td> <strong>{{presma?.skor.sub_kategori.kategori.nama_kategori}}</strong> : {{presma?.skor.sub_kategori.nama_sub_kategori}}</td>
+                <td>{{presma?.skor.tingkat.nama_tingkat}}</td>   
                 <td>     
                   <span *ngIf="presma.status_verifikasi_ekstrakurikuler==0" class="badge badge-default">Belum diproses</span>
                   <span *ngIf="presma.status_verifikasi_ekstrakurikuler==1" class="badge badge-success">Diterima</span>
                   <span *ngIf="presma.status_verifikasi_ekstrakurikuler==2" class="badge badge-danger">Ditolak</span>                                       
                 </td>
                 <td>{{presma?.keterangan}}</td>
+                <td>
+                  <button type="button" class="btn btn-primary btn-sm" [routerLink]="['verifikasidetail', presma.id]" >Proses</button>
+                </td>
               </tr>
             </tbody>
           </table> 
