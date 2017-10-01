@@ -62,7 +62,7 @@ class Departemen{
         }
         else if(id_departemen == 9){ //fakultas
             ekskul.findAll({
-            order: [['createdAt', 'DESC']],
+                order: [['createdAt', 'DESC']],
                 include:[{
                     model: skor,
                     include: [{
@@ -119,9 +119,12 @@ class Departemen{
                         where:{
                             id:id
                         }
-                    }).then(()=>{
-                        // nodemailer.SendEmail('rezabaguspermana.rbp@gmail.com', res)
-                        res.json({status:true, message:'berhasil update status verifikasi'})
+                    }).then((hasil)=>{
+                        if (status == 2) {
+                            nodemailer.SendTolak(id, keterangan, res)
+                        } else {
+                            res.json({status:true, message:'berhasil update status verifikasi'})
+                        }
                     }).catch(()=>{
                         res.json({status:false, message:'error saat update'})
                     })      

@@ -1,6 +1,7 @@
 var express = require('express'),
     multer = require('multer'),
 	departemen = require('./../controller/departemen.controller'),
+    mailer = require('./../controller/mailer.controller'),
     router = express.Router();  
 var createPDF = require('./../controller/createPDF.controller')
 
@@ -21,6 +22,10 @@ router.get('/getsummary/:id_departemen', function(req, res, next){
     departemen.getSummary(req, res);
 });
 
+
+// router.post('/mail', function(req, res, next) {
+//     mailer.SendTolak(res);
+// });
 
 
 
