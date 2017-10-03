@@ -1,0 +1,40 @@
+<!-- notifikasi -->
+<div class="col-sm-12 col-md-12">
+  <div class="alert alert-warning text-center" role="alert">
+    <i class="fa fa-exclamation-triangle" aria-hidden="true"> Pastikan bahwa email yang anda gunakan adalah valid karena akan digunakan sebagai media untuk pemberitahuan verifikasi prestai ekstrakurikuler</i>
+  </div>    
+</div><!--/.col-->
+<!-- end of notifikasi -->
+
+<div class="animated fadeIn">
+  <div class="card">
+    <form [formGroup] = 'form' class="form-horizontal">
+      <div class="card-block">
+        <h4 class="card-title">Profil</h4>
+        <br>
+        <div class="form-group row">
+          <label class="col-md-3 form-control-label" for="nama_kegiatan">Nama</label>
+          <div class="col-md-9">
+            <input type="text" formControlName="nama" id="nama" name="nama" class="form-control form-control-sm" readonly  required>
+          </div>
+        </div>  
+        <div class="form-group row">
+          <label class="col-md-3 form-control-label" for="nama_kegiatan">NIM</label>
+          <div class="col-md-9">
+            <input type="text" formControlName="nim" id="nim" name="nim" class="form-control form-control-sm" readonly required >
+          </div>
+        </div>  
+        <div class="form-group row">
+          <label class="col-md-3 form-control-label" for="nama_kegiatan">Email</label>
+          <div class="col-md-9">
+            <input type="text" formControlName="email" id="email" name="email" class="form-control form-control-sm" placeholder="Masukkan emai" required>
+          </div>
+        </div>                    
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-sm btn-primary" [hidden]=submitted (click)="submit()"><i class="fa fa-dot-circle-o"></i> Edit</button>
+        <button type="submit" class="btn btn-sm btn-primary" [hidden]=!submitted [disabled]="submitted" (click)="submit()"><i *ngIf="!submitted" class="fa fa-spinner fa-spin"></i> Edit lcick</button>
+      </div>
+    </form>
+  </div>  
+</div>

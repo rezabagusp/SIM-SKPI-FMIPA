@@ -88,12 +88,11 @@ export class EkskulComponent implements OnInit {
   ngOnInit() {   
     // init
     this.activatedRoute.params.subscribe((params: Params)=>{
-      console.log('params', params['kondisi'])
+      // console.log('params', params['kondisi'])
       if(params['kondisi'] == 'all') {
         this.kondisi = ''
       } else if(params['kondisi'] == 'Diterima') {
         this.kondisi = 'Diterima'
-        console.log(this.kondisi)
       } else if(params['kondisi'] == 'Ditolak') {
         this.kondisi = 'Ditolak'
       } else if(params['kondisi'] == 'Belum_diajukan') {
@@ -111,7 +110,7 @@ export class EkskulComponent implements OnInit {
   changeState(state){
     if (this.state!=state)
       this.state=state;
-    console.log('status, ', this.state)
+    // console.log('status, ', this.state)
   }
   initForm(){
 
@@ -180,7 +179,7 @@ export class EkskulComponent implements OnInit {
           this.jumlah_skor=this.getCountedSkor(this.list_ekskul);
           this.getMutu();
           this.dtTrigger.next();
-          console.log('all ekskul: ', this.list_ekskul)
+          // console.log('all ekskul: ', this.list_ekskul)
         }
         else{
           this.data.showError(data.message);
@@ -213,7 +212,7 @@ export class EkskulComponent implements OnInit {
     this.departemenservice.getMutu(this.data.url_get_mutu, this.data.token, this.jumlah_skor)
     .subscribe(
       data => {
-        console.log(data)
+        // console.log(data)
         if(data.status)
           this.kategori = data.result;
         else
@@ -227,7 +226,6 @@ export class EkskulComponent implements OnInit {
     var sementara = <Array<File>> fileinput.target.files
     var ext = sementara[0].type;
     var size = Number(sementara[0].size);
-    console.log(this.max_size)
     if(ext !== 'image/jpeg' && ext !=='image/png' ){
         swal(
           'Perhatian',
@@ -239,7 +237,7 @@ export class EkskulComponent implements OnInit {
       this.filesToUpload = <Array<File>> fileinput.target.files;
       this.MahasiswaService.uploadFile(this.data.url_upload, this.data.token, this.filesToUpload, this.data.nim).
       then(data =>{
-        console.log(data)
+        // console.log(data)
         if(JSON.parse(JSON.stringify(data)).status){
           this.fileValid = true;
           this.bukti = JSON.parse(JSON.stringify(data)).nama;
@@ -247,7 +245,7 @@ export class EkskulComponent implements OnInit {
         else   
           this.data.showError(JSON.parse(JSON.stringify(data)).message);
       })
-      console.log(this.filesToUpload)
+      // console.log(this.filesToUpload)
     }
         
   }
@@ -298,7 +296,7 @@ export class EkskulComponent implements OnInit {
     this.MahasiswaService.addEkskul(this.data.url_tambah_ekskul, this.data.token, creds)
     .subscribe((result)=>{
       if (result.status){   
-        console.log(result)
+        // console.log(result)
         this.addEkskulModal.hide();
         this.form.reset();
         this.ngOnInit();
@@ -310,7 +308,6 @@ export class EkskulComponent implements OnInit {
     })
   }
   deleteEkskul(value){
-    console.log(value);
     this.deleteConfirm().then(()=>{
       var creds = JSON.stringify({id: value, id_mahasiswa: this.data.id_mahasiswa})
       this.MahasiswaService.deleteEkskul(this.data.url_delete, this.data.token, creds)
@@ -351,7 +348,6 @@ export class EkskulComponent implements OnInit {
                                 console.log('yang bakaaln dirikim', creds)
     this.MahasiswaService.updateEkskul(this.data.url_update, this.data.token, creds)
     .subscribe((result)=>{
-      console.log('ersutlnyaadf', result)
       if (result.status){   
         this.ngOnInit();
         this.dtTrigger.next();
@@ -390,7 +386,7 @@ export class EkskulComponent implements OnInit {
       status_submit: !data.status_submit
     })
     this.ispropose = true;
-    console.log(creds)
+    // console.log(creds)
     this.MahasiswaService.submit(this.data.url_submit_ekskul, this.data.token, creds)
     .subscribe(
       data =>{
@@ -405,16 +401,6 @@ export class EkskulComponent implements OnInit {
         }
       }
     )
-  }
-  
-  cek(){
-    var date = new Date('2017-08-03T00:00:00.000Z')
-
-    console.log(date.toISOString().substring(0, 10))
-    console.log('form', this.form);    
-    console.log(new Date().toISOString().substring(0, 10));    
-    console.log('id_mahasiwa', this.data.id_mahasiswa) 
-    console.log('nim', this.data.nim)
   }
 
 

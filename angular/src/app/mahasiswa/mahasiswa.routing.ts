@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FullLayoutComponent } from '../layouts/full-layout.component';
 
+import { ProfilComponent } from './profil/profil.component';
+
 
 const routes: Routes = [
   //mahasiswa
@@ -21,7 +23,14 @@ const routes: Routes = [
       {
         path: 'ekskul/:kondisi',
         loadChildren: './ekskul/ekskul.module#EkskulModule'
-      },    
+      },  
+      {
+        path: 'profil',
+        component: ProfilComponent,
+        data: {
+          title: 'Profil'
+        }
+      },          
     ]
   },
 ];

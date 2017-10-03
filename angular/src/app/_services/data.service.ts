@@ -17,7 +17,8 @@ export class DataService {
   public url_upload = this.dir+'/mahasiswa/upload';
   public url_delete = this.dir+'/mahasiswa/deleteekskul';
   public url_update = this.dir+'/mahasiswa/updateekskul';  
-  public url_submit_ekskul = this.dir+'/mahasiswa/submitekskul';    
+  public url_submit_ekskul = this.dir+'/mahasiswa/submitekskul';
+  public url_update_profil = this.dir+'/mahasiswa/updateprofil';      
   
 
   // API departemen
@@ -81,6 +82,7 @@ export class DataService {
   public id_mahasiswa;
   public nama_mahasiswa;
   public nim;
+  public email_mahasiswa;
 
   //admin
   public id_admin
@@ -128,7 +130,8 @@ export class DataService {
       else if(this.role == 'mahasiswa'){
         this.id_mahasiswa = this.decode.id;
         this.nama_mahasiswa = this.decode.nama_mahasiswa
-        this.nim = this.decode.nim_mahasiswa;        
+        this.nim = this.decode.nim_mahasiswa;  
+        this.email_mahasiswa = this.decode.email_user;      
       }
   }
   showSuccess(message:string){
