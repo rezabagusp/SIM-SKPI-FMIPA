@@ -72,4 +72,8 @@ router.post('/asset', function(request, response){
 router.post('/submitekskul', function(req, res, next){// for detail ekskul
 	mahasiswa.submitEkskul(req, res);
 })
+
+router.post('/updateprofil', function(req, res, next){// for detail ekskul
+	mahasiswa.updateProfil(req, res);
+})
 module.exports = router;

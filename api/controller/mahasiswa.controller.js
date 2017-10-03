@@ -35,7 +35,7 @@ var ekskul = sequelize.import('../models/ekstrakurikuler.model.js');
 function toTitleCase(str){
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
-
+var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 ekskul.belongsTo(skor, {foreignKey:'fk_skor_id'})
 skor.belongsTo(sub_kategori, {foreignKey:'fk_sub_kategori_id'})
 skor.belongsTo(tingkat, {foreignKey:'fk_tingkat_id'})
@@ -300,6 +300,47 @@ class Mahasiswa {
                         res.json({status: false, message:'gagal submit'})
                     })
             })
+    }
+    updateProfil(data, res){
+        console.log(data.body.id_mahasiswa)
+        var email = data.body.email,
+            id_mahasiswa = data.body.id_mahasiswa;
+
+        if(!email){
+            res.json({status:false, message:'request tidak lengkap'})
+        }
+        else{
+            if(re.test(email)){ // validate email with regex
+                mahasiswa.findOne({
+                    where: {
+                        id: id_mahasiswa
+                    }
+                }).then((hasil)=>{
+                    console.log(hasil.dataValues)
+                    if(hasil == null){
+                        res.json({status:false, message:'mahasiswa tidak ditemukan'})
+                    }
+                    else{
+                        mahasiswa.update({
+                            email_user: email
+                        },{
+                            where:{
+                                id: id_mahasiswa
+                            }
+                        }).then((hasil)=>{
+                            res.json({status: true, message:'Berhasil update profil'})
+                        }).catch((err)=>{
+                            res.json({status: false, message:'Gagal update profil'})
+                        })
+                    }
+                }).catch((err)=>{
+                    res.json({status:false, message:'error saar pencarian mahasiswa'})
+                })                
+            }
+            else{
+                res.json({status:false, message:'Email tidak valid'})
+            }
+        }
     }
 }
 
