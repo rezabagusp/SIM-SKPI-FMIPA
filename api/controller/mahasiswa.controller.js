@@ -10,7 +10,7 @@ var express = require('express'),
 
             console.log(file.fieldname)
 	        let ext = path.extname(file.originalname);
-	        callback(null, file.fieldname+'-'+ Date.now());
+	        callback(null, file.fieldname+'-'+Date.now()+ext);
         }
     }),
 	upload = multer({

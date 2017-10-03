@@ -273,6 +273,12 @@ class GeneratePDF {
 					</tr>
 					{{daftar}}
 					`
+					console.log(this.ekstrakurikulers[this.indexekstrakurikuler].bukti_ekstrakurikuler)
+				var foto_bukti = `
+					<img src= "logo.png"height="420" width="420">
+					{{foto_bukti}}
+				`
+				this.resource = this.resource.replace('{{foto_bukti}}', foto_bukti)
 				this.resource = this.resource.replace('{{daftar}}', bukti)
 				count++
 				this.indikator++

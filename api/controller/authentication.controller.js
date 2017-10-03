@@ -48,7 +48,7 @@ class Authentication{
         })
     }
     auth2(data, res){
-        var code = 'e8f73c4aaf7d9cfa4da13bf124dcf3d6'
+        var code = 'e2ea54f053df918bd3d48e6800b45ad1'
         var options = {
             method: 'POST',
             url: 'http://accounts.ipb.ac.id/OAuth/token.php',
@@ -65,10 +65,10 @@ class Authentication{
                 'Authorization': 'Bearer '+code,
             }
         };
-
+        console.log('masuk auth2')
         rp(options) // requst for access token
             .then(function(body) {
-                console.log(body)
+                // console.log(body)
                 let options1 = {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',  // Is set automatically,
@@ -78,7 +78,44 @@ class Authentication{
                 }
                 rp.post('https://accounts.ipb.ac.id/OAuth/api.php/me/', options1) // request for claims
                 .then(function(body){
-                    res.json(body)
+                    mahasiswa
+                        .findOne({
+                            where: {
+                                nama_user: body.username
+                            }
+                        })
+                        .then((result) => {
+                            var token = jwt.sign(result.dataValues, SECRET_KEY);
+                            console.log(result.dataValues,'http://localhost:4200/#/auth/sso/'+token)
+                            res.redirect('http://localhost:4200/#/auth/sso/'+token)
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                            mahasiswa
+                                .create({
+                                    nama_user: body.username,
+                                    nama_mahasiswa: body.nama,
+                                    nim_mahasiswa: body.nim,
+                                    email_user: body.email,
+                                    role: (body.status).toLowerCase(),
+                                    fk_departemen_id: (body.nim).charAt(1)
+                                })
+                                .then((row) => {
+                                    mahasiswa
+                                        .findOne({
+                                            where: {
+                                                nama_user: body.username
+                                            }
+                                        })
+                                        .then((data) => {
+                                            var token = jwt.sign(data.dataValues, SECRET_KEY);
+                                            res.redirect('http://localhost:4200/#/auth/sso/'+token)
+                                        })
+                                        .catch((err) => {
+                                            res.json({status: false, message: 'failed to loggin', err: err})
+                                        })
+                                })
+                        })
                 }).catch(function(err){
                     res.json(err)
                 })
@@ -86,30 +123,6 @@ class Authentication{
                 res.json(err)
             })
 
-    }
-    isi(data, res) {
-        console.log('masuk', data.body)
-        res.json(data.body)
-    }
-    Step2Oauth2(data, res) {
-        var code = 'd3aae5033ae698336846b7d8eb35294d'
-        var args = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ',
-                'tambah':'coba'
-            },
-            body: {
-                client_id: 'fmipa.skpi',
-                client_secret: '445634566',
-                grant_type: 'authorization_code',
-                code: code
-            }
-        }
-        client.post('http://localhost:8000/login/coba',args, (data, response) => {
-            console.log(data)
-            // console.log(response)
-        })
     }
 }
 
