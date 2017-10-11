@@ -86,7 +86,7 @@ export class VerifikasiDetailComponent implements OnInit {
         return new Promise(function (resolve, reject) {
           setTimeout(function() {
             resolve();
-          })
+          }, 700)
         })
       },
       allowOutsideClick: false

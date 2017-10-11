@@ -1,14 +1,14 @@
 var fs = require('fs')
 var pdf = require('html-pdf')
 var moment = require('moment')
-var sequelize = require(__dirname + '/../dbsequelize')
-var tingkat = sequelize.import(__dirname + '/../models/tingkat.model')
-var kategori = sequelize.import(__dirname + '/../models/kategori.model')
-var sub_kategori = sequelize.import(__dirname + '/../models/sub_kategori.model')
-var bobot = sequelize.import(__dirname + '/../models/skor.model')
-var mahasiswa = sequelize.import(__dirname + '/../models/mahasiswa.model')
-var ekstrakurikuler = sequelize.import(__dirname + '/../models/ekstrakurikuler.model')
-var departemen = sequelize.import(__dirname + '/../models/departemen.model')
+var sequelize = require(__dirname + '/../../dbsequelize')
+var tingkat = sequelize.import(__dirname + '/../../models/tingkat.model')
+var kategori = sequelize.import(__dirname + '/../../models/kategori.model')
+var sub_kategori = sequelize.import(__dirname + '/../../models/sub_kategori.model')
+var bobot = sequelize.import(__dirname + '/../../models/skor.model')
+var mahasiswa = sequelize.import(__dirname + '/../../models/mahasiswa.model')
+var ekstrakurikuler = sequelize.import(__dirname + '/../../models/ekstrakurikuler.model')
+var departemen = sequelize.import(__dirname + '/../../models/departemen.model')
 
 mahasiswa.belongsTo(departemen, {foreignKey:'fk_departemen_id'})
 
@@ -186,7 +186,7 @@ class GeneratePDF {
 				this.bukti = 0
 				let kategoris = `
 					<tr>
-						<td align="center" rowspan="{{rowspankategori}}">`+ (indexkategori + 1) +`</td>
+						<td style="vertical-align: top;" align="center" rowspan="{{rowspankategori}}">`+ (indexkategori + 1) +`</td>
 					</tr>
 					<tr>
 						<th align="left" colspan="4">Mengikuti `+ this.kategoris[i].nama_kategori +` di Tingkat `+ this.tingkats[j].nama_tingkat +`</th>
@@ -197,7 +197,7 @@ class GeneratePDF {
 				this.resource = this.resource.replace('{{kategoris}}', kategoris)
 				let kategorisbukti = `
 					<tr>
-						<td align="center" rowspan="{{rowspanbukti}}">`+ (indexkategori+1) +`</td>
+						<td style="vertical-align: top;" align="center" rowspan="{{rowspanbukti}}">`+ (indexkategori+1) +`</td>
 					</tr>
 					<tr>
 						<th align="left" colspan="5">Mengikuti `+ this.kategoris[i].nama_kategori +` di Tingkat `+ this.tingkats[j].nama_tingkat +`</th>
@@ -275,7 +275,7 @@ class GeneratePDF {
 					`
 					console.log(this.ekstrakurikulers[this.indexekstrakurikuler].bukti_ekstrakurikuler)
 				var foto_bukti = `
-					<img src= "G64140023-1507055889216.jpg" height="800" width=700>
+					<img src= "`+this.ekstrakurikulers[this.indexekstrakurikuler].bukti_ekstrakurikuler+`" height="800" width=700>
 					{{foto_bukti}}
 				`
 				this.resource = this.resource.replace('{{foto_bukti}}', foto_bukti)
@@ -318,7 +318,7 @@ class GeneratePDF {
 	}
 	/*Convert HTML to PDF*/
 	ConvertHTLM2PDF(data, res) {
-		this.destination = __dirname + '/../public/ipe/'+this.NIM+'.pdf'
+		this.destination = __dirname + '/../ipe/'+this.NIM+'.pdf'
 		this.resource = this.resource.replace('{{bukti}}', '')
 		this.resource = this.resource.replace('{{foto_bukti}}', '')
 		pdf

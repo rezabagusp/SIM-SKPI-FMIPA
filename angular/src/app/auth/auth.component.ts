@@ -60,7 +60,7 @@ export class Auth implements OnInit {
         this.slimLoadingBarService.start(() => {
           console.log('Loading complete');
         });
-        if (result) {
+        if(result) {
           this.slimLoadingBarService.complete();
           console.log(result);
           this.toastrService.success("yeay kamu berhasil masuk", "Success !")
@@ -86,7 +86,7 @@ export class Auth implements OnInit {
     else if(this.decode.role == 'admin')
       this.router.navigate(['admin/dashboard']); // if succes masuk ke halaman lain      
     else  //mahasiswa
-      this.router.navigate(['mahasiswa/dashboard']); // if succes masuk ke halaman lain      
+      this.router.navigate(['mahasiswa/dashboard']); // if succes masuk ke halaman lain    
   }
 
   loginJquery() {
@@ -116,6 +116,6 @@ export class Auth implements OnInit {
   }
 
   loginSSO(){
-    window.open('https://accounts.ipb.ac.id/module.php/core/loginuserpass.php?AuthState=_5e6cdbd104a3b712af3798ee56a6c8a599ee37582d%3Ahttps%3A%2F%2Faccounts.ipb.ac.id%2Fsaml2%2Fidp%2FSSOService.php%3Fspentityid%3Dhttps%253A%252F%252Faccounts.ipb.ac.id%252Fmodule.php%252Fsaml%252Fsp%252Fmetadata.php%252Fdefault-sp%26cookieTime%3D1506430063%26RelayState%3Dhttps%253A%252F%252Faccounts.ipb.ac.id%252FOAuth%252Fauthorize.php%253Fredirect_url%253Dhttps%25253A%25252F%25252Ffmipa.skpi%25252FIPBLoginCallback%2526scope%253Dcore_applications%2526state%253D3%2528%2525230%25252F%2521%257E%2526response_type%253Dcode%2526client_id%253Dfmipa.skpi', '_self')
+    window.open('https://accounts.ipb.ac.id/module.php/core/loginuserpass.php?AuthState=_5e6cdbd104a3b712af3798ee56a6c8a599ee37582d%3Ahttps%3A%2F%2Faccounts.ipb.ac.id%2Fsaml2%2Fidp%2FSSOService.php%3Fspentityid%3Dhttps%253A%252F%252Faccounts.ipb.ac.id%252Fmodule.php%252Fsaml%252Fsp%252Fmetadata.php%252Fdefault-sp%26cookieTime%3D1506430063%26RelayState%3Dhttps%253A%252F%252Faccounts.ipb.ac.id%252FOAuth%252Fauthorize.php%253Fredirect_url%253Dhttps%25253A%25252F%25252Flocalhost:8000%25252Flogin%25252Fauth2%2526scope%253Dcore_applications%2526state%253D3%2528%2525230%25252F%2521%257E%2526response_type%253Dcode%2526client_id%253Dfmipa.skpi', '_self')
   }
 }

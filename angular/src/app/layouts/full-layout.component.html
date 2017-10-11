@@ -59,10 +59,13 @@
         </li>
         <li *ngIf="role == 'mahasiswa' " class="nav-item">
           <a class="nav-link" routerLinkActive="active" [routerLink]="['profil']"><i class="fa fa-user"></i>Profil</a>
-        </li>            
-        <li class="nav-item">
+        </li>
+        <li *ngIf="role == 'mahasiswa' " class="nav-item"> <!--logout sso -->
+          <a class="nav-link" href="javascript:void(0)" (click)="logoutSso()"><i class="icon-logout"></i>Log Out</a>
+        </li>                    
+        <li *ngIf="role != 'mahasiswa' " class="nav-item">
           <a class="nav-link" href="javascript:void(0)" (click)="logout()"><i class="icon-logout"></i>Log Out</a>
-        </li>    
+        </li>
 
       </ul>
     </nav>

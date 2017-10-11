@@ -41,7 +41,7 @@ export class ProfilComponent implements OnInit {
       data =>{
         if(data.status){
           this.submitted = false;
-          
+          this.data.email_mahasiswa = this.form.value.email;
           this.data.showSuccess(data.message)
         }
         else{

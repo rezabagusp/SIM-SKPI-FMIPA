@@ -33,7 +33,7 @@
       </div>
       <div class="card-footer">
         <button type="submit" class="btn btn-sm btn-primary" [hidden]=submitted (click)="submit()"><i class="fa fa-dot-circle-o"></i> Edit</button>
-        <button type="submit" class="btn btn-sm btn-primary" [hidden]=!submitted [disabled]="submitted" (click)="submit()"><i *ngIf="!submitted" class="fa fa-spinner fa-spin"></i> Edit lcick</button>
+        <button type="submit" class="btn btn-sm btn-primary" [hidden]=!submitted [disabled]="submitted" (click)="submit()"><i *ngIf="submitted" class="fa fa-spinner fa-spin"></i> Edit</button>
       </div>
     </form>
   </div>  

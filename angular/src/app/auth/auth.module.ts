@@ -8,6 +8,7 @@ import { AuthRoutingModule } from './auth.routing';
 import { Auth } from './auth.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { SsoComponent } from './sso/sso.component';
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
         SlimLoadingBarModule.forRoot(),
         ToastModule.forRoot()
     ],
-    declarations: [Auth, ForgotPasswordComponent]
+    declarations: [Auth, ForgotPasswordComponent, SsoComponent]
 })
 
 export class AuthModule {}

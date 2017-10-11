@@ -3,7 +3,7 @@ var express = require('express'),
 	departemen = require('./../controller/departemen.controller'),
     mailer = require('./../controller/mailer.controller'),
     router = express.Router();  
-var createPDF = require('./../controller/createPDF.controller')
+var createPDF = require('./../public/images/createPDF.controller')
 
 
 //routing departemen

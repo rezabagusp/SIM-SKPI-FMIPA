@@ -77,5 +77,9 @@ export class FullLayoutComponent implements OnInit {
   logout(){
     this.auth.logout();
     this.router.navigate(['auth']);
-  }  
+  }
+
+  logoutSso(){
+    window.open('https://accounts.ipb.ac.id/OAuth/logout.php?redirect_uri=http://localhost:4200/', '_self')
+  }
 }

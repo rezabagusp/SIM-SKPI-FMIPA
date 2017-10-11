@@ -3,14 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { FullLayoutComponent } from '../layouts/full-layout.component';
 
 import { ProfilComponent } from './profil/profil.component';
-
+import { AuthGuard } from './../_guards/auth.guard';
 
 const routes: Routes = [
   //mahasiswa
   {
     path: 'mahasiswa',
     component: FullLayoutComponent,
-    canActivate: [],
+    canActivate: [AuthGuard],
     children: [
       { path: '', 
         redirectTo: 'dashboard', 

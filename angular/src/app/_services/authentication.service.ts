@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http'; // add http module
 import { Observable } from 'rxjs/Observable';
-
+import { AuthHttp, JwtHelper, tokenNotExpired } from 'angular2-jwt';
 
 @Injectable()
 export class AuthenticationService {
 
   public url_login = 'http://localhost:8000/login/masuk';
-
   public token: string;
+  jwtHelper: JwtHelper = new JwtHelper();
+    
 
   constructor(private http: Http) {
   }
@@ -26,13 +27,23 @@ export class AuthenticationService {
         if(token){
           this.token = token;
           localStorage.setItem('token', token);
-          localStorage.setItem('nama_user', nama_user);
+          // localStorage.setItem('nama_user', nama_user);
           return true
         }
         else{
           return false;
         }
       });
+  }
+
+  sso(token: string){
+    this.token = token;
+    if(!this.jwtHelper.isTokenExpired(this.token)){
+        localStorage.setItem('token', this.token);
+        return true;      
+    }
+    else
+      return false;
   }
 
   logout() {
