@@ -88,7 +88,7 @@ class Authentication{
                         .then((result) => {
                             var token = jwt.sign(result.dataValues, SECRET_KEY);
                             console.log(result.dataValues,'http://localhost:4200/#/auth/sso/'+token)
-                            res.redirect('http://localhost:4200/#/auth/sso/'+token)
+                            res.redirect('http://localhost:8000/#/auth/sso/'+token)
                         })
                         .catch((err) => {
                             // console.log(err)
