@@ -12,9 +12,8 @@ var express = require('express'),
     departemen = require('./routes/departemen'), 
     admin = require('./routes/admin'),
     summary = require(__dirname + '/routes/summary.route');
-
-    
-
+var CronJob = require('cron').CronJob;
+var mysqlDump = require('mysqldump');
 var app = express();
 
 /*global secret token key*/
@@ -30,87 +29,47 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname + '/dist'));
+
+/* job for bakcup db*/
+var job = new CronJob({
+  cronTime: '00 18 19 * * 0',
+  onTick: () => {
+    mysqlDump({
+        host: 'localhost',
+        port:3306,
+        user: 'root',
+        password: '',
+        ifNotExist:true,
+        database: 'skpi',
+        dest:'./backup/skpi'+ new Date().getDate() + new Date().getMonth() + new Date().getFullYear() +'.sql' // destination file 
+    },function(err){
+        console.log(new Date().getDate() + new Date().getMonth() + new Date().getFullYear()) 
+    })
+    console.log('run backup') 
+  },
+  start: true,
+  timeZone: 'Asia/Jakarta'
+})
+job.start()
+/*end of job*/
 
 //check connection
-// app.use(function(req, res, next){
-//   require('dns').resolve('www.google.com', function(err) {
-//     if (err ) {
-//       console.log('ERR')
-//       res.json(err)
-//     } else {
-//       console.log("Connected");
-//       next();
-//     }
-//   });
-// })
-
-// ------------ SSO ---------//
-// Set the configuration settings
-// const credentials = {
-// client: {
-//     id: 'fmipa.skpi',
-//     secret: '445634566'
-// },
-// auth: {
-//     tokenHost: 'https://accounts.ipb.ac.id',
-//     tokenPath: '/OAuth/token.php',
-//     authorizePath: '/OAuth/authorize.php',
-// }
-// };
-
-// // Initialize the OAuth2 Library
-// const oauth2 = require('simple-oauth2').create(credentials);   
-
-// //---*  authorization codee flow*----//    
-// // Authorization oauth2 URI
-// const authorizationUri = oauth2.authorizationCode.authorizeURL({
-//   redirect_url: 'https://fmipa.skpi/IPBLoginCallback',
-//   scope: 'core_applications',
-//   state: '3(#0/!~'
-// });
-
-
-// app.get('/auth', (req, res) => {
-//   console.log('authorisasi: ', authorizationUri);
-//   res.redirect(authorizationUri);
-// });      
-// //abis login di SSO IPB bikin redirect urlnya ke sini
-// app.get('/IPBLoginCallback', (req, res) => {
-//   const code = req.query.code;
-//   console.log('kodenya', code)
-//   const options = {
-//     code,
-//   };
-
-//   oauth2.authorizationCode.getToken(options, (error, result) => {
-//     if (error) {
-//       console.error('Access Token Error', error.message);
-//       return res.json('Authentication failed');
-//     }
-
-//     console.log('The resulting token: ', result);
-//     const token = oauth2.accessToken.create(result);
-
-//     console.log('token codenya: ', token)
-//     return res
-//       .status(200)
-//       .json(token);
-//   });
-// });
-
+app.use(function(req, res, next){
+  require('dns').resolve('www.google.com', function(err) {
+    if (err ) {
+      console.log('ERR')
+      res.json({status:false, message:'Connection error'})
+    } else {
+      console.log("Connected");
+      next();
+    }
+  });
+})
 
 //route apps
 app.use('/', index);
 app.use('/login', login);
-app.use('/mahasiswa', mahasiswa);
-app.use('/departemen', departemen);
-app.use('/admin', admin);
-app.use('/summary', summary)
-app.use('*', function(req, res, next){
-  res.json({status:false, message:'non API implemented'})
-})
-
-
 
 /*jwt middleware*/
 app.use(function(req, res, next){
@@ -121,9 +80,17 @@ app.use(function(req, res, next){
         res.status(500).send('Invalid Token');
       else next();
     });
-  }else res.json("please send me a token");
+  }else res.json("You have no token");
 });
+/* end of jwt middleware*/
 
+app.use('/mahasiswa', mahasiswa);
+app.use('/departemen', departemen);
+app.use('/admin', admin);
+app.use('/summary', summary)
+app.use('*', function(req, res, next){
+  res.json({status:false, message:'non API implemented'})
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
