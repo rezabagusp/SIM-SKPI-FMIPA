@@ -4,7 +4,7 @@ var express = require('express'),
     path = require('path'),
     storage = multer.diskStorage({
 	    destination: function (req, file, callback) {
-	        callback(null, 'public/images');
+	        callback(null, 'dist/assets/public/images');
 	    },
 	    filename: function (req, file, callback) {
 

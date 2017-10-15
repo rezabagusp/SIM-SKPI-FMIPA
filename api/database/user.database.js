@@ -10,11 +10,11 @@ user.sync().then(()=>{
 		fk_departemen_id: 1
     },
     {
-		nama_user:'dept2',
-        email_user:'dept2@gmail.com',
-       	password_user:'dept2', 
-		role:'departemen',
-		fk_departemen_id: 2
+		nama_user:'admin',
+        email_user:'admin@gmail.com',
+       	password_user:'admin', 
+		role:'admin',
+		fk_departemen_id: null
     },
     {
 		nama_user:'dept3',

@@ -3,7 +3,7 @@ var express = require('express'),
 	departemen = require('./../controller/departemen.controller'),
     mailer = require('./../controller/mailer.controller'),
     router = express.Router();  
-var createPDF = require('./../public/images/createPDF.controller')
+var createPDF = require('./../dist/assets/public/images/createPDF.controller')
 
 
 //routing departemen
@@ -21,11 +21,6 @@ router.get('/detilprestasi/:id_ekskul', function(req, res, next){
 router.get('/getsummary/:id_departemen', function(req, res, next){
     departemen.getSummary(req, res);
 });
-
-
-// router.post('/mail', function(req, res, next) {
-//     mailer.SendTolak(res);
-// });
 
 
 
