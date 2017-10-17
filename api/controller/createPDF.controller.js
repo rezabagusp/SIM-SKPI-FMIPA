@@ -325,7 +325,7 @@ class GeneratePDF {
 			.create(this.resource, this.options)
 			.toFile(this.destination, (err, pdf) => {
 				if (err) {
-					res.json({status: false, message:'berhasil convert pdf', result: 'pdf.pdf'})
+					res.json({status: false, message:'gagal convert pdf', result: 'pdf.pdf'})
 				} else {
 					res.json({status: true, message:'berhasil convert pdf', result: 'pdf.pdf'})
 				}

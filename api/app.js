@@ -15,7 +15,7 @@ var express = require('express'),
 var CronJob = require('cron').CronJob;
 var mysqlDump = require('mysqldump');
 var app = express();
-
+var backup = require('./backup');
 /*global secret token key*/
 SECRET_KEY='secret_admire';
 
@@ -31,28 +31,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(__dirname + '/dist'));
 
-/* job for bakcup db*/
-var job = new CronJob({
-  cronTime: '00 18 19 * * 0',
-  onTick: () => {
-    mysqlDump({
-        host: 'localhost',
-        port:3306,
-        user: 'root',
-        password: '',
-        ifNotExist:true,
-        database: 'skpi',
-        dest:'./backup/skpi'+ new Date().getDate() + new Date().getMonth() + new Date().getFullYear() +'.sql' // destination file 
-    },function(err){
-        console.log(new Date().getDate() + new Date().getMonth() + new Date().getFullYear()) 
-    })
-    console.log('run backup') 
-  },
-  start: true,
-  timeZone: 'Asia/Jakarta'
-})
-job.start()
-/*end of job*/
+app.use(function(){
+  backup;
+});
 
 //check connection
 app.use(function(req, res, next){
