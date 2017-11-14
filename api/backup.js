@@ -22,8 +22,6 @@ var job = new CronJob({
   start: true,
   timeZone: 'Asia/Jakarta'
 })
-job.start()
-
 
 // job for backup all table
 var job2 = new CronJob({
@@ -45,7 +43,10 @@ var job2 = new CronJob({
   start: true,
   timeZone: 'Asia/Jakarta'
 })
+
+// start the job
+job.start()
 job2.start()
 
-// console.log('job 1 status ', job.running)
-// console.log('job 2 status ', job2.running)
+console.log('job 1 status ', job.running)
+console.log('job 2 status ', job2.running)

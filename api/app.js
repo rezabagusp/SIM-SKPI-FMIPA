@@ -16,13 +16,13 @@ var CronJob = require('cron').CronJob;
 var mysqlDump = require('mysqldump');
 var app = express();
 var backup = require('./backup');
+
 /*global secret token key*/
 SECRET_KEY='secret_admire';
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
 app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -31,15 +31,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(__dirname + '/dist'));
 
-app.use(function(){
-  backup;
-});
-
 //check connection
 app.use(function(req, res, next){
   require('dns').resolve('www.google.com', function(err) {
     if (err ) {
-      console.log('ERR')
+      console.log('ERROR Connection')
       res.json({status:false, message:'Connection error'})
     } else {
       console.log("Connected");

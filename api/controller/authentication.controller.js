@@ -87,7 +87,7 @@ class Authentication{
                         })
                         .then((result) => {
                             var token = jwt.sign(result.dataValues, SECRET_KEY);
-                            console.log(result.dataValues,'http://localhost:4200/#/auth/sso/'+token)
+                            console.log(result.dataValues,'http://localhost:8000/#/auth/sso/'+token)
                             res.redirect('http://localhost:8000/#/auth/sso/'+token)
                         })
                         .catch((err) => {
@@ -110,7 +110,7 @@ class Authentication{
                                         })
                                         .then((data) => {
                                             var token = jwt.sign(data.dataValues, SECRET_KEY);
-                                            res.redirect('http://localhost:4200/#/auth/sso/'+token)
+                                            res.redirect('http://localhost:8000/#/auth/sso/'+token)
                                         })
                                         .catch((err) => {
                                             res.json({status: false, message: 'failed to loggin', err: err})
@@ -123,68 +123,6 @@ class Authentication{
             }).catch(function(err){
                 res.json(err)
             })
-
-    }
-    
-    openSsoPage(data, res){
-        // //--- open SSO page ---//
-        // // Set the configuration settings
-        // const credentials = {
-        // client: {
-        //     id: 'fmipa.skpi',
-        //     secret: '445634566'
-        // },
-        // auth: {
-        //     tokenHost: 'http://accounts.ipb.ac.id/OAuth/token.php'
-        // }
-        // };
-        // // Authorization oauth2 URI
-        // const authorizationUri = oauth2.authorizationCode.authorizeURL({
-        //     redirect_uri: 'http://localhost:8000/login/auth2',
-        //     scope: 'core_applications',
-        //     state: '3(#0/!~'
-        // });
-
-        // res.redirect(authorizationUri);
-
-    }
-    logoutAuth2(data, res){
-        // define the request to get the token
-
-        // var code = data.query.code
-        // var options = {
-        //     method: 'POST',
-        //     url: 'http://accounts.ipb.ac.id/OAuth/token.php',
-        //     form: {
-        //         // Like <input type="text" name="name">
-        //         client_id: 'fmipa.skpi',
-        //         client_secret: '445634566',
-        //         grant_type: 'authorization_code',
-        //         code: code
-        //     },
-        //     json: true,
-        //     headers: {
-        //         'Content-Type': 'application/x-www-form-urlencoded',  // Is set automatically,
-        //         'Authorization': 'Bearer '+code,
-        //     }
-        // };
-
-        // rp(options) // request to get the access_token
-        //     .then(function(body){
-        //         console.log('tokennya', body.access_token)
-        //         let options1 = {
-        //             method: 'GET',
-        //             headers: {
-        //                 'Content-Type': 'application/x-www-form-urlencoded',  // Is set automatically,
-        //                 'Authorization': 'Bearer '+ body.access_token,
-        //             },
-        //         }
-        //         rp.post('https://accounts.ipb.ac.id/OAuth/logout.php?redirect_uri=http://localhost:4200/', options1) // request to logout
-        //         res.json({status: true, message:'berhasil logout'})
-        //     }).catch(function(err){
-        //         res.json(err)
-        //     })
-
 
     }
 }
