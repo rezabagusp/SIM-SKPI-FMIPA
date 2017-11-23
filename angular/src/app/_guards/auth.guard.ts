@@ -22,7 +22,6 @@ export class AuthGuard implements CanActivate {
   canActivate() {
     if ( localStorage.getItem('token') && !this.jwtHelper.isTokenExpired(localStorage.getItem('token')) ) {
       return true;
-
     }
 
     this.toastrService.warning('Silahkan login terlebih dahulu! mahasiswa', 'Warning!');

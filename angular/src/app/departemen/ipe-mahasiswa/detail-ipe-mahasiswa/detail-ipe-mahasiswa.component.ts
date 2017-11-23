@@ -45,13 +45,12 @@ export class DetailIpeMahasiswaComponent implements OnInit {
       this.nama_mahasiswa = params['nama']
       this.id_mahasiswa = params['id'];
       this.nim = params['nim'];
-      console.log('params', params)
+      // console.log('params', params)
     })    
 
   }
 
   ngOnInit() {
-
     this.initForm();
     this.dataTables();
     this.getAllDetailIPEMahasiswa();
@@ -75,7 +74,7 @@ export class DetailIpeMahasiswaComponent implements OnInit {
     this.departemenservice.getAllDetailIPEMahasiswa(this.data.url_get_all_detail_ipe_mahasiswa, this.data.token , this.nim)
     .subscribe(
       data=> {
-        console.log(data)
+        // console.log(data)
         if(data.status){
           this.list_ekskul = data.result;
           this.dtTrigger.next();
@@ -92,7 +91,7 @@ export class DetailIpeMahasiswaComponent implements OnInit {
     this.departemenservice.getMutu(this.data.url_get_mutu, this.data.token, this.jumlah_skor)
     .subscribe(
       data => {
-        console.log(data)
+        // console.log(data)
         if(data.status)
           this.kategori = data.result;
         else
@@ -118,7 +117,7 @@ export class DetailIpeMahasiswaComponent implements OnInit {
   // harus post jumlah skor, nim_mahasiswa, dan tanggal_lulus 
   downloadIpe(){
     if(this.form.controls.tanggal_lulus.valid){
-      console.log(this.form)
+      // console.log(this.form)
       let creds = JSON.stringify({nim: this.nim, tanggal_lulus: this.form.value.tanggal_lulus});    
       this.download = true;
       this.departemenservice.DownloadIPE(this.data.url_download_ipe, this.data.token, creds)
@@ -127,7 +126,7 @@ export class DetailIpeMahasiswaComponent implements OnInit {
           console.log('data', data)
           if(data.status){
             this.download = false;
-            window.open('assets/public/ipe/pdf1.pdf')              
+            window.open('assets/public/ipe/'+data.result, '_blank')              
 
           }
           else{

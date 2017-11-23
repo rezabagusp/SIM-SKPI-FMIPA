@@ -82,13 +82,10 @@ export class IpeMahasiswaComponent implements OnInit {
     this.departemenService.getAllDepartemen(this.data.url_get_all_departemen, this.data.token)
     .subscribe(
       data =>{
-        console.log(data)
+        // console.log(data)
         if(data.status){
           this.list_departemen = data.result;
-          for(let x in this.list_departemen){
-            if(this.list_departemen[x].nama_departemen==='fakultas')
-                delete this.list_departemen[x];
-          }
+          this.list_departemen.pop() //pop departemen terakhir
         }
         else
           this.data.showError(data.message)
@@ -100,7 +97,7 @@ export class IpeMahasiswaComponent implements OnInit {
     this.form.controls.nama_mahasiswa.setValue('',  { onlySelf: true });
     this.form.controls.nim.setValue('',  { onlySelf: true });
     this.form.controls.departemen.setValue('',  { onlySelf: true });
-    console.log(data)
+    // console.log(data)
 
   }
 
@@ -121,17 +118,17 @@ export class IpeMahasiswaComponent implements OnInit {
   
   submit(){
     this.setSearch();
-    console.log('search by', this.search_by)
-    console.log(this.form)
+    // console.log('search by', this.search_by)
+    // console.log(this.form)
     let creds = JSON.stringify({
       search_by: this.search_by,
       search_data: this.search_data
     })
-    console.log(this.search_by, this.search_data)
+    // console.log(this.search_by, this.search_data)
     this.departemenService.postPencarian(this.data.url_post_pencarian, this.data.token, creds)
     .subscribe(
       data =>{
-        console.log(data)
+        // console.log(data)
         if(data.status){
           this.data.showSuccess(data.message)
           this.list_hasil_pencarian = data.result

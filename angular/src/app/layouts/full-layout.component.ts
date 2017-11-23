@@ -80,6 +80,6 @@ export class FullLayoutComponent implements OnInit {
   }
 
   logoutSso(){
-    window.open('https://accounts.ipb.ac.id/OAuth/logout.php?redirect_uri=http://localhost:4200/', '_self')
+    window.open('https://accounts.ipb.ac.id/OAuth/logout.php?redirect_uri='+this.data.dir, '_self')
   }
 }

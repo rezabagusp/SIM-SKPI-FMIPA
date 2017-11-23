@@ -22,12 +22,12 @@ export class VerifikasiDetailComponent implements OnInit {
   public checked=false;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private data: DataService, private DepartemenService: DepartemenService ) {
-    console.log('masukd detil component');
+    // console.log('masukd detil component');
     
     //captured the params url
     this.activatedRoute.params.subscribe((params: Params)=>{
       this.id_presma = params['id'];
-      console.log('idnya:',this.id_presma);
+      // console.log('idnya:',this.id_presma);
     })
   }
 
@@ -38,11 +38,11 @@ export class VerifikasiDetailComponent implements OnInit {
     this.DepartemenService.getDetilPresmaById(this.data.url_get_detil_presma, this.data.token, this.id_presma)
     .subscribe(
       data =>{
-        console.log(data)
+        // console.log(data)
         if(data.status){
           this.presma = data.result;
           this.status = this.presma.status_verifikasi_ekstrakurikuler;
-          console.log('atanya', this.presma);
+          // console.log('atanya', this.presma);
         }
         else
           this.data.showError(data.message);
@@ -54,7 +54,7 @@ export class VerifikasiDetailComponent implements OnInit {
     this.DepartemenService.verifikasiEkskul(this.data.url_verif_ekskul, this.data.token, status_baru , this.id_presma, this.keterangan)
     .subscribe(
       data =>{
-        console.log(data)
+        // console.log(data)
         if(data.status){
           swal(
             'Berhasil!',
@@ -94,7 +94,7 @@ export class VerifikasiDetailComponent implements OnInit {
         this.keterangan = hasil
         // change the status to ga lolos
         var status_baru = 2
-        console.log('keterangan', hasil)
+        // console.log('keterangan', hasil)
         this.verifikasiPresma(status_baru);
     })
   }

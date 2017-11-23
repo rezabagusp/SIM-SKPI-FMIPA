@@ -6,7 +6,7 @@ import { AuthHttp, JwtHelper, tokenNotExpired } from 'angular2-jwt';
 @Injectable()
 export class AuthenticationService {
 
-  public url_login = 'http://localhost:8000/login/masuk';
+  public url_login = 'http://172.18.31.100:8000/login/masuk';
   public token: string;
   jwtHelper: JwtHelper = new JwtHelper();
     
@@ -16,7 +16,7 @@ export class AuthenticationService {
 
   login(nama_user: string, password_user: string) {
     let send = JSON.stringify({nama_user: nama_user, password_user:password_user });//bikin data inputan lu jadi string json
-    console.log("yang akan dikirim vias service: ", send); 
+    // console.log("yang akan dikirim vias service: ", send); 
     let header= new Headers();
     header.append('Content-type', 'application/json' );
 

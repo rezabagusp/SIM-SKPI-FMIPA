@@ -6,7 +6,8 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 
 export class DataService {
-  public dir = 'http://localhost:8000'
+  //base url
+  public dir = 'http://172.18.31.100:8000'
   // API mahasiswa
   public url_tambah_ekskul = this.dir+'/mahasiswa/addekskul'; 
   public url_get_sub_kategori = this.dir+'/mahasiswa/getsubkategori';
