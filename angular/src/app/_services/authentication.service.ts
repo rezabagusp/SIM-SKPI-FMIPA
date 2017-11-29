@@ -6,7 +6,7 @@ import { AuthHttp, JwtHelper, tokenNotExpired } from 'angular2-jwt';
 @Injectable()
 export class AuthenticationService {
 
-  public url_login = 'http://172.18.31.100:8000/login/masuk';
+  public url_login = 'http://skpi.fmipa.ipb.ac.id/login/masuk';
   public token: string;
   jwtHelper: JwtHelper = new JwtHelper();
     

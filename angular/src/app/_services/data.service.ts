@@ -7,7 +7,7 @@ import { Subject } from 'rxjs/Subject';
 
 export class DataService {
   //base url
-  public dir = 'http://172.18.31.100:8000'
+  public dir = 'http://skpi.fmipa.ipb.ac.id'
   // API mahasiswa
   public url_tambah_ekskul = this.dir+'/mahasiswa/addekskul'; 
   public url_get_sub_kategori = this.dir+'/mahasiswa/getsubkategori';
