@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: 'mahasiswa',
     component: FullLayoutComponent,
-    canActivate: [AuthGuard],
+    canActivate: [],
     children: [
       { path: '', 
         redirectTo: 'dashboard', 

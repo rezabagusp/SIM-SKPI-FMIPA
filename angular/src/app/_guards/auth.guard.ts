@@ -16,17 +16,19 @@ export class AuthGuard implements CanActivate {
               private route: ActivatedRoute ) {
     this.token = localStorage.getItem('token');
     const user = this.jwtHelper.decodeToken(this.token)
-
+    this.roles = user.role;
+    
   }
 
   canActivate() {
-    if ( localStorage.getItem('token') && !this.jwtHelper.isTokenExpired(localStorage.getItem('token')) ) {
+    if ( localStorage.getItem('token') && !this.jwtHelper.isTokenExpired(localStorage.getItem('token'))) {
       return true;
     }
 
     this.toastrService.warning('Silahkan login terlebih dahulu! mahasiswa', 'Warning!');
     // not logged in so redirect to login page
     this.router.navigate(['/login']);
+    
     console.log('auth guard');
     return false;
   }

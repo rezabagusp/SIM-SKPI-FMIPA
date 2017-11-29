@@ -104,17 +104,14 @@ export class DataService {
     this.role = this.decode.role;
     if(this.role == 'departemen'){
       this.id_departemen = this.decode.fk_departemen_id;
-      console.log('masuk id departemen', this.id_departemen)
       return this.id_departemen
     }
     else if(this.role == 'admin'){
       this.id_admin = this.decode.fk_departemen_id
-      console.log('masuk id admin', this.decode)
       return this.id_admin;      
     }
     else if(this.role == 'mahasiswa'){
       this.id_mahasiswa = this.decode.id;
-      console.log('masuk id mahasiswa', this.id_mahasiswa)
       return this.id_mahasiswa
     }    
   }  

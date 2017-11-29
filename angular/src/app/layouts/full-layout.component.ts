@@ -72,13 +72,22 @@ export class FullLayoutComponent implements OnInit {
     this.status.isopen = !this.status.isopen;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.checkUser();
+  }
   
   logout(){
     this.auth.logout();
     this.router.navigate(['auth']);
   }
-
+  checkUser(){
+    if(this.data.role == 'departemen')
+      this.router.navigate(['departemen/dashboard']); // if succes masuk ke halaman lain
+    if(this.data.role == 'mahasiswa')
+      this.router.navigate(['mahasiswa/dashboard']); // if succes masuk ke halaman lain
+    if(this.data.role == 'admin')
+      this.router.navigate(['admin/dashboard']); // if succes masuk ke halaman lain          
+  }
   logoutSso(){
     window.open('https://accounts.ipb.ac.id/OAuth/logout.php?redirect_uri='+this.data.dir, '_self')
   }

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 
 @Component({
   templateUrl: 'dashboard.component.html',
-  providers:[DataService]
+  providers:[]
 })
 export class DashboardComponent {
   private total = 0

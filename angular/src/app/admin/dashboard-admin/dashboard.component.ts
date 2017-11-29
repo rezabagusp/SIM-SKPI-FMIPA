@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 export class DashboardAdminComponent {
 
   constructor( ) { 
-    console.log("dashboard admin")
   }
 
 }

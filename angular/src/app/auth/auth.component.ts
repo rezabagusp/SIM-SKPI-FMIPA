@@ -44,13 +44,14 @@ export class Auth implements OnInit {
   ngOnInit() {
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-    console.log(this.returnUrl);
-    console.log(this.route)
     this.loginJquery();
+
+    //check if there is token
+    if('token' in localStorage)
+      this.checkstatus()
   }
 
   login() {
-    // this.router.navigate(['/admin'])
     const header = new Headers();
     header.append('Content-type', 'application/json' );
 
@@ -62,7 +63,6 @@ export class Auth implements OnInit {
         });
         if(result) {
           this.slimLoadingBarService.complete();
-          console.log(result);
           this.toastrService.success("yeay kamu berhasil masuk", "Success !")
           this.checkstatus();
         }else {
@@ -80,7 +80,6 @@ export class Auth implements OnInit {
   checkstatus(){
     this.token = localStorage.getItem('token');
     this.decode = this.jwthelper.decodeToken(this.token);
-    console.log()
     if(this.decode.role == 'departemen')
       this.router.navigate(['departemen/dashboard']); // if succes masuk ke halaman lain
     else if(this.decode.role == 'admin')
