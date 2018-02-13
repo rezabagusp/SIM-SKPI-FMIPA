@@ -14,7 +14,6 @@ export class SsoComponent implements OnInit {
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private auth: AuthenticationService) { 
     this.activatedRoute.params.subscribe((params: Params)=>{
       this.token = params['token'];
-      console.log('params', params);
     })       
   }
 

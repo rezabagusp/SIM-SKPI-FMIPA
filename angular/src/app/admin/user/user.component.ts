@@ -18,7 +18,6 @@ export class UserComponent implements OnInit {
   //ng model atribut
   private nama_user;
   private email_user;
-  private password_user;
   private id_user;
   private list_departemen = [
     {
@@ -80,7 +79,6 @@ export class UserComponent implements OnInit {
     this.form = this.fb.group({
       nama_user: ['', Validators.required],
       email_user: ['', Validators.required],
-      password_user: ['', Validators.required],
       role: ['', Validators.required],
       departemen: ['', Validators.required],
     });
@@ -131,7 +129,6 @@ export class UserComponent implements OnInit {
 
     this.form.controls.nama_user.setValue(data.nama_user,  { onlySelf: true });
     this.form.controls.email_user.setValue(data.email_user,  { onlySelf: true });
-    this.form.controls.password_user.setValue(data.password_user,  { onlySelf: true });   
 
     this.form.controls.role.setValue(this.getSelectedRole(data.role),  { onlySelf: true });
     this.form.controls.departemen.setValue(this.getSelectedDepartemen(data.fk_departemen_id),  { onlySelf: true });        
@@ -142,7 +139,6 @@ export class UserComponent implements OnInit {
     var creds = JSON.stringify({
                                 nama_user: this.form.value.nama_user,
                                 email_user: this.form.value.email_user,
-                                password_user: this.form.value.password_user,
                                 role: this.form.value.role.id,
                                 id_departemen: this.form.value.departemen.id
                                 })
@@ -183,7 +179,6 @@ export class UserComponent implements OnInit {
     var creds = JSON.stringify({
                                 nama_user: this.form.value.nama_user,
                                 email_user: this.form.value.email_user,
-                                password_user: this.form.value.password_user,
                                 role: this.form.value.role.id,
                                 id_departemen: this.form.value.departemen.id,
                                 id_user: this.id_user

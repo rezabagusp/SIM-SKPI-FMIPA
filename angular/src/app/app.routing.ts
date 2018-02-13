@@ -23,6 +23,7 @@ export const routes: Routes = [
     path:'departemen',
     redirectTo:'departemen/dashboard'
   }
+  
 ];
 
 @NgModule({

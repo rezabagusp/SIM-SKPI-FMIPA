@@ -6,7 +6,7 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 
 export class DataService {
-  //base url
+  //base url 
   public dir = 'http://skpi.fmipa.ipb.ac.id'
   // API mahasiswa
   public url_tambah_ekskul = this.dir+'/mahasiswa/addekskul'; 

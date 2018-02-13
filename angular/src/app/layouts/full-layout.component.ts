@@ -89,6 +89,7 @@ export class FullLayoutComponent implements OnInit {
       this.router.navigate(['admin/dashboard']); // if succes masuk ke halaman lain          
   }
   logoutSso(){
+    localStorage.removeItem('token');
     window.open('https://accounts.ipb.ac.id/OAuth/logout.php?redirect_uri='+this.data.dir, '_self')
   }
 }

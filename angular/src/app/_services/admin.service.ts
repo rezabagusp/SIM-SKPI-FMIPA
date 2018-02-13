@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Http, Headers, Response, URLSearchParams} from '@angular/http';//add http module
 import { Subject } from 'rxjs/Subject';
 import { AuthHttp, JwtHelper, tokenNotExpired } from 'angular2-jwt';

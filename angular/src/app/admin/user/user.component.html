@@ -6,13 +6,12 @@
           <i class="fa fa-align-justify"></i> List User
         </div>
         <div class="card-block">
-          <table class="table table-sm table-simple table-responsive" style="display: inline-block;width: 100%;overflow: auto;">
+          <table class="table table-simple table-responsive table-fit" style="display: inline-block;width: 100%;overflow: auto;">
             <thead>
               <tr>
                 <th>No</th>
                 <th>Username</th>
                 <th>Email</th>
-                <th>Password</th>
                 <th>Role</th>
                 <th>Departemen</th>
                 <th></th>
@@ -23,7 +22,6 @@
                 <td>{{i+1}}</td>
                 <td>{{user?.nama_user}}</td>
                 <td>{{user?.email_user}}</td>
-                <td>{{user?.password_user}}</td>
                 <td>{{user?.role}}</td>
                 <td *ngIf="user.fk_departemen_id != null">{{user?.departemen.nama_departemen}}</td>
                 <td *ngIf="user.fk_departemen_id == null">NaN</td>                
@@ -66,12 +64,12 @@
               <input type="text" id="username" name="email_user" formControlName="email_user" class="form-control form-control-sm" placeholder="masukan email lengkap" required>
             </div> 
           </div>  
-          <div class="form-group row">
+          <!-- <div class="form-group row">
             <label class="col-md-3 form-control-label" for="password_user">Password</label>
               <div class="col-md-9">
               <input type="text" id="username" name="password_user" formControlName="password_user" class="form-control form-control-sm" placeholder="password" required>
             </div> 
-          </div>   
+          </div>    -->
            <div class="form-group row">
             <label class="col-md-3 form-control-label" for="role">role</label>
               <div class="col-md-9">
@@ -124,12 +122,12 @@
               <input type="text" id="username" name="email_user" formControlName="email_user" class="form-control form-control-sm" placeholder="masukan email lengkap" required>
             </div> 
           </div>  
-          <div class="form-group row">
+          <!-- <div class="form-group row">
             <label class="col-md-3 form-control-label" for="password_user">Password</label>
               <div class="col-md-9">
               <input type="text" id="username" name="password_user" formControlName="password_user" class="form-control form-control-sm" placeholder="password" required>
             </div> 
-          </div>   
+          </div>    -->
            <div class="form-group row">
             <label class="col-md-3 form-control-label" for="role">role</label>
               <div class="col-md-9">
